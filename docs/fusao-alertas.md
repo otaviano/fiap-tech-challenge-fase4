@@ -34,20 +34,31 @@ coisas.
 | NEWS2 parcial ≥ 7 | **crítico** | NEWS2 "high": emergência |
 | Isolation Forest (deterioração multiparamétrica) | moderado | padrão anômalo, sem limiar clínico absoluto |
 | Desvio do basal do paciente | pelo escore, **teto moderado** | mudança relativa pede olhar, não chamar o plantonista |
-| Outras modalidades (áudio, vídeo...) | pelo escore: ≥ 0,8 alto · ≥ 0,5 moderado | até ganharem tabela própria |
+| Relato de risco de autolesão na consulta | **crítico** | não espera corroboração |
+| Outras fontes (áudio, texto, vídeo...) | pelo escore: ≥ 0,8 alto · ≥ 0,5 moderado | ex.: "falta de ar" relatada (0,80) é alto; fala ofegante (0,75–0,90) vai de moderado a alto |
 
-### 2. Corroboração e concordância
+### 2. Corroboração e concordância entre canais
 
-- **Corroboração (mesma modalidade):** 2 ou mais detectores diferentes em 15
-  min elevam um nível, **até no máximo *alto***. Os detectores de sinais vitais
-  leem o mesmo sensor, então um oxímetro reposicionado engana os três ao mesmo
-  tempo. A concordância entre eles é evidência, mas não independente.
-- **Concordância multimodal:** achados de modalidades diferentes em 15 min
-  elevam mais um nível, **sem teto**. Dessaturação no monitor somada a fala
-  ofegante na consulta são fontes independentes.
+Cada modalidade pertence a um **canal físico**, que é a origem do dado:
 
-Resultado: **um alerta só é crítico com NEWS2 ≥ 7 ou com modalidades que
-concordam.**
+| Canal | Modalidades |
+|---|---|
+| monitor | sinais vitais |
+| consulta | áudio (como o paciente fala) e texto (o que ele diz) |
+| câmera | vídeo e movimentação |
+| prontuário | prescrições |
+
+- **Corroboração (mesmo canal):** 2 ou mais detectores diferentes em 15 min
+  elevam um nível, **até no máximo *alto***. Os três detectores de sinais
+  vitais leem o mesmo sensor, e um oxímetro reposicionado engana os três ao
+  mesmo tempo. Áudio e texto saem da mesma gravação. Em ambos os casos a
+  concordância é evidência, mas não independente.
+- **Concordância entre canais:** achados de canais diferentes em 15 min elevam
+  mais um nível, **sem teto**. Dessaturação no monitor somada a fala ofegante
+  na consulta são fontes independentes.
+
+Resultado: **um alerta só é crítico com NEWS2 ≥ 7, com relato de risco de
+autolesão, ou com canais físicos que concordam.**
 
 ### 3. Episódio e escalonamento
 
@@ -71,7 +82,7 @@ alerta.
 |---|---|---|
 | 07:48 | NEWS2: SpO2 89,5% (3 pontos) | **moderado** → enfermagem: "Dessaturação — SpO2 89,5%" |
 | 07:56 | + desvio robusto: SpO2 85% contra basal de 93,2% | **alto** → plantonista: "ESCALONAMENTO · … corroborado por 2 detectores" |
-| (+ áudio) | + fala ofegante na consulta (`POST /achados`) | **crítico** → resposta rápida: "… concordância entre 2 modalidades" |
+| (+ consulta) | + fala ofegante na consulta (`med-monitor audio analisar … --api`) | **crítico** → resposta rápida: "… concordância entre consulta e monitor" |
 
 ## Resposta: reconhecimento
 

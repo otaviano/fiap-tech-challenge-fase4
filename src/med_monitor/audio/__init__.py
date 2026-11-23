@@ -1,13 +1,11 @@
-"""Entrega técnica 2 — Análise de áudio.
+"""Entrega técnica 2 — Análise de áudio das consultas.
 
-Escopo:
-- `transcricao`: Azure Speech to Text (pt-BR) sobre gravações de consulta;
-- `texto`: Azure Text Analytics — sentimento, opinião e Text Analytics for
-  Health (entidades clínicas: sintomas, medicamentos, dosagens) sobre a
-  transcrição; lista de termos críticos do hospital;
-- `acustica`: features locais (librosa) para sinais vocais — taxa de fala,
-  pausas, jitter/shimmer, energia — indicativos de fadiga, disartria ou
-  dificuldade respiratória, comparados com a linha de base do paciente.
+- `acustica`: features da fala (pausas, grupos de fala, respiração audível, articulação, F0) e
+  detecção de `fala_ofegante` / `fadiga_vocal` contra o basal do paciente;
+- `termos`: léxico de termos críticos do hospital, com tratamento de negação;
+- `consulta`: pipeline completo (acústica + Azure Speech to Text + Azure Text Analytics) → `Achado`s;
+- `amostras`: consultas sintéticas em pt-BR com alterações controladas (espeak-ng);
+- `avaliacao`: detecção, confusão e falso alarme nas consultas sintéticas.
 
-Saída: `Achado(modalidade=AUDIO | TEXTO, ...)`.
+Ver docs/audio.md.
 """

@@ -1,0 +1,166 @@
+{
+  "paciente_id": "PRT-2026-200102",
+  "arquivo": "data/raw/audio/PRT-2026-200102_atual.wav",
+  "basal": "data/raw/audio/PRT-2026-200102_basal.wav",
+  "servicos": {
+    "speech": "referencia (roteiro .txt)",
+    "language": "indisponível"
+  },
+  "features": {
+    "duracao_s": 22.729,
+    "tempo_fala_s": 13.25,
+    "razao_pausa": 0.38,
+    "pausas_por_min": 44.902,
+    "pausa_media_s": 0.508,
+    "grupo_fala_medio_s": 0.779,
+    "taxa_articulacao": 5.132,
+    "f0_mediana_hz": 104.38,
+    "f0_variab_st": 1.836,
+    "intensidade_db": -27.851,
+    "planicidade_espectral": 0.015,
+    "inspiracoes_por_min": 39.289
+  },
+  "features_basal": {
+    "duracao_s": 17.244,
+    "tempo_fala_s": 14.71,
+    "razao_pausa": 0.071,
+    "pausas_por_min": 11.371,
+    "pausa_media_s": 0.373,
+    "grupo_fala_medio_s": 3.677,
+    "taxa_articulacao": 5.37,
+    "f0_mediana_hz": 104.985,
+    "f0_variab_st": 1.414,
+    "intensidade_db": -26.429,
+    "planicidade_espectral": 0.015,
+    "inspiracoes_por_min": 0.0
+  },
+  "alteracoes": [
+    {
+      "tipo": "fala_ofegante",
+      "escore": 0.9,
+      "comparacao": "basal do paciente",
+      "criterios_atendidos": [
+        "grupos de fala ≥ 35% mais curtos que o basal",
+        "pausas ≥ 50% mais frequentes que o basal",
+        "respiração audível ≥ 4/min acima do basal"
+      ],
+      "medidas": {
+        "grupo_fala_medio_s": {
+          "atual": 0.779,
+          "referencia": 3.677
+        },
+        "pausas_por_min": {
+          "atual": 44.902,
+          "referencia": 11.371
+        },
+        "planicidade_espectral": {
+          "atual": 0.015,
+          "referencia": 0.015
+        },
+        "inspiracoes_por_min": {
+          "atual": 39.289,
+          "referencia": 0.0
+        }
+      }
+    }
+  ],
+  "transcricao": {
+    "texto": "Doutor, estou com falta de ar desde cedo. Qualquer coisa que eu falo já canso. Tentei levantar para ir ao banheiro e precisei parar no caminho, o peito apertado. Parece que o ar não chega, e à noite piorou quando deitei.",
+    "fonte": "referencia",
+    "idioma": "pt-BR",
+    "segmentos": []
+  },
+  "termos": [
+    {
+      "termo": "falta de ar",
+      "categoria": "respiratorio",
+      "escore": 0.8,
+      "negado": false,
+      "trecho": "doutor, estou com falta de ar desde cedo. qualque"
+    },
+    {
+      "termo": "peito apertado",
+      "categoria": "cardiovascular",
+      "escore": 0.8,
+      "negado": false,
+      "trecho": "banheiro e precisei parar no caminho, o peito apertado. parece que o ar na"
+    }
+  ],
+  "analise_texto": null,
+  "erros": [],
+  "achados": [
+    {
+      "paciente_id": "PRT-2026-200102",
+      "modalidade": "audio",
+      "tipo": "fala_ofegante",
+      "escore": 0.9,
+      "fonte": "librosa",
+      "evidencia": {
+        "comparacao": "basal do paciente",
+        "criterios_atendidos": [
+          "grupos de fala ≥ 35% mais curtos que o basal",
+          "pausas ≥ 50% mais frequentes que o basal",
+          "respiração audível ≥ 4/min acima do basal"
+        ],
+        "medidas": {
+          "grupo_fala_medio_s": {
+            "atual": 0.779,
+            "referencia": 3.677
+          },
+          "pausas_por_min": {
+            "atual": 44.902,
+            "referencia": 11.371
+          },
+          "planicidade_espectral": {
+            "atual": 0.015,
+            "referencia": 0.015
+          },
+          "inspiracoes_por_min": {
+            "atual": 39.289,
+            "referencia": 0.0
+          }
+        }
+      },
+      "momento": "2026-11-23T22:58:16.829876+00:00",
+      "id": "0272b4925604"
+    },
+    {
+      "paciente_id": "PRT-2026-200102",
+      "modalidade": "texto",
+      "tipo": "termo_critico",
+      "escore": 0.8,
+      "fonte": "lexico-hospital",
+      "evidencia": {
+        "categoria": "respiratorio",
+        "termos": [
+          "falta de ar"
+        ],
+        "trechos": [
+          "doutor, estou com falta de ar desde cedo. qualque"
+        ],
+        "negados_ignorados": []
+      },
+      "momento": "2026-11-23T22:58:16.829876+00:00",
+      "id": "90097be8ecf5"
+    },
+    {
+      "paciente_id": "PRT-2026-200102",
+      "modalidade": "texto",
+      "tipo": "termo_critico",
+      "escore": 0.8,
+      "fonte": "lexico-hospital",
+      "evidencia": {
+        "categoria": "cardiovascular",
+        "termos": [
+          "peito apertado"
+        ],
+        "trechos": [
+          "banheiro e precisei parar no caminho, o peito apertado. parece que o ar na"
+        ],
+        "negados_ignorados": []
+      },
+      "momento": "2026-11-23T22:58:16.829876+00:00",
+      "id": "fa4d3eaae58f"
+    }
+  ]
+}

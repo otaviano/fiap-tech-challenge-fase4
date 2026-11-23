@@ -1,0 +1,193 @@
+{
+  "paciente_id": "PRT-2026-200103",
+  "arquivo": "data/raw/audio/PRT-2026-200103_atual.wav",
+  "basal": "data/raw/audio/PRT-2026-200103_basal.wav",
+  "servicos": {
+    "speech": "referencia (roteiro .txt)",
+    "language": "indisponível"
+  },
+  "features": {
+    "duracao_s": 26.677,
+    "tempo_fala_s": 21.95,
+    "razao_pausa": 0.125,
+    "pausas_por_min": 14.348,
+    "pausa_media_s": 0.523,
+    "grupo_fala_medio_s": 3.136,
+    "taxa_articulacao": 3.736,
+    "f0_mediana_hz": 162.846,
+    "f0_variab_st": 2.187,
+    "intensidade_db": -32.843,
+    "planicidade_espectral": 0.017,
+    "inspiracoes_por_min": 0.0
+  },
+  "features_basal": {
+    "duracao_s": 15.914,
+    "tempo_fala_s": 13.79,
+    "razao_pausa": 0.062,
+    "pausas_por_min": 12.245,
+    "pausa_media_s": 0.303,
+    "grupo_fala_medio_s": 3.447,
+    "taxa_articulacao": 5.439,
+    "f0_mediana_hz": 194.78,
+    "f0_variab_st": 1.771,
+    "intensidade_db": -24.69,
+    "planicidade_espectral": 0.019,
+    "inspiracoes_por_min": 0.0
+  },
+  "alteracoes": [
+    {
+      "tipo": "fadiga_vocal",
+      "escore": 0.9,
+      "comparacao": "basal do paciente",
+      "criterios_atendidos": [
+        "fala ≥ 20% mais lenta que o basal",
+        "voz ≥ 8% mais grave",
+        "voz ≥ 4 dB mais fraca"
+      ],
+      "medidas": {
+        "taxa_articulacao": {
+          "atual": 3.736,
+          "referencia": 5.439
+        },
+        "f0_variab_st": {
+          "atual": 2.187,
+          "referencia": 1.771
+        },
+        "f0_mediana_hz": {
+          "atual": 162.846,
+          "referencia": 194.78
+        },
+        "intensidade_db": {
+          "atual": -32.843,
+          "referencia": -24.69
+        }
+      }
+    }
+  ],
+  "transcricao": {
+    "texto": "Estou muito cansada hoje, doutor. Sem força nenhuma, nem consegui comer direito. Tive calafrio de madrugada e a enfermeira disse que eu estava com febre. Só quero ficar deitada, uma fraqueza no corpo todo.",
+    "fonte": "referencia",
+    "idioma": "pt-BR",
+    "segmentos": []
+  },
+  "termos": [
+    {
+      "termo": "cansada",
+      "categoria": "fadiga",
+      "escore": 0.55,
+      "negado": false,
+      "trecho": "estou muito cansada hoje, doutor. sem f"
+    },
+    {
+      "termo": "sem forca",
+      "categoria": "fadiga",
+      "escore": 0.55,
+      "negado": false,
+      "trecho": "estou muito cansada hoje, doutor. sem forca nenhuma, nem conseg"
+    },
+    {
+      "termo": "calafrio",
+      "categoria": "geral",
+      "escore": 0.45,
+      "negado": false,
+      "trecho": "nhuma, nem consegui comer direito. tive calafrio de madrugada e a en"
+    },
+    {
+      "termo": "febre",
+      "categoria": "geral",
+      "escore": 0.45,
+      "negado": false,
+      "trecho": "e a enfermeira disse que eu estava com febre. so quero ficar dei"
+    },
+    {
+      "termo": "fraqueza",
+      "categoria": "fadiga",
+      "escore": 0.55,
+      "negado": false,
+      "trecho": "com febre. so quero ficar deitada, uma fraqueza no corpo todo."
+    }
+  ],
+  "analise_texto": null,
+  "erros": [],
+  "achados": [
+    {
+      "paciente_id": "PRT-2026-200103",
+      "modalidade": "audio",
+      "tipo": "fadiga_vocal",
+      "escore": 0.9,
+      "fonte": "librosa",
+      "evidencia": {
+        "comparacao": "basal do paciente",
+        "criterios_atendidos": [
+          "fala ≥ 20% mais lenta que o basal",
+          "voz ≥ 8% mais grave",
+          "voz ≥ 4 dB mais fraca"
+        ],
+        "medidas": {
+          "taxa_articulacao": {
+            "atual": 3.736,
+            "referencia": 5.439
+          },
+          "f0_variab_st": {
+            "atual": 2.187,
+            "referencia": 1.771
+          },
+          "f0_mediana_hz": {
+            "atual": 162.846,
+            "referencia": 194.78
+          },
+          "intensidade_db": {
+            "atual": -32.843,
+            "referencia": -24.69
+          }
+        }
+      },
+      "momento": "2026-11-23T22:58:19.477523+00:00",
+      "id": "86503a6ad55a"
+    },
+    {
+      "paciente_id": "PRT-2026-200103",
+      "modalidade": "texto",
+      "tipo": "termo_critico",
+      "escore": 0.55,
+      "fonte": "lexico-hospital",
+      "evidencia": {
+        "categoria": "fadiga",
+        "termos": [
+          "cansada",
+          "sem forca",
+          "fraqueza"
+        ],
+        "trechos": [
+          "estou muito cansada hoje, doutor. sem f",
+          "estou muito cansada hoje, doutor. sem forca nenhuma, nem conseg",
+          "com febre. so quero ficar deitada, uma fraqueza no corpo todo."
+        ],
+        "negados_ignorados": []
+      },
+      "momento": "2026-11-23T22:58:19.477523+00:00",
+      "id": "9f96544d61e5"
+    },
+    {
+      "paciente_id": "PRT-2026-200103",
+      "modalidade": "texto",
+      "tipo": "termo_critico",
+      "escore": 0.45,
+      "fonte": "lexico-hospital",
+      "evidencia": {
+        "categoria": "geral",
+        "termos": [
+          "calafrio",
+          "febre"
+        ],
+        "trechos": [
+          "nhuma, nem consegui comer direito. tive calafrio de madrugada e a en",
+          "e a enfermeira disse que eu estava com febre. so quero ficar dei"
+        ],
+        "negados_ignorados": []
+      },
+      "momento": "2026-11-23T22:58:19.477523+00:00",
+      "id": "4ac79f171584"
+    }
+  ]
+}

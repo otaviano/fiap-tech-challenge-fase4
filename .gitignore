@@ -71,3 +71,6 @@ infra/.terraform.lock.hcl
 
 # Material de gravação (local, não é entregável)
 docs/roteiro-video.md
+
+# Consultas sintéticas: geradas por `med-monitor audio amostras` (determinístico)
+data/raw/audio/

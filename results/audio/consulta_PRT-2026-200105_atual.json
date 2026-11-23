@@ -1,0 +1,70 @@
+{
+  "paciente_id": "PRT-2026-200105",
+  "arquivo": "data/raw/audio/PRT-2026-200105_atual.wav",
+  "basal": "data/raw/audio/PRT-2026-200105_basal.wav",
+  "servicos": {
+    "speech": "referencia (roteiro .txt)",
+    "language": "indisponível"
+  },
+  "features": {
+    "duracao_s": 13.073,
+    "tempo_fala_s": 9.97,
+    "razao_pausa": 0.152,
+    "pausas_por_min": 20.408,
+    "pausa_media_s": 0.448,
+    "grupo_fala_medio_s": 1.994,
+    "taxa_articulacao": 5.316,
+    "f0_mediana_hz": 91.924,
+    "f0_variab_st": 1.406,
+    "intensidade_db": -29.355,
+    "planicidade_espectral": 0.015,
+    "inspiracoes_por_min": 0.0
+  },
+  "features_basal": {
+    "duracao_s": 16.774,
+    "tempo_fala_s": 13.99,
+    "razao_pausa": 0.096,
+    "pausas_por_min": 19.392,
+    "pausa_media_s": 0.296,
+    "grupo_fala_medio_s": 2.332,
+    "taxa_articulacao": 5.147,
+    "f0_mediana_hz": 93.531,
+    "f0_variab_st": 1.564,
+    "intensidade_db": -28.143,
+    "planicidade_espectral": 0.014,
+    "inspiracoes_por_min": 0.0
+  },
+  "alteracoes": [],
+  "transcricao": {
+    "texto": "Estou bem, doutor. Não tenho falta de ar, nem dor no peito. Dormi bem e não tive febre. Só quero saber se a cirurgia continua marcada para quinta e se posso tomar banho sozinho.",
+    "fonte": "referencia",
+    "idioma": "pt-BR",
+    "segmentos": []
+  },
+  "termos": [
+    {
+      "termo": "falta de ar",
+      "categoria": "respiratorio",
+      "escore": 0.8,
+      "negado": true,
+      "trecho": "estou bem, doutor. nao tenho falta de ar, nem dor no peito."
+    },
+    {
+      "termo": "dor no peito",
+      "categoria": "cardiovascular",
+      "escore": 0.8,
+      "negado": true,
+      "trecho": "bem, doutor. nao tenho falta de ar, nem dor no peito. dormi bem e nao ti"
+    },
+    {
+      "termo": "febre",
+      "categoria": "geral",
+      "escore": 0.45,
+      "negado": true,
+      "trecho": "nem dor no peito. dormi bem e nao tive febre. so quero saber se"
+    }
+  ],
+  "analise_texto": null,
+  "erros": [],
+  "achados": []
+}

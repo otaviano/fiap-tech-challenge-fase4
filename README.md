@@ -22,7 +22,7 @@ achados em alertas para a equipe médica.
 | Requisito do enunciado | Onde está |
 |---|---|
 | Análise de vídeo (OpenPose, YOLOv8, relatório de desvios) | [`src/med_monitor/video/`](src/med_monitor/video/) |
-| Análise de áudio (Azure Speech to Text, Azure Text Analytics, alterações vocais) | [`src/med_monitor/audio/`](src/med_monitor/audio/), [`src/med_monitor/azure/`](src/med_monitor/azure/) |
+| Análise de áudio ✅ (Azure 🟡 aguardando conta) | [`audio/`](src/med_monitor/audio/) — fala ofegante e fadiga vs basal do paciente, termos críticos com negação; [`azure/`](src/med_monitor/azure/) — Speech to Text, sentimento e Text Analytics for Health ([detalhes](docs/audio.md)) |
 | Anomalias em sinais vitais ✅ | [`anomalias/sinais_vitais.py`](src/med_monitor/anomalias/sinais_vitais.py) — NEWS2 + desvio robusto + Isolation Forest; recall 96% em 336 h de UTI ([detalhes](docs/sinais-vitais.md)) |
 | Anomalias em prescrições e movimentação | [`src/med_monitor/anomalias/`](src/med_monitor/anomalias/) |
 | Fusão multimodal e alertas em tempo real ✅ | [`fusao/motor.py`](src/med_monitor/fusao/motor.py), [`alertas/despacho.py`](src/med_monitor/alertas/despacho.py), [`serving/`](src/med_monitor/serving/) — painel SSE da equipe médica, escalonamento por concordância entre modalidades, ciência auditada ([detalhes](docs/fusao-alertas.md)) |
@@ -53,6 +53,16 @@ med-monitor vitais baixar                                   # 10 registros do MI
 med-monitor vitais analisar --sintetico --grafico           # série sintética com eventos injetados
 med-monitor vitais analisar --registro p000020-2183-04-28-17-47n --grafico
 med-monitor vitais avaliar                                  # recall/latência/carga de alarme (~10 min)
+```
+
+### Áudio das consultas
+
+```bash
+pip install -e ".[audio,dev]"
+med-monitor audio amostras           # consultas sintéticas (requer espeak-ng)
+med-monitor audio analisar data/raw/audio/PRT-2026-200102_atual.wav \
+    --basal data/raw/audio/PRT-2026-200102_basal.wav [--api http://localhost:8000]
+med-monitor audio avaliar
 ```
 
 ### Painel da equipe médica (tempo real)

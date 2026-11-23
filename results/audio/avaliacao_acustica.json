@@ -1,0 +1,1043 @@
+{
+  "vozes": [
+    "pt-br+m3",
+    "pt-br+f2",
+    "pt-br+m1",
+    "pt-br+f4"
+  ],
+  "roteiros_atuais": [
+    "basal_2",
+    "basal_3",
+    "estavel"
+  ],
+  "resumo": {
+    "com basal": {
+      "normal": {
+        "n": 12,
+        "falso_alarme": 0
+      },
+      "fadiga": {
+        "n": 12,
+        "detectado": 12,
+        "confusao": 0
+      },
+      "fadiga_leve": {
+        "n": 12,
+        "detectado": 4,
+        "confusao": 2
+      },
+      "dispneia": {
+        "n": 12,
+        "detectado": 12,
+        "confusao": 0
+      },
+      "dispneia_leve": {
+        "n": 12,
+        "detectado": 12,
+        "confusao": 0
+      }
+    },
+    "sem basal": {
+      "normal": {
+        "n": 12,
+        "falso_alarme": 0
+      },
+      "fadiga": {
+        "n": 12,
+        "detectado": 0,
+        "confusao": 1
+      },
+      "fadiga_leve": {
+        "n": 12,
+        "detectado": 0,
+        "confusao": 1
+      },
+      "dispneia": {
+        "n": 12,
+        "detectado": 12,
+        "confusao": 0
+      },
+      "dispneia_leve": {
+        "n": 12,
+        "detectado": 12,
+        "confusao": 0
+      }
+    }
+  },
+  "casos": [
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_2",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_2",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_2",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_2",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_2",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_2",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_2",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_2",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_2",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_2",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_3",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_3",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_3",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_3",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_3",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_3",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_3",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_3",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_3",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "basal_3",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "estavel",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "estavel",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "estavel",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "estavel",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "estavel",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal",
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "estavel",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "estavel",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "estavel",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "estavel",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m3",
+      "roteiro": "estavel",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_2",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_2",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_2",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_2",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_2",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_2",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_2",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_2",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_2",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_2",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_3",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_3",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_3",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_3",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_3",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_3",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_3",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_3",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_3",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "basal_3",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "estavel",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "estavel",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "estavel",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "estavel",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "estavel",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "estavel",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "estavel",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "estavel",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "estavel",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f2",
+      "roteiro": "estavel",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_2",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_2",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_2",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_2",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_2",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_2",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_2",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_2",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_2",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_2",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_3",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_3",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_3",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_3",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_3",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_3",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_3",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_3",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_3",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "basal_3",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "estavel",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "estavel",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "estavel",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "estavel",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "estavel",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal",
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "estavel",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "estavel",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "estavel",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "estavel",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+m1",
+      "roteiro": "estavel",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_2",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_2",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_2",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_2",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_2",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_2",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_2",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_2",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_2",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_2",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_3",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_3",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_3",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_3",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_3",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_3",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_3",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_3",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_3",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "basal_3",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "estavel",
+      "condicao": "normal",
+      "modo": "com basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "estavel",
+      "condicao": "normal",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "estavel",
+      "condicao": "fadiga",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "estavel",
+      "condicao": "fadiga",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "estavel",
+      "condicao": "fadiga_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fadiga_vocal"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "estavel",
+      "condicao": "fadiga_leve",
+      "modo": "sem basal",
+      "declarado": []
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "estavel",
+      "condicao": "dispneia",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "estavel",
+      "condicao": "dispneia",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "estavel",
+      "condicao": "dispneia_leve",
+      "modo": "com basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    },
+    {
+      "voz": "pt-br+f4",
+      "roteiro": "estavel",
+      "condicao": "dispneia_leve",
+      "modo": "sem basal",
+      "declarado": [
+        "fala_ofegante"
+      ]
+    }
+  ]
+}

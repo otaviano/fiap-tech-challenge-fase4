@@ -21,10 +21,10 @@ anteriores) quer **monitorar pacientes continuamente com dados multimodais**
 | 1.2 | Análise postural (OpenPose) | `video/pose.py` | ⬜ |
 | 1.3 | Objetos e áreas críticas (YOLOv8) | `video/objetos.py` | ⬜ |
 | 1.4 | Relatório automático de desvios | `video/relatorio.py` | ⬜ |
-| 2.1 | Processar áudios de consultas | `audio/` | ⬜ |
-| 2.2 | Alterações vocais (cansaço, dificuldade respiratória) | `audio/acustica.py` | ⬜ |
-| 2.3 | Azure Speech to Text | `azure/speech.py` + `audio/transcricao.py` | ⬜ |
-| 2.4 | Termos críticos e sentimento (Azure Text Analytics) | `azure/language.py` + `audio/texto.py` | ⬜ |
+| 2.1 | Processar áudios de consultas | `audio/consulta.py` — [docs](audio.md) | ✅ |
+| 2.2 | Alterações vocais (cansaço, dificuldade respiratória) | `audio/acustica.py` | ✅ dispneia 24/24, fadiga 12/12, 0 falsos alarmes (sintético) |
+| 2.3 | Azure Speech to Text | `azure/speech.py` | 🟡 implementado e testado com dublê; falta rodar com a conta |
+| 2.4 | Termos críticos e sentimento (Azure Text Analytics) | `azure/language.py` + `audio/termos.py` | 🟡 léxico com negação ✅; Azure falta rodar com a conta |
 | 3.1 | Anomalias em sinais vitais (FC, PA, SpO2) | `anomalias/sinais_vitais.py` — [docs](sinais-vitais.md) | ✅ recall 96% em 336 h reais |
 | 3.2 | Anomalias na evolução de prescrições | `anomalias/prescricoes.py` | ⬜ |
 | 3.3 | Padrões de movimentação na internação | `anomalias/movimentacao.py` | ⬜ |
@@ -118,7 +118,7 @@ residência de dados não é uma restrição.
 |---|---|---|
 | Sinais vitais | PhysioNet — **MIMIC-III Waveform Matched Subset**, registros numéricos (FC, PA invasiva, FR, SpO2 a 1/min; ODbL) | 10 registros curados, 336 h. BIDMC descartado: 8 min por registro e sem PA |
 | Sons respiratórios | AudioSet (Google) — classes *Cough*, *Wheeze*, *Breathing*, *Gasp* | Só metadados + IDs do YouTube; baixar trechos curtos |
-| Consultas (voz) | Gravações autorais do grupo, roteirizadas (paciente com fala normal × cansada/ofegante) | Consentimento implícito (somos nós); nada de dado real de paciente |
+| Consultas (voz) | Sintéticas (espeak-ng, condição conhecida) para desenvolvimento e avaliação; gravações autorais do grupo com os mesmos roteiros para o vídeo | Nada de dado real de paciente. AudioSet não usado: só traz IDs do YouTube e embeddings, sem fala de consulta |
 | Vídeo de fisioterapia | **REHAB24-6** (Zenodo, CC BY-NC 4.0): execuções corretas × incorretas rotuladas | Decisão D6. KIMORE (sob pedido) e UI-PRMD (só esqueleto, sem RGB) descartados |
 | Prescrições | Sintéticas, no formato do prontuário da Fase 3 | Injetar anomalias rotuladas para medir recall |
 
@@ -130,4 +130,5 @@ residência de dados não é uma restrição.
       Health no F0 (D7): se recusar, trocar `language_sku` para `S`
 - [x] Vídeos de fisioterapia → dataset público REHAB24-6 (D6)
 - [x] Text Analytics for Health em português → `language="pt"` (D5); região `eastus` (D7)
+- [ ] Gravar os roteiros de `audio/amostras.py` com a voz do grupo (basal + atual) para o vídeo
 - [x] Repositório público: <https://github.com/otaviano/fiap-tech-challenge-fase4>

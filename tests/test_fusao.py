@@ -108,3 +108,31 @@ def test_descrever_em_ptbr():
     assert descrever(achado("hipotensao", "news2", sinal="pas", valor=86.9)) == "Hipotensão — PAS 86,9 mmHg"
     assert "abaixo do basal do paciente (96,1)" in descrever(
         achado("spo2_abaixo_do_basal", "desvio-robusto", sinal="spo2", valor=80.7, basal=96.1))
+
+
+def test_audio_e_texto_da_mesma_consulta_corroboram_mas_nao_sao_canais_independentes():
+    m = MotorFusao()
+    m.processar(achado("fala_ofegante", "librosa", escore=0.75, modalidade=Modalidade.AUDIO))
+    [d] = m.processar(achado("termo_critico", "lexico-hospital", minuto=0, escore=0.8,
+                             modalidade=Modalidade.TEXTO, categoria="respiratorio", termos=["falta de ar"]))
+    assert d.alerta.severidade is Severidade.ALTO          # não crítico: mesma gravação
+    assert not d.alerta.codigo.startswith("MM-")
+
+
+def test_consulta_mais_monitor_chega_a_critico():
+    m = MotorFusao()
+    m.processar(achado("taquipneia", "news2", sinal="fr", valor=27.0))
+    [d] = m.processar(achado("fala_ofegante", "librosa", minuto=3, escore=0.75, modalidade=Modalidade.AUDIO))
+    assert d.alerta.severidade is Severidade.CRITICO      # monitor e consulta: canais independentes
+    assert d.alerta.codigo.startswith("MM-")
+    assert "concordância entre consulta e monitor" in d.alerta.mensagem
+    # o texto da mesma consulta não gera um segundo alerta: já está no teto do episódio
+    assert m.processar(achado("termo_critico", "lexico-hospital", minuto=3, escore=0.8,
+                              modalidade=Modalidade.TEXTO, categoria="respiratorio", termos=["falta de ar"])) == []
+
+
+def test_risco_de_autolesao_e_critico_sozinho():
+    [d] = MotorFusao().processar(achado("termo_critico", "lexico-hospital", escore=0.95,
+                                        modalidade=Modalidade.TEXTO, categoria="risco_autolesao",
+                                        termos=["vontade de morrer"]))
+    assert d.alerta.severidade is Severidade.CRITICO

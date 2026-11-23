@@ -141,6 +141,71 @@ def _cmd_monitorar(args: argparse.Namespace) -> int:
     return 0
 
 
+# ----------------------------------------------------------------- áudio
+
+def _cmd_audio_amostras(_: argparse.Namespace) -> int:
+    from .audio import amostras
+
+    for a, basal, atual in amostras.gerar_padrao():
+        print(f"{a.paciente_id}: basal {basal.name} ({a.basal[1]}) · atual {atual.name} ({a.atual[1]})")
+    print(f"em {amostras.DESTINO_PADRAO} (cada .wav com o roteiro .txt ao lado)")
+    return 0
+
+
+def _cmd_audio_analisar(args: argparse.Namespace) -> int:
+    import json as _json
+    import urllib.request
+    from pathlib import Path
+
+    from .audio import consulta
+    from .config import AUDIO_RESULTS
+
+    paciente = args.paciente or Path(args.arquivo).stem.split("_")[0]
+    rel = consulta.analisar_consulta(args.arquivo, paciente, basal=args.basal, usar_azure=not args.sem_azure)
+    print(f"{paciente} · {Path(args.arquivo).name}" + (f" vs basal {Path(args.basal).name}" if args.basal else ""))
+    print(f"  serviços: transcrição = {rel.servicos['speech']} · texto = {rel.servicos['language']}")
+    for erro in rel.erros:
+        print(f"  ! {erro}")
+    f = rel.features
+    print(f"  fala: {f['taxa_articulacao']:.1f} síl/s · grupos de {f['grupo_fala_medio_s']:.1f} s · "
+          f"{f['pausas_por_min']:.0f} pausas/min · {f['inspiracoes_por_min']:.0f} inspirações/min · "
+          f"F0 {f['f0_mediana_hz'] or 0:.0f} Hz")
+    if rel.transcricao:
+        print(f"  transcrição: {rel.transcricao['texto'][:160]}{'…' if len(rel.transcricao['texto']) > 160 else ''}")
+    negados = sorted({t["termo"] for t in rel.termos if t["negado"]})
+    if negados:
+        print(f"  termos negados (ignorados): {', '.join(negados)}")
+    if not rel.achados:
+        print("  nenhum achado")
+    for a in rel.achados:
+        ev = a.evidencia
+        detalhe = ev.get("criterios_atendidos") or ev.get("termos") or ev.get("sintomas") or ""
+        print(f"  ▸ {a.modalidade.value}/{a.tipo} escore {a.escore:.2f} [{a.fonte}] {detalhe}")
+    print(f"  relatório: {consulta.salvar(rel, AUDIO_RESULTS)}")
+
+    if args.api:
+        for a in rel.achados:
+            corpo = {k: v for k, v in a.as_dict().items() if k in ("paciente_id", "modalidade", "tipo", "escore",
+                                                                    "fonte", "evidencia")}
+            req = urllib.request.Request(args.api.rstrip("/") + "/achados", method="POST",
+                                         data=_json.dumps(corpo, ensure_ascii=False).encode(),
+                                         headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                for alerta in _json.load(resp)["alertas"]:
+                    print(f"  → alerta [{alerta['severidade']}] {alerta['mensagem']} → {alerta['destinatario']}")
+    return 0
+
+
+def _cmd_audio_avaliar(_: argparse.Namespace) -> int:
+    from .audio import avaliacao
+
+    res = avaliacao.avaliar()
+    print(avaliacao.tabela_markdown(res))
+    js, md = avaliacao.salvar(res)
+    print(f"salvo em {js} e {md}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="med-monitor", description=__doc__)
     parser.add_argument("--version", action="version", version=__version__)
@@ -171,6 +236,20 @@ def build_parser() -> argparse.ArgumentParser:
     avaliar.add_argument("--if-persistencia", type=int, help="persistência do Isolation Forest")
     avaliar.add_argument("--saida", help="subpasta de results/anomalias (para variações)")
     avaliar.set_defaults(func=_cmd_vitais_avaliar)
+
+    audio = sub.add_parser("audio", help="consultas gravadas: alterações vocais + termos críticos (Azure)")
+    asub = audio.add_subparsers(dest="acao", required=True)
+    am = asub.add_parser("amostras", help="gera consultas sintéticas (espeak-ng) com basal e consulta atual")
+    am.set_defaults(func=_cmd_audio_amostras)
+    an = asub.add_parser("analisar", help="analisa uma consulta: fala, transcrição, termos e sentimento")
+    an.add_argument("arquivo", help="áudio da consulta (.wav)")
+    an.add_argument("--basal", help="consulta anterior do mesmo paciente, para comparação")
+    an.add_argument("--paciente", help="id do paciente (padrão: prefixo do nome do arquivo)")
+    an.add_argument("--sem-azure", action="store_true", help="não chama o Azure mesmo se configurado")
+    an.add_argument("--api", help="envia os achados para a fusão, ex.: http://localhost:8000")
+    an.set_defaults(func=_cmd_audio_analisar)
+    av = asub.add_parser("avaliar", help="detecção de fadiga/dispneia em consultas sintéticas (~1 min)")
+    av.set_defaults(func=_cmd_audio_avaliar)
 
     serve = sub.add_parser("serve", help="API + painel da equipe médica (http://localhost:8000)")
     serve.add_argument("--host", default="127.0.0.1")

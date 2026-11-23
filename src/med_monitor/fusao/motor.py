@@ -15,11 +15,14 @@ Como a severidade de um episódio é decidida:
    alto**. Detectores da mesma modalidade leem o mesmo sensor: um oxímetro
    reposicionado engana os três ao mesmo tempo, então a concordância deles não
    é evidência independente o bastante para declarar emergência.
-3. **Concordância multimodal**: achados de modalidades diferentes (ex.:
-   dessaturação no monitor + fala ofegante na consulta) elevam mais um nível,
-   sem teto — aí sim são fontes independentes.
+3. **Concordância entre canais**: achados de **canais físicos** diferentes
+   (ex.: dessaturação no monitor + fala ofegante na consulta) elevam mais um
+   nível, sem teto — aí sim são fontes independentes. O canal é a origem física
+   do dado (`CANAL`): áudio e texto da mesma consulta saem da mesma gravação, e
+   por isso se *corroboram* (teto alto) mas não contam como independentes.
 
-*Crítico*, portanto, só sai de NEWS2 ≥ 7 ou de modalidades que concordam.
+*Crítico*, portanto, só sai de NEWS2 ≥ 7, de risco de autolesão relatado, ou de
+canais físicos que concordam.
 
 Um episódio começa no primeiro achado e termina quando o paciente passa
 `janela_episodio` sem achados novos. Dentro do episódio, só sai alerta novo se
@@ -47,6 +50,14 @@ SEVERIDADE_BASE: dict[tuple[str, str | None], Severidade] = {
 TETO_BASE = {"desvio-robusto": S.MODERADO}
 TETO_CORROBORACAO = S.ALTO
 
+# Canal físico de cada modalidade: é a independência *da origem* que importa.
+CANAL = {
+    Modalidade.SINAIS_VITAIS: "monitor",
+    Modalidade.AUDIO: "consulta", Modalidade.TEXTO: "consulta",
+    Modalidade.VIDEO: "camera", Modalidade.MOVIMENTACAO: "camera",
+    Modalidade.PRESCRICAO: "prontuario",
+}
+
 PREFIXO = {
     Modalidade.SINAIS_VITAIS: "SV", Modalidade.AUDIO: "AU", Modalidade.TEXTO: "TX",
     Modalidade.VIDEO: "VD", Modalidade.MOVIMENTACAO: "MV", Modalidade.PRESCRICAO: "RX",
@@ -69,6 +80,7 @@ ROTULO = {
     # áudio e vídeo (entram pela API /achados até os analisadores ficarem prontos)
     "fala_ofegante": "Fala ofegante", "fadiga_vocal": "Fadiga vocal", "disartria": "Disartria",
     "termo_critico": "Termo crítico na consulta", "sentimento_negativo": "Sentimento negativo",
+    "sintoma_relatado": "Sintoma relatado",
     "queda": "Queda", "desvio_postural": "Desvio postural", "amplitude_reduzida": "Amplitude de movimento reduzida",
 }
 UNIDADE = {"fc": "bpm", "pas": "mmHg", "pad": "mmHg", "pam": "mmHg", "fr": "irpm", "spo2": "%"}
@@ -76,6 +88,9 @@ NOME_SINAL = {"fc": "FC", "pas": "PAS", "pad": "PAD", "pam": "PAM", "fr": "FR", 
 
 
 def severidade_base(achado: Achado) -> Severidade:
+    # relato de risco de autolesão não espera corroboração
+    if achado.evidencia.get("categoria") == "risco_autolesao":
+        return S.CRITICO
     for chave in ((achado.fonte, achado.tipo), (achado.fonte, None)):
         if chave in SEVERIDADE_BASE:
             return SEVERIDADE_BASE[chave]
@@ -111,6 +126,16 @@ def descrever(achado: Achado) -> str:
     if achado.tipo == "padrao_multivariado":
         desvios = ", ".join(f"{NOME_SINAL.get(s, s)} {_num(round(z, 1))}σ" for s, z in ev.get("principais_desvios", {}).items())
         return f"{rotulo} ({desvios})"
+    if achado.tipo == "termo_critico":
+        termos = ", ".join(f"“{t}”" for t in ev.get("termos", []))
+        return f"Paciente relata {termos} ({ev.get('categoria', '').replace('_', ' ')})"
+    if achado.tipo == "sintoma_relatado":
+        return f"Sintomas citados na consulta: {', '.join(ev.get('sintomas', []))}"
+    if achado.tipo in ("fala_ofegante", "fadiga_vocal"):
+        criterios = "; ".join(ev.get("criterios_atendidos", []))
+        return f"{rotulo} na consulta ({criterios})" if criterios else rotulo
+    if achado.tipo == "sentimento_negativo":
+        return f"{rotulo} na consulta (confiança {_num(round(ev.get('confianca', 0), 2))})"
     if achado.tipo == "sensor_sem_sinal":
         return f"{rotulo}: {NOME_SINAL.get(sinal, sinal)} há {ev.get('minutos')} min"
     if sinal and "valor" in ev:
@@ -183,13 +208,14 @@ class MotorFusao:
         severidade = max((severidade_base(a) for a in ep.achados), key=lambda s: s.peso)
         fontes = {a.fonte for a in recentes}
         modalidades = {a.modalidade for a in recentes}
+        canais = {CANAL.get(a.modalidade, a.modalidade.value) for a in recentes}
         motivos = []
         if len(fontes) >= 2 and severidade.peso < TETO_CORROBORACAO.peso:
             severidade = severidade.elevar()
             motivos.append(f"corroborado por {len(fontes)} detectores")
-        if len(modalidades) >= 2:
+        if len(canais) >= 2:
             severidade = severidade.elevar()
-            motivos.append(f"concordância entre {len(modalidades)} modalidades")
+            motivos.append("concordância entre " + " e ".join(sorted(canais)))
 
         if severidade.peso < self.severidade_minima.peso:
             return []
@@ -207,7 +233,7 @@ class MotorFusao:
         if escalonou:
             partes.insert(0, "ESCALONAMENTO")
         mods = tuple(sorted(modalidades, key=lambda m: m.value))
-        prefixo = "MM" if len(mods) > 1 else PREFIXO.get(principal.modalidade, "XX")
+        prefixo = "MM" if len(canais) > 1 else PREFIXO.get(principal.modalidade, "XX")
         alerta = Alerta(
             paciente_id=achado.paciente_id,
             codigo=f"{prefixo}-{principal.tipo.upper()}",
