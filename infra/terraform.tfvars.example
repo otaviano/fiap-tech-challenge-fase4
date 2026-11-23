@@ -1,3 +1,8 @@
 subscription_id = "00000000-0000-0000-0000-000000000000"
-# location = "brazilsouth"
-# sku      = "F0"
+
+# Opcional: alerta por e-mail quando o gasto passar de 50% e 90% do teto.
+# budget_alert_email = "voce@exemplo.com"
+# budget_amount      = 20
+
+# Se o F0 recusar Text Analytics for Health:
+# language_sku = "S"

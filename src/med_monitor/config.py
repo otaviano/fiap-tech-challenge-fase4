@@ -42,6 +42,8 @@ class AzureSettings:
     speech_language: str = field(default_factory=lambda: os.getenv("AZURE_SPEECH_LANGUAGE", "pt-BR"))
     language_endpoint: str = field(default_factory=lambda: os.getenv("AZURE_LANGUAGE_ENDPOINT", ""))
     language_key: str = field(default_factory=lambda: os.getenv("AZURE_LANGUAGE_KEY", ""))
+    # Text Analytics for Health só aceita a tag genérica "pt" (docs/plano.md, D5)
+    text_language: str = field(default_factory=lambda: os.getenv("AZURE_TEXT_LANGUAGE", "pt"))
 
     @property
     def speech_configurado(self) -> bool:

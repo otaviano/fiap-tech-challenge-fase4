@@ -30,7 +30,7 @@ anteriores) quer **monitorar pacientes continuamente com dados multimodais**
 | 3.3 | Padrões de movimentação na internação | `anomalias/movimentacao.py` | ⬜ |
 | 3.4 | Alertas automáticos à equipe médica | `fusao/` + `alertas/` + `serving/` | ⬜ |
 | — | Contratos `Achado`/`Alerta`, config, auditoria, CLI | `domain.py`, `config.py`, `audit.py`, `cli.py` | ✅ |
-| — | Recursos Azure (Speech + Language) | `infra/` | ✅ (falta `apply`) |
+| — | Recursos Azure (Speech + Language + orçamento) | `infra/` | ✅ (falta conta e `apply`) |
 
 ### Entregáveis
 
@@ -73,6 +73,45 @@ simulador; os detectores são *streaming* de verdade, só a fonte é gravada.
 não fingem: o pipeline roda com o que for local e o relatório marca que o
 serviço não foi chamado. Para a entrega e o vídeo, rodar com Azure real.
 
+**D5 — Text Analytics for Health com `language="pt"`.** A API hospedada aceita
+português só pela tag genérica `pt` (não há `pt-br` nem `pt-pt` na lista). O
+texto em pt-BR vai com `pt`. O sentimento e o reconhecimento de entidades comuns
+continuam com `pt-BR`/`pt`. Variável: `AZURE_TEXT_LANGUAGE`.
+
+**D6 — Dataset de vídeo: REHAB24-6.** Dataset público de fisioterapia ([Zenodo
+13305826](https://zenodo.org/records/13305826)), com 65 gravações de 6
+exercícios (abdução de braço, "arm VW", flexão apoiada na mesa, abdução de
+perna, avanço e agachamento) feitas por 10 pessoas. Cada exercício foi executado pelo
+menos 5 vezes **corretamente** e 5 vezes **incorretamente** sob orientação de um
+fisioterapeuta. O vídeo é RGB a 30 FPS, de duas câmeras, e vem com segmentação
+por repetição e com esqueleto 3D de referência. Isso dá *ground truth* para
+medir o acerto do detector de desvios, e não só para demonstrá-lo. Licença
+**CC BY-NC 4.0**: uso acadêmico permitido, com citação obrigatória no relatório
+e no README. Os vídeos (2,65 GB) **não** entram no repositório: são baixados por
+`scripts/baixar_rehab24.sh`. Cirurgia fica fora do escopo, porque o enunciado
+diz "ex.: fisioterapia *ou* cirurgia".
+
+**D7 — Orçamento Azure.** O teto é o crédito de US$ 100/ano, e o projeto foi
+desenhado para não consumir nada dele:
+- os dois recursos ficam na camada **F0 (gratuita)**. O Speech F0 dá 5 h de
+  transcrição em tempo real por mês. O Language F0 dá 5.000 registros de texto
+  por mês, sendo 1 registro = 1.000 caracteres. No F0 não existe cobrança
+  excedente: passou do limite, a chamada é recusada (*throttle*);
+- a estimativa de uso cabe com folga. São cerca de 30 consultas de 2–3 min,
+  menos de 2 h de áudio. Cada transcrição dá cerca de 3 registros por análise,
+  e com 3 análises por áudio são uns 300 registros por mês;
+- risco conhecido: a documentação não deixa claro se o Text Analytics for Health
+  entra na cota gratuita. Se o F0 recusar a chamada, só o recurso Language passa
+  para a camada `S`, e o Speech continua no F0;
+- há uma rede de proteção: um orçamento (`azurerm_consumption_budget_subscription`)
+  com alerta por e-mail em 50% e 90% de US$ 20, criado só quando
+  `budget_alert_email` é informado.
+
+O Language fica em `eastus` e o Speech em `brazilsouth`. A documentação não
+confirma o Text Analytics for Health no Brazil South, e o East US é região
+principal para todos os recursos de Language. Como os dados são sintéticos, a
+residência de dados não é uma restrição.
+
 ## Dados
 
 | Modalidade | Fonte candidata | Observação |
@@ -80,12 +119,15 @@ serviço não foi chamado. Para a entrega e o vídeo, rodar com Azure real.
 | Sinais vitais | PhysioNet — *BIDMC PPG and Respiration* (FC, FR, SpO2 a 1 Hz, acesso aberto) | PA: avaliar *MIMIC-III Waveform Matched Subset* (aberto) ou sintetizar |
 | Sons respiratórios | AudioSet (Google) — classes *Cough*, *Wheeze*, *Breathing*, *Gasp* | Só metadados + IDs do YouTube; baixar trechos curtos |
 | Consultas (voz) | Gravações autorais do grupo, roteirizadas (paciente com fala normal × cansada/ofegante) | Consentimento implícito (somos nós); nada de dado real de paciente |
-| Vídeo de fisioterapia | Gravações autorais de exercícios (execução correta × compensação/desvio) | Avaliar também datasets públicos de reabilitação (ex.: KIMORE, UI-PRMD) |
+| Vídeo de fisioterapia | **REHAB24-6** (Zenodo, CC BY-NC 4.0): execuções corretas × incorretas rotuladas | Decisão D6. KIMORE (sob pedido) e UI-PRMD (só esqueleto, sem RGB) descartados |
 | Prescrições | Sintéticas, no formato do prontuário da Fase 3 | Injetar anomalias rotuladas para medir recall |
 
 ## Em aberto
 
-- [ ] Assinatura Azure: conta de estudante (crédito) ou F0 em conta pessoal?
-- [ ] Vídeos de fisioterapia: gravar ou usar dataset público (licença)?
-- [ ] Text Analytics for Health em pt-BR: confirmar suporte/região.
-- [ ] Repositório público no GitHub (`fiap-tech-challenge-fase4`), como nas fases anteriores?
+- [ ] Criar a conta Azure com o benefício de crédito de US$ 100/ano e confirmar
+      que a assinatura aceita recursos F0 e tem limite de gasto (*spending limit*)
+- [ ] No primeiro `terraform apply`, testar uma chamada de Text Analytics for
+      Health no F0 (D7): se recusar, trocar `language_sku` para `S`
+- [x] Vídeos de fisioterapia → dataset público REHAB24-6 (D6)
+- [x] Text Analytics for Health em português → `language="pt"` (D5); região `eastus` (D7)
+- [x] Repositório público: <https://github.com/otaviano/fiap-tech-challenge-fase4>

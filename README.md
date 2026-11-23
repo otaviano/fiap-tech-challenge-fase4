@@ -46,4 +46,15 @@ pytest
 
 ---
 
+## Dados e créditos
+
+- **REHAB24-6** — vídeos de fisioterapia com execuções corretas e incorretas.
+  Černek, Sedmidubský e Budíková, *REHAB24-6: Physical Therapy Dataset for
+  Analyzing Pose Estimation Methods*, SISAP 2024.
+  [Zenodo 13305826](https://zenodo.org/records/13305826), licença CC BY-NC 4.0.
+  Não é redistribuído aqui: baixe com `./scripts/baixar_rehab24.sh`.
+- **PhysioNet** — séries de sinais vitais (em definição, ver [`docs/plano.md`](docs/plano.md)).
+
+---
+
 *FIAP Postech — IA para Devs | Tech Challenge Fase 4 | 2026*
