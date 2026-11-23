@@ -1,0 +1,1884 @@
+{
+  "registros": 10,
+  "horas_de_monitoramento": 336.4,
+  "execucoes": 30,
+  "eventos_clinicos_avaliados": 139,
+  "eventos_descartados_sem_sinal": 29,
+  "eventos_por_tipo": {
+    "taquicardia": 25,
+    "bradicardia": 26,
+    "hipotensao": 19,
+    "dessaturacao": 23,
+    "taquipneia": 30,
+    "deterioracao_combinada": 16
+  },
+  "tolerancia_min": 10,
+  "detectores": {
+    "news2": {
+      "recall": 0.719,
+      "latencia_mediana_min": 7.0,
+      "recall_por_tipo": {
+        "taquicardia": 0.64,
+        "bradicardia": 0.5,
+        "hipotensao": 0.632,
+        "dessaturacao": 0.957,
+        "taquipneia": 0.8,
+        "deterioracao_combinada": 0.812
+      },
+      "alertas_fora_de_evento_24h": 9.5,
+      "alertas_em_artefato": 0,
+      "carga_basal_24h": 11.2
+    },
+    "desvio-robusto": {
+      "recall": 0.799,
+      "latencia_mediana_min": 6.0,
+      "recall_por_tipo": {
+        "taquicardia": 1.0,
+        "bradicardia": 0.885,
+        "hipotensao": 0.421,
+        "dessaturacao": 0.87,
+        "taquipneia": 0.733,
+        "deterioracao_combinada": 0.812
+      },
+      "alertas_fora_de_evento_24h": 2.9,
+      "alertas_em_artefato": 0,
+      "carga_basal_24h": 3.6
+    },
+    "isolation-forest": {
+      "recall": 0.209,
+      "latencia_mediana_min": 13.0,
+      "recall_por_tipo": {
+        "taquicardia": 0.16,
+        "bradicardia": 0.115,
+        "hipotensao": 0.211,
+        "dessaturacao": 0.174,
+        "taquipneia": 0.133,
+        "deterioracao_combinada": 0.625
+      },
+      "alertas_fora_de_evento_24h": 0.9,
+      "alertas_em_artefato": 0,
+      "carga_basal_24h": 1.5
+    },
+    "sistema": {
+      "recall": 0.964,
+      "latencia_mediana_min": 5.0,
+      "recall_por_tipo": {
+        "taquicardia": 1.0,
+        "bradicardia": 0.923,
+        "hipotensao": 0.947,
+        "dessaturacao": 0.957,
+        "taquipneia": 0.967,
+        "deterioracao_combinada": 1.0
+      },
+      "alertas_fora_de_evento_24h": 13.3,
+      "alertas_em_artefato": 0,
+      "carga_basal_24h": 16.3
+    }
+  },
+  "params_if": {},
+  "detalhe": [
+    {
+      "registro": "p000020-2183-04-28-17-47n",
+      "semente": 1,
+      "horas": 21.9,
+      "eventos": [
+        {
+          "tipo": "bradicardia",
+          "inicio": "2183-04-28T23:42:59.486000",
+          "latencias": {
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2183-04-29T01:42:59.486000",
+          "latencias": {
+            "desvio-robusto": 10.0,
+            "isolation-forest": 11.0,
+            "sistema": 10.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2183-04-29T03:56:59.486000",
+          "latencias": {
+            "news2": 7.0,
+            "desvio-robusto": 8.0,
+            "sistema": 7.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2183-04-29T06:30:59.486000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 7.0,
+            "sistema": 5.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 7,
+        "desvio-robusto": 6,
+        "isolation-forest": 0,
+        "sistema": 13
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000020-2183-04-28-17-47n",
+      "semente": 2,
+      "horas": 21.9,
+      "eventos": [
+        {
+          "tipo": "hipotensao",
+          "inicio": "2183-04-28T22:48:59.486000",
+          "latencias": {
+            "news2": 9.0,
+            "sistema": 9.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2183-04-29T01:27:59.486000",
+          "latencias": {
+            "news2": 8.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2183-04-29T04:05:59.486000",
+          "latencias": {
+            "news2": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2183-04-29T07:28:59.486000",
+          "latencias": {
+            "news2": 25.0,
+            "desvio-robusto": 22.0,
+            "isolation-forest": 10.0,
+            "sistema": 10.0
+          }
+        },
+        {
+          "tipo": "taquicardia",
+          "inicio": "2183-04-29T15:09:59.486000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "isolation-forest": 5.0,
+            "sistema": 5.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 7,
+        "desvio-robusto": 5,
+        "isolation-forest": 0,
+        "sistema": 12
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000020-2183-04-28-17-47n",
+      "semente": 3,
+      "horas": 21.9,
+      "eventos": [
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2183-04-28T22:30:59.486000",
+          "latencias": {
+            "news2": 8.0,
+            "desvio-robusto": 6.0,
+            "isolation-forest": 13.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2183-04-29T00:46:59.486000",
+          "latencias": {
+            "news2": 8.0,
+            "sistema": 8.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2183-04-29T03:58:59.486000",
+          "latencias": {
+            "desvio-robusto": 21.0,
+            "isolation-forest": 17.0,
+            "sistema": 17.0
+          }
+        },
+        {
+          "tipo": "taquicardia",
+          "inicio": "2183-04-29T10:42:59.486000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "isolation-forest": 29.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2183-04-29T13:05:59.486000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 7,
+        "desvio-robusto": 6,
+        "isolation-forest": 1,
+        "sistema": 14
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000079-2175-09-26-12-28n",
+      "semente": 1,
+      "horas": 38.2,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2175-09-26T21:58:00",
+          "latencias": {
+            "news2": 19.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2175-09-27T00:08:00",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 5.0,
+            "isolation-forest": 11.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2175-09-27T05:11:00",
+          "latencias": {}
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2175-09-27T09:08:00",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 6.0,
+            "sistema": 4.0
+          }
+        }
+      ],
+      "descartados": 2,
+      "fora_de_evento": {
+        "news2": 5,
+        "desvio-robusto": 3,
+        "isolation-forest": 1,
+        "sistema": 9
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000079-2175-09-26-12-28n",
+      "semente": 2,
+      "horas": 38.2,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2175-09-26T18:03:00",
+          "latencias": {
+            "news2": 36.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2175-09-26T22:51:00",
+          "latencias": {
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2175-09-27T15:04:00",
+          "latencias": {
+            "desvio-robusto": 7.0,
+            "isolation-forest": 34.0,
+            "sistema": 7.0
+          }
+        }
+      ],
+      "descartados": 3,
+      "fora_de_evento": {
+        "news2": 9,
+        "desvio-robusto": 4,
+        "isolation-forest": 1,
+        "sistema": 14
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000079-2175-09-26-12-28n",
+      "semente": 3,
+      "horas": 38.2,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2175-09-26T17:45:00",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2175-09-26T21:00:00",
+          "latencias": {
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2175-09-27T07:12:00",
+          "latencias": {
+            "news2": 6.0,
+            "desvio-robusto": 7.0,
+            "isolation-forest": 9.0,
+            "sistema": 6.0
+          }
+        }
+      ],
+      "descartados": 3,
+      "fora_de_evento": {
+        "news2": 6,
+        "desvio-robusto": 2,
+        "isolation-forest": 2,
+        "sistema": 10
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000123-2161-10-29-03-01n",
+      "semente": 1,
+      "horas": 34.0,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2161-10-29T11:28:28.280000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2161-10-29T13:36:28.280000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 5.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2161-10-29T21:57:28.280000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 7.0,
+            "sistema": 4.0
+          }
+        }
+      ],
+      "descartados": 3,
+      "fora_de_evento": {
+        "news2": 1,
+        "desvio-robusto": 1,
+        "isolation-forest": 0,
+        "sistema": 2
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000123-2161-10-29-03-01n",
+      "semente": 2,
+      "horas": 34.0,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2161-10-29T08:22:28.280000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2161-10-29T12:37:28.280000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 5.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2161-10-30T02:34:28.280000",
+          "latencias": {
+            "news2": 6.0,
+            "desvio-robusto": 7.0,
+            "isolation-forest": 18.0,
+            "sistema": 6.0
+          }
+        }
+      ],
+      "descartados": 3,
+      "fora_de_evento": {
+        "news2": 1,
+        "desvio-robusto": 1,
+        "isolation-forest": 1,
+        "sistema": 3
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000123-2161-10-29-03-01n",
+      "semente": 3,
+      "horas": 34.0,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2161-10-29T08:08:28.280000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2161-10-29T11:09:28.280000",
+          "latencias": {
+            "news2": 7.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2161-10-29T17:29:28.280000",
+          "latencias": {
+            "news2": 7.0,
+            "desvio-robusto": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2161-10-29T20:21:28.280000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 7.0,
+            "sistema": 5.0
+          }
+        }
+      ],
+      "descartados": 2,
+      "fora_de_evento": {
+        "news2": 1,
+        "desvio-robusto": 2,
+        "isolation-forest": 0,
+        "sistema": 3
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000124-2160-07-05-21-51n",
+      "semente": 1,
+      "horas": 16.1,
+      "eventos": [
+        {
+          "tipo": "bradicardia",
+          "inicio": "2160-07-06T02:46:12.668000",
+          "latencias": {}
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2160-07-06T04:57:12.668000",
+          "latencias": {
+            "news2": 3.0,
+            "sistema": 3.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2160-07-06T07:08:12.668000",
+          "latencias": {
+            "news2": 8.0,
+            "desvio-robusto": 8.0,
+            "sistema": 8.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2160-07-06T10:34:12.668000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 7.0,
+            "sistema": 4.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 7,
+        "desvio-robusto": 4,
+        "isolation-forest": 1,
+        "sistema": 12
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000124-2160-07-05-21-51n",
+      "semente": 2,
+      "horas": 16.1,
+      "eventos": [
+        {
+          "tipo": "hipotensao",
+          "inicio": "2160-07-06T02:39:12.668000",
+          "latencias": {
+            "news2": 30.0,
+            "desvio-robusto": 2.0,
+            "sistema": 2.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2160-07-06T05:35:12.668000",
+          "latencias": {
+            "news2": 8.0,
+            "desvio-robusto": 9.0,
+            "sistema": 8.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2160-07-06T07:47:12.668000",
+          "latencias": {
+            "news2": 6.0,
+            "desvio-robusto": 7.0,
+            "sistema": 6.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 10,
+        "desvio-robusto": 3,
+        "isolation-forest": 1,
+        "sistema": 14
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000124-2160-07-05-21-51n",
+      "semente": 3,
+      "horas": 16.1,
+      "eventos": [
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2160-07-06T02:30:12.668000",
+          "latencias": {
+            "news2": 7.0,
+            "desvio-robusto": 5.0,
+            "isolation-forest": 12.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2160-07-06T04:40:12.668000",
+          "latencias": {
+            "news2": 3.0,
+            "desvio-robusto": 7.0,
+            "sistema": 3.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 8,
+        "desvio-robusto": 0,
+        "isolation-forest": 1,
+        "sistema": 9
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000138-2131-10-31-13-39n",
+      "semente": 1,
+      "horas": 20.6,
+      "eventos": [
+        {
+          "tipo": "bradicardia",
+          "inicio": "2131-10-31T19:15:38.360000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "isolation-forest": 6.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2131-10-31T21:13:38.360000",
+          "latencias": {
+            "news2": 9.0,
+            "desvio-robusto": 9.0,
+            "isolation-forest": 12.0,
+            "sistema": 9.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2131-11-01T01:50:38.360000",
+          "latencias": {
+            "news2": 3.0,
+            "sistema": 3.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2131-11-01T05:46:38.360000",
+          "latencias": {
+            "news2": 11.0,
+            "sistema": 11.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 3,
+        "desvio-robusto": 1,
+        "isolation-forest": 3,
+        "sistema": 7
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000138-2131-10-31-13-39n",
+      "semente": 2,
+      "horas": 20.6,
+      "eventos": [
+        {
+          "tipo": "hipotensao",
+          "inicio": "2131-10-31T18:33:38.360000",
+          "latencias": {
+            "news2": 8.0,
+            "desvio-robusto": 9.0,
+            "sistema": 8.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2131-10-31T21:04:38.360000",
+          "latencias": {
+            "news2": 7.0,
+            "desvio-robusto": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2131-10-31T23:32:38.360000",
+          "latencias": {
+            "news2": 7.0,
+            "sistema": 7.0
+          }
+        },
+        {
+          "tipo": "taquicardia",
+          "inicio": "2131-11-01T09:45:38.360000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 3,
+        "desvio-robusto": 1,
+        "isolation-forest": 3,
+        "sistema": 7
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000138-2131-10-31-13-39n",
+      "semente": 3,
+      "horas": 20.6,
+      "eventos": [
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2131-10-31T18:19:38.360000",
+          "latencias": {
+            "news2": 8.0,
+            "desvio-robusto": 6.0,
+            "isolation-forest": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2131-10-31T20:30:38.360000",
+          "latencias": {
+            "news2": 6.0,
+            "desvio-robusto": 7.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "taquicardia",
+          "inicio": "2131-11-01T05:49:38.360000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 6.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2131-11-01T08:10:38.360000",
+          "latencias": {
+            "desvio-robusto": 4.0,
+            "isolation-forest": 10.0,
+            "sistema": 4.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 3,
+        "desvio-robusto": 1,
+        "isolation-forest": 0,
+        "sistema": 4
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000177-2125-11-29-12-35n",
+      "semente": 1,
+      "horas": 26.4,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2125-11-29T19:08:33.833000",
+          "latencias": {
+            "news2": 10.0,
+            "desvio-robusto": 5.0,
+            "isolation-forest": 21.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2125-11-29T21:13:33.833000",
+          "latencias": {
+            "news2": 3.0,
+            "desvio-robusto": 4.0,
+            "sistema": 3.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2125-11-29T23:13:33.833000",
+          "latencias": {
+            "news2": 27.0,
+            "sistema": 27.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2125-11-30T01:37:33.833000",
+          "latencias": {
+            "news2": 7.0,
+            "sistema": 7.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2125-11-30T04:24:33.833000",
+          "latencias": {
+            "desvio-robusto": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2125-11-30T06:21:33.833000",
+          "latencias": {
+            "news2": 21.0,
+            "desvio-robusto": 23.0,
+            "sistema": 21.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 16,
+        "desvio-robusto": 6,
+        "isolation-forest": 0,
+        "sistema": 22
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000177-2125-11-29-12-35n",
+      "semente": 2,
+      "horas": 26.4,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2125-11-29T17:31:33.833000",
+          "latencias": {
+            "news2": 6.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2125-11-29T20:45:33.833000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2125-11-29T23:44:33.833000",
+          "latencias": {
+            "isolation-forest": 12.0,
+            "sistema": 12.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2125-11-30T03:44:33.833000",
+          "latencias": {
+            "news2": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2125-11-30T06:35:33.833000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 10.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2125-11-30T09:13:33.833000",
+          "latencias": {
+            "news2": 48.0,
+            "isolation-forest": 26.0,
+            "sistema": 26.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 20,
+        "desvio-robusto": 8,
+        "isolation-forest": 1,
+        "sistema": 29
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000177-2125-11-29-12-35n",
+      "semente": 3,
+      "horas": 26.4,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2125-11-29T17:24:33.833000",
+          "latencias": {
+            "news2": 13.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2125-11-29T20:00:33.833000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 5.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2125-11-29T22:18:33.833000",
+          "latencias": {
+            "news2": 14.0,
+            "desvio-robusto": 23.0,
+            "sistema": 14.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2125-11-30T01:02:33.833000",
+          "latencias": {
+            "news2": 6.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2125-11-30T03:23:33.833000",
+          "latencias": {
+            "desvio-robusto": 7.0,
+            "sistema": 7.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2125-11-30T06:05:33.833000",
+          "latencias": {
+            "news2": 22.0,
+            "desvio-robusto": 17.0,
+            "sistema": 17.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 19,
+        "desvio-robusto": 6,
+        "isolation-forest": 1,
+        "sistema": 26
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000208-2188-05-18-00-06n",
+      "semente": 1,
+      "horas": 41.6,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2188-05-18T10:26:59.746000",
+          "latencias": {
+            "news2": 17.0,
+            "desvio-robusto": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2188-05-18T12:38:59.746000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2188-05-18T14:53:59.746000",
+          "latencias": {
+            "news2": 21.0,
+            "sistema": 21.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2188-05-18T17:52:59.746000",
+          "latencias": {
+            "news2": 7.0,
+            "desvio-robusto": 9.0,
+            "sistema": 7.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2188-05-18T22:08:59.746000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 7.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2188-05-19T00:18:59.746000",
+          "latencias": {
+            "news2": 14.0,
+            "desvio-robusto": 17.0,
+            "isolation-forest": 15.0,
+            "sistema": 14.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 26,
+        "desvio-robusto": 8,
+        "isolation-forest": 2,
+        "sistema": 36
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000208-2188-05-18-00-06n",
+      "semente": 2,
+      "horas": 41.6,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2188-05-18T05:52:59.746000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 5.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2188-05-18T11:07:59.746000",
+          "latencias": {}
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2188-05-19T00:21:59.746000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 9.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2188-05-19T05:09:59.746000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 14.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2188-05-19T09:05:59.746000",
+          "latencias": {
+            "news2": 12.0,
+            "sistema": 12.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 28,
+        "desvio-robusto": 8,
+        "isolation-forest": 3,
+        "sistema": 39
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000208-2188-05-18-00-06n",
+      "semente": 3,
+      "horas": 41.6,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2188-05-18T05:31:59.746000",
+          "latencias": {
+            "news2": 15.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2188-05-18T08:57:59.746000",
+          "latencias": {
+            "news2": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2188-05-18T12:15:59.746000",
+          "latencias": {}
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2188-05-18T16:35:59.746000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2188-05-18T19:57:59.746000",
+          "latencias": {
+            "desvio-robusto": 8.0,
+            "sistema": 8.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2188-05-19T00:11:59.746000",
+          "latencias": {
+            "news2": 6.0,
+            "desvio-robusto": 23.0,
+            "isolation-forest": 22.0,
+            "sistema": 6.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 27,
+        "desvio-robusto": 9,
+        "isolation-forest": 2,
+        "sistema": 38
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000214-2188-10-24-16-23n",
+      "semente": 1,
+      "horas": 71.8,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2188-10-25T10:16:47.482000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2188-10-25T12:42:47.482000",
+          "latencias": {
+            "news2": 25.0,
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2188-10-25T15:26:47.482000",
+          "latencias": {
+            "news2": 7.0,
+            "sistema": 7.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2188-10-26T02:48:47.482000",
+          "latencias": {
+            "news2": 7.0,
+            "desvio-robusto": 7.0,
+            "sistema": 7.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2188-10-26T05:23:47.482000",
+          "latencias": {
+            "news2": 22.0,
+            "desvio-robusto": 19.0,
+            "sistema": 19.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 32,
+        "desvio-robusto": 9,
+        "isolation-forest": 3,
+        "sistema": 44
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000214-2188-10-24-16-23n",
+      "semente": 2,
+      "horas": 71.8,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2188-10-24T23:49:47.482000",
+          "latencias": {
+            "news2": 3.0,
+            "desvio-robusto": 5.0,
+            "sistema": 3.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2188-10-25T09:05:47.482000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2188-10-26T10:48:47.482000",
+          "latencias": {
+            "news2": 7.0,
+            "desvio-robusto": 6.0,
+            "isolation-forest": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2188-10-26T19:29:47.482000",
+          "latencias": {
+            "news2": 6.0,
+            "desvio-robusto": 7.0,
+            "sistema": 6.0
+          }
+        }
+      ],
+      "descartados": 2,
+      "fora_de_evento": {
+        "news2": 29,
+        "desvio-robusto": 9,
+        "isolation-forest": 0,
+        "sistema": 38
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000214-2188-10-24-16-23n",
+      "semente": 3,
+      "horas": 71.8,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2188-10-24T22:59:47.482000",
+          "latencias": {
+            "news2": 3.0,
+            "desvio-robusto": 5.0,
+            "sistema": 3.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2188-10-25T04:05:47.482000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2188-10-25T09:22:47.482000",
+          "latencias": {
+            "desvio-robusto": 10.0,
+            "sistema": 10.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2188-10-25T22:17:47.482000",
+          "latencias": {
+            "news2": 9.0,
+            "sistema": 9.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2188-10-26T05:34:47.482000",
+          "latencias": {
+            "news2": 27.0,
+            "desvio-robusto": 28.0,
+            "isolation-forest": 15.0,
+            "sistema": 15.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 30,
+        "desvio-robusto": 8,
+        "isolation-forest": 1,
+        "sistema": 39
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000217-2126-09-30-12-28n",
+      "semente": 1,
+      "horas": 23.6,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2126-09-30T18:19:39.077000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "isolation-forest": 16.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2126-09-30T20:23:39.077000",
+          "latencias": {
+            "news2": 9.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2126-09-30T22:20:39.077000",
+          "latencias": {
+            "isolation-forest": 12.0,
+            "sistema": 12.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2126-10-01T00:38:39.077000",
+          "latencias": {
+            "news2": 8.0,
+            "desvio-robusto": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2126-10-01T03:09:39.077000",
+          "latencias": {
+            "news2": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2126-10-01T05:03:39.077000",
+          "latencias": {
+            "desvio-robusto": 14.0,
+            "sistema": 14.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 20,
+        "desvio-robusto": 5,
+        "isolation-forest": 1,
+        "sistema": 26
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000217-2126-09-30-12-28n",
+      "semente": 2,
+      "horas": 23.6,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2126-09-30T17:15:39.077000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2126-09-30T20:07:39.077000",
+          "latencias": {
+            "news2": 25.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2126-09-30T22:41:39.077000",
+          "latencias": {
+            "desvio-robusto": 10.0,
+            "sistema": 10.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2126-10-01T01:56:39.077000",
+          "latencias": {
+            "news2": 8.0,
+            "desvio-robusto": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2126-10-01T04:25:39.077000",
+          "latencias": {}
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2126-10-01T06:50:39.077000",
+          "latencias": {
+            "news2": 13.0,
+            "desvio-robusto": 14.0,
+            "isolation-forest": 28.0,
+            "sistema": 13.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 16,
+        "desvio-robusto": 3,
+        "isolation-forest": 1,
+        "sistema": 20
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000217-2126-09-30-12-28n",
+      "semente": 3,
+      "horas": 23.6,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2126-09-30T17:10:39.077000",
+          "latencias": {
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2126-09-30T19:38:39.077000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2126-09-30T21:44:39.077000",
+          "latencias": {
+            "news2": 8.0,
+            "sistema": 8.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2126-10-01T00:11:39.077000",
+          "latencias": {
+            "news2": 8.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2126-10-01T02:20:39.077000",
+          "latencias": {
+            "desvio-robusto": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2126-10-01T04:46:39.077000",
+          "latencias": {
+            "desvio-robusto": 14.0,
+            "isolation-forest": 24.0,
+            "sistema": 14.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 21,
+        "desvio-robusto": 3,
+        "isolation-forest": 1,
+        "sistema": 25
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000263-2160-01-08-23-52n",
+      "semente": 1,
+      "horas": 42.2,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2160-01-09T10:22:57.879000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2160-01-09T12:35:57.879000",
+          "latencias": {
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2160-01-09T14:50:57.879000",
+          "latencias": {
+            "news2": 34.0,
+            "sistema": 34.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2160-01-09T17:51:57.879000",
+          "latencias": {
+            "news2": 6.0,
+            "desvio-robusto": 7.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2160-01-09T22:11:57.879000",
+          "latencias": {
+            "news2": 4.0,
+            "desvio-robusto": 8.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2160-01-10T00:21:57.879000",
+          "latencias": {
+            "news2": 9.0,
+            "desvio-robusto": 19.0,
+            "isolation-forest": 24.0,
+            "sistema": 9.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 12,
+        "desvio-robusto": 1,
+        "isolation-forest": 2,
+        "sistema": 15
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000263-2160-01-08-23-52n",
+      "semente": 2,
+      "horas": 42.2,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2160-01-09T05:41:57.879000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2160-01-09T11:01:57.879000",
+          "latencias": {
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2160-01-09T16:20:57.879000",
+          "latencias": {
+            "news2": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2160-01-10T00:32:57.879000",
+          "latencias": {
+            "news2": 7.0,
+            "desvio-robusto": 7.0,
+            "sistema": 7.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2160-01-10T05:25:57.879000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 7.0,
+            "isolation-forest": 5.0,
+            "sistema": 5.0
+          }
+        }
+      ],
+      "descartados": 1,
+      "fora_de_evento": {
+        "news2": 14,
+        "desvio-robusto": 1,
+        "isolation-forest": 1,
+        "sistema": 16
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    },
+    {
+      "registro": "p000263-2160-01-08-23-52n",
+      "semente": 3,
+      "horas": 42.2,
+      "eventos": [
+        {
+          "tipo": "taquicardia",
+          "inicio": "2160-01-09T05:18:57.879000",
+          "latencias": {
+            "news2": 5.0,
+            "desvio-robusto": 5.0,
+            "sistema": 5.0
+          }
+        },
+        {
+          "tipo": "bradicardia",
+          "inicio": "2160-01-09T08:47:57.879000",
+          "latencias": {
+            "desvio-robusto": 4.0,
+            "sistema": 4.0
+          }
+        },
+        {
+          "tipo": "hipotensao",
+          "inicio": "2160-01-09T12:07:57.879000",
+          "latencias": {
+            "desvio-robusto": 8.0,
+            "sistema": 8.0
+          }
+        },
+        {
+          "tipo": "dessaturacao",
+          "inicio": "2160-01-09T16:32:57.879000",
+          "latencias": {
+            "news2": 7.0,
+            "desvio-robusto": 7.0,
+            "sistema": 7.0
+          }
+        },
+        {
+          "tipo": "taquipneia",
+          "inicio": "2160-01-09T19:57:57.879000",
+          "latencias": {
+            "news2": 6.0,
+            "sistema": 6.0
+          }
+        },
+        {
+          "tipo": "deterioracao_combinada",
+          "inicio": "2160-01-10T00:15:57.879000",
+          "latencias": {
+            "news2": 6.0,
+            "desvio-robusto": 16.0,
+            "isolation-forest": 30.0,
+            "sistema": 6.0
+          }
+        }
+      ],
+      "descartados": 0,
+      "fora_de_evento": {
+        "news2": 12,
+        "desvio-robusto": 0,
+        "isolation-forest": 2,
+        "sistema": 14
+      },
+      "em_artefato": {
+        "news2": 0,
+        "desvio-robusto": 0,
+        "isolation-forest": 0,
+        "sistema": 0
+      }
+    }
+  ]
+}

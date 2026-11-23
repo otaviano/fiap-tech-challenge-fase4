@@ -11,10 +11,6 @@ Portado da Fase 3. Cada interação (uma análise de vídeo, um áudio processad
 uma janela de sinais vitais) recebe um `trace_id`, compartilhado por todos os
 eventos dela — achados, chamadas ao Azure, alertas emitidos —, então é possível
 reconstruir *por que* um alerta chegou à equipe médica.
-
-TODO(fase4): `trace()` ainda tem a assinatura do assistente da Fase 3
-(`usuario`, `pergunta`); generalizar para `origem`/`descricao` quando o primeiro
-analisador for plugado.
 """
 
 from __future__ import annotations
@@ -83,12 +79,16 @@ class AuditTrail:
         return registro
 
     @contextmanager
-    def trace(self, usuario: str, pergunta: str, paciente_id: str | None = None) -> Iterator[str]:
-        """Abre uma interação: emite início e fim, com latência medida."""
+    def trace(self, origem: str, descricao: str, paciente_id: str | None = None) -> Iterator[str]:
+        """Abre uma interação: emite início e fim, com latência medida.
+
+        `origem` é quem disparou (analisador, usuário, simulador); `descricao`, o
+        que está sendo processado (ex.: "registro p000020…", "consulta.wav").
+        """
         trace_id = str(uuid.uuid4())
         inicio = time.perf_counter()
-        self.event(trace_id, "interacao_iniciada", usuario=usuario,
-                   paciente_id=paciente_id, pergunta=pergunta[:500])
+        self.event(trace_id, "interacao_iniciada", origem=origem,
+                   paciente_id=paciente_id, descricao=descricao[:500])
         try:
             yield trace_id
         except Exception as exc:  # a falha também é auditável

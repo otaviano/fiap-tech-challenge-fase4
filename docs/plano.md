@@ -25,7 +25,7 @@ anteriores) quer **monitorar pacientes continuamente com dados multimodais**
 | 2.2 | Alterações vocais (cansaço, dificuldade respiratória) | `audio/acustica.py` | ⬜ |
 | 2.3 | Azure Speech to Text | `azure/speech.py` + `audio/transcricao.py` | ⬜ |
 | 2.4 | Termos críticos e sentimento (Azure Text Analytics) | `azure/language.py` + `audio/texto.py` | ⬜ |
-| 3.1 | Anomalias em sinais vitais (FC, PA, SpO2) | `anomalias/sinais_vitais.py` | ⬜ |
+| 3.1 | Anomalias em sinais vitais (FC, PA, SpO2) | `anomalias/sinais_vitais.py` — [docs](sinais-vitais.md) | ✅ recall 96% em 336 h reais |
 | 3.2 | Anomalias na evolução de prescrições | `anomalias/prescricoes.py` | ⬜ |
 | 3.3 | Padrões de movimentação na internação | `anomalias/movimentacao.py` | ⬜ |
 | 3.4 | Alertas automáticos à equipe médica | `fusao/` + `alertas/` + `serving/` | ⬜ |
@@ -116,7 +116,7 @@ residência de dados não é uma restrição.
 
 | Modalidade | Fonte candidata | Observação |
 |---|---|---|
-| Sinais vitais | PhysioNet — *BIDMC PPG and Respiration* (FC, FR, SpO2 a 1 Hz, acesso aberto) | PA: avaliar *MIMIC-III Waveform Matched Subset* (aberto) ou sintetizar |
+| Sinais vitais | PhysioNet — **MIMIC-III Waveform Matched Subset**, registros numéricos (FC, PA invasiva, FR, SpO2 a 1/min; ODbL) | 10 registros curados, 336 h. BIDMC descartado: 8 min por registro e sem PA |
 | Sons respiratórios | AudioSet (Google) — classes *Cough*, *Wheeze*, *Breathing*, *Gasp* | Só metadados + IDs do YouTube; baixar trechos curtos |
 | Consultas (voz) | Gravações autorais do grupo, roteirizadas (paciente com fala normal × cansada/ofegante) | Consentimento implícito (somos nós); nada de dado real de paciente |
 | Vídeo de fisioterapia | **REHAB24-6** (Zenodo, CC BY-NC 4.0): execuções corretas × incorretas rotuladas | Decisão D6. KIMORE (sob pedido) e UI-PRMD (só esqueleto, sem RGB) descartados |

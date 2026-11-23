@@ -1,0 +1,298 @@
+{
+  "serie": "p000020-2183-04-28-17-47n",
+  "paciente_id": "p000020-2183-04-28-17-47n",
+  "eventos_injetados": [],
+  "achados": [
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "spo2_abaixo_do_basal",
+      "escore": 0.4,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "spo2",
+        "valor": 96.0,
+        "basal": 100.0,
+        "z": -4.0
+      },
+      "momento": "2183-04-28T19:00:59",
+      "id": "13608bb38bd6"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "hipotensao",
+      "escore": 0.7083333333333334,
+      "fonte": "news2",
+      "evidencia": {
+        "sinal": "pas",
+        "valor": 81.0,
+        "pontos": {
+          "fr": 1,
+          "spo2": 1,
+          "pas": 3,
+          "fc": 0
+        },
+        "news2_parcial": 5
+      },
+      "momento": "2183-04-28T19:42:59",
+      "id": "2e0cca8cbedd"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "pas_acima_do_basal",
+      "escore": 0.6048302384158974,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "pas",
+        "valor": 195.3,
+        "basal": 113.2,
+        "z": 6.0
+      },
+      "momento": "2183-04-28T20:04:59",
+      "id": "6dce541b9207"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "hipotensao",
+      "escore": 0.625,
+      "fonte": "news2",
+      "evidencia": {
+        "sinal": "pas",
+        "valor": 80.6,
+        "pontos": {
+          "fr": 0,
+          "spo2": 0,
+          "pas": 3,
+          "fc": 0
+        },
+        "news2_parcial": 3
+      },
+      "momento": "2183-04-28T20:46:59",
+      "id": "372518767835"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "fr_acima_do_basal",
+      "escore": 0.505,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "fr",
+        "valor": 20.2,
+        "basal": 10.1,
+        "z": 5.0
+      },
+      "momento": "2183-04-28T21:27:59",
+      "id": "f0d3765f8427"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "taquipneia",
+      "escore": 0.625,
+      "fonte": "news2",
+      "evidencia": {
+        "sinal": "fr",
+        "valor": 24.8,
+        "pontos": {
+          "fr": 3,
+          "spo2": 0,
+          "pas": 0,
+          "fc": 0
+        },
+        "news2_parcial": 3
+      },
+      "momento": "2183-04-28T21:46:59",
+      "id": "22ac06f1c08d"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "news2_medio",
+      "escore": 0.4166666666666667,
+      "fonte": "news2",
+      "evidencia": {
+        "pontos": {
+          "fr": 3,
+          "spo2": 0,
+          "pas": 2,
+          "fc": 0
+        },
+        "news2_parcial": 5,
+        "corte": 5
+      },
+      "momento": "2183-04-28T22:00:59",
+      "id": "5731f6930b36"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "pas_acima_do_basal",
+      "escore": 0.4304838082541792,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "pas",
+        "valor": 170.0,
+        "basal": 126.6,
+        "z": 4.3
+      },
+      "momento": "2183-04-28T23:26:59",
+      "id": "ac2733398d26"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "bradipneia",
+      "escore": 0.625,
+      "fonte": "news2",
+      "evidencia": {
+        "sinal": "fr",
+        "valor": 3.5,
+        "pontos": {
+          "fr": 3,
+          "spo2": 0,
+          "pas": 0,
+          "fc": 0
+        },
+        "news2_parcial": 3
+      },
+      "momento": "2183-04-29T02:47:59",
+      "id": "252f529561e9"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "fr_abaixo_do_basal",
+      "escore": 0.755,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "fr",
+        "valor": 4.1,
+        "basal": 19.2,
+        "z": -7.5
+      },
+      "momento": "2183-04-29T02:48:59",
+      "id": "39fe8aef82cf"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "padrao_multivariado",
+      "escore": 0.8974504121043387,
+      "fonte": "isolation-forest",
+      "evidencia": {
+        "escore_if": -0.677,
+        "limiar": -0.597,
+        "principais_desvios": {
+          "pas": -3.6,
+          "pad": -3.0,
+          "fr": -0.8
+        },
+        "valores": {
+          "fc": 81.0,
+          "pas": 118.6,
+          "pad": 46.2,
+          "fr": 14.6,
+          "spo2": 95.6
+        }
+      },
+      "momento": "2183-04-29T07:58:59",
+      "id": "4afec8d623d7"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "dessaturacao",
+      "escore": 0.7083333333333334,
+      "fonte": "news2",
+      "evidencia": {
+        "sinal": "spo2",
+        "valor": 80.0,
+        "pontos": {
+          "fr": 2,
+          "spo2": 3,
+          "fc": 0
+        },
+        "news2_parcial": 5
+      },
+      "momento": "2183-04-29T09:43:59",
+      "id": "57d19069d7d3"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "spo2_abaixo_do_basal",
+      "escore": 1.0,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "spo2",
+        "valor": 80.7,
+        "basal": 96.1,
+        "z": -15.4
+      },
+      "momento": "2183-04-29T09:44:59",
+      "id": "a32843b7e25e"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "padrao_multivariado",
+      "escore": 0.5319931845146376,
+      "fonte": "isolation-forest",
+      "evidencia": {
+        "escore_if": -0.686,
+        "limiar": -0.68,
+        "principais_desvios": {
+          "spo2": -15.8,
+          "fr": 1.7,
+          "fc": -1.4
+        },
+        "valores": {
+          "fc": 75.9,
+          "pas": 136.2,
+          "pad": 49.8,
+          "fr": 19.7,
+          "spo2": 80.7
+        }
+      },
+      "momento": "2183-04-29T09:44:59",
+      "id": "6aa239719c33"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "sensor_sem_sinal",
+      "escore": 0.2,
+      "fonte": "filtro-artefato",
+      "evidencia": {
+        "sinal": "spo2",
+        "minutos": 10,
+        "tecnico": true
+      },
+      "momento": "2183-04-29T12:16:59",
+      "id": "2d99c4fa665e"
+    },
+    {
+      "paciente_id": "p000020-2183-04-28-17-47n",
+      "modalidade": "sinais_vitais",
+      "tipo": "taquipneia",
+      "escore": 0.625,
+      "fonte": "news2",
+      "evidencia": {
+        "sinal": "fr",
+        "valor": 27.2,
+        "pontos": {
+          "fr": 3,
+          "spo2": 0,
+          "fc": 0
+        },
+        "news2_parcial": 3
+      },
+      "momento": "2183-04-29T13:52:59",
+      "id": "9c737f824116"
+    }
+  ]
+}

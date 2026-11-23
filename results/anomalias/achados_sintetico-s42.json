@@ -1,0 +1,301 @@
+{
+  "serie": "sintetico-s42",
+  "paciente_id": "sintetico-s42",
+  "eventos_injetados": [
+    {
+      "tipo": "taquicardia",
+      "inicio": "2026-01-01T05:01:00",
+      "fim": "2026-01-01T05:22:00",
+      "sinais": [
+        "fc"
+      ],
+      "clinico": true
+    },
+    {
+      "tipo": "bradicardia",
+      "inicio": "2026-01-01T07:29:00",
+      "fim": "2026-01-01T07:54:00",
+      "sinais": [
+        "fc"
+      ],
+      "clinico": true
+    },
+    {
+      "tipo": "hipotensao",
+      "inicio": "2026-01-01T11:13:00",
+      "fim": "2026-01-01T11:45:00",
+      "sinais": [
+        "pas",
+        "pad",
+        "pam"
+      ],
+      "clinico": true
+    },
+    {
+      "tipo": "dessaturacao",
+      "inicio": "2026-01-01T14:19:00",
+      "fim": "2026-01-01T14:39:00",
+      "sinais": [
+        "spo2"
+      ],
+      "clinico": true
+    },
+    {
+      "tipo": "taquipneia",
+      "inicio": "2026-01-01T16:17:00",
+      "fim": "2026-01-01T16:44:00",
+      "sinais": [
+        "fr"
+      ],
+      "clinico": true
+    },
+    {
+      "tipo": "deterioracao_combinada",
+      "inicio": "2026-01-01T18:23:00",
+      "fim": "2026-01-01T19:36:00",
+      "sinais": [
+        "fc",
+        "pas",
+        "pad",
+        "pam",
+        "fr",
+        "spo2"
+      ],
+      "clinico": true
+    },
+    {
+      "tipo": "artefato",
+      "inicio": "2026-01-01T21:15:00",
+      "fim": "2026-01-01T21:15:00",
+      "sinais": [
+        "spo2"
+      ],
+      "clinico": false
+    },
+    {
+      "tipo": "artefato",
+      "inicio": "2026-01-01T23:49:00",
+      "fim": "2026-01-01T23:51:00",
+      "sinais": [
+        "spo2"
+      ],
+      "clinico": false
+    }
+  ],
+  "achados": [
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "fc_acima_do_basal",
+      "escore": 1.0,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "fc",
+        "valor": 116.2,
+        "basal": 77.3,
+        "z": 13.0
+      },
+      "momento": "2026-01-01T05:05:00",
+      "id": "6dc095b724b7"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "fc_abaixo_do_basal",
+      "escore": 1.0,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "fc",
+        "valor": 43.6,
+        "basal": 78.9,
+        "z": -11.8
+      },
+      "momento": "2026-01-01T07:33:00",
+      "id": "9622b44d2c0b"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "pas_abaixo_do_basal",
+      "escore": 0.8225576953628458,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "pas",
+        "valor": 83.3,
+        "basal": 124.5,
+        "z": -8.2
+      },
+      "momento": "2026-01-01T11:21:00",
+      "id": "d8564724a509"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "hipotensao",
+      "escore": 0.625,
+      "fonte": "news2",
+      "evidencia": {
+        "sinal": "pas",
+        "valor": 85.8,
+        "pontos": {
+          "fr": 0,
+          "spo2": 0,
+          "pas": 3,
+          "fc": 0
+        },
+        "news2_parcial": 3
+      },
+      "momento": "2026-01-01T11:23:00",
+      "id": "4a89fb69beeb"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "spo2_abaixo_do_basal",
+      "escore": 0.7302438574386116,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "spo2",
+        "valor": 90.0,
+        "basal": 97.3,
+        "z": -7.3
+      },
+      "momento": "2026-01-01T14:25:00",
+      "id": "c403a3616fde"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "dessaturacao",
+      "escore": 0.625,
+      "fonte": "news2",
+      "evidencia": {
+        "sinal": "spo2",
+        "valor": 88.7,
+        "pontos": {
+          "fr": 0,
+          "spo2": 3,
+          "pas": 0,
+          "fc": 0
+        },
+        "news2_parcial": 3
+      },
+      "momento": "2026-01-01T14:26:00",
+      "id": "58a5c96eb712"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "taquipneia",
+      "escore": 0.625,
+      "fonte": "news2",
+      "evidencia": {
+        "sinal": "fr",
+        "valor": 29.2,
+        "pontos": {
+          "fr": 3,
+          "spo2": 0,
+          "pas": 0,
+          "fc": 0
+        },
+        "news2_parcial": 3
+      },
+      "momento": "2026-01-01T16:22:00",
+      "id": "6af6e255e8a8"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "fr_acima_do_basal",
+      "escore": 0.7196795541065629,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "fr",
+        "valor": 28.8,
+        "basal": 14.4,
+        "z": 7.2
+      },
+      "momento": "2026-01-01T16:23:00",
+      "id": "e9c956f1c827"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "padrao_multivariado",
+      "escore": 0.7850412621614157,
+      "fonte": "isolation-forest",
+      "evidencia": {
+        "escore_if": -0.64,
+        "limiar": -0.583,
+        "principais_desvios": {
+          "fc": 6.0,
+          "fr": 3.2,
+          "pas": -2.9
+        },
+        "valores": {
+          "fc": 95.8,
+          "pas": 105.6,
+          "pad": 63.8,
+          "fr": 21.8,
+          "spo2": 95.7
+        }
+      },
+      "momento": "2026-01-01T18:39:00",
+      "id": "585587df7233"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "news2_medio",
+      "escore": 0.5,
+      "fonte": "news2",
+      "evidencia": {
+        "pontos": {
+          "fr": 2,
+          "spo2": 1,
+          "pas": 2,
+          "fc": 1
+        },
+        "news2_parcial": 6,
+        "corte": 5
+      },
+      "momento": "2026-01-01T18:48:00",
+      "id": "65f0a6431fc1"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "fc_acima_do_basal",
+      "escore": 0.6370980716341961,
+      "fonte": "desvio-robusto",
+      "evidencia": {
+        "sinal": "fc",
+        "valor": 98.9,
+        "basal": 79.7,
+        "z": 6.4
+      },
+      "momento": "2026-01-01T18:50:00",
+      "id": "1e1353259e31"
+    },
+    {
+      "paciente_id": "sintetico-s42",
+      "modalidade": "sinais_vitais",
+      "tipo": "taquipneia",
+      "escore": 0.75,
+      "fonte": "news2",
+      "evidencia": {
+        "sinal": "fr",
+        "valor": 24.6,
+        "pontos": {
+          "fr": 3,
+          "spo2": 1,
+          "pas": 1,
+          "fc": 1
+        },
+        "news2_parcial": 6
+      },
+      "momento": "2026-01-01T18:55:00",
+      "id": "7a44f8c30d8c"
+    }
+  ]
+}

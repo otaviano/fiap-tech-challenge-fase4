@@ -44,6 +44,8 @@ results/**/*.png
 results/logs/*.log
 results/logs/auditoria.jsonl
 !results/logs/exemplo_*.jsonl
+# gráficos de exemplo citados na documentação
+!results/anomalias/sinais_vitais_*.png
 
 # Segredos (chaves do Azure ficam só no .env local)
 .env

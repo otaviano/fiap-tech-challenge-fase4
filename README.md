@@ -23,7 +23,8 @@ achados em alertas para a equipe médica.
 |---|---|
 | Análise de vídeo (OpenPose, YOLOv8, relatório de desvios) | [`src/med_monitor/video/`](src/med_monitor/video/) |
 | Análise de áudio (Azure Speech to Text, Azure Text Analytics, alterações vocais) | [`src/med_monitor/audio/`](src/med_monitor/audio/), [`src/med_monitor/azure/`](src/med_monitor/azure/) |
-| Anomalias em sinais vitais, prescrições e movimentação | [`src/med_monitor/anomalias/`](src/med_monitor/anomalias/) |
+| Anomalias em sinais vitais ✅ | [`anomalias/sinais_vitais.py`](src/med_monitor/anomalias/sinais_vitais.py) — NEWS2 + desvio robusto + Isolation Forest; recall 96% em 336 h de UTI ([detalhes](docs/sinais-vitais.md)) |
+| Anomalias em prescrições e movimentação | [`src/med_monitor/anomalias/`](src/med_monitor/anomalias/) |
 | Fusão multimodal e alertas em tempo real | [`src/med_monitor/fusao/`](src/med_monitor/fusao/), [`src/med_monitor/alertas/`](src/med_monitor/alertas/), [`src/med_monitor/serving/`](src/med_monitor/serving/) |
 | Serviços gerenciados em nuvem (Azure) | [`infra/`](infra/) — Terraform |
 | Fluxo multimodal | [`docs/arquitetura.md`](docs/arquitetura.md) |
@@ -44,6 +45,16 @@ med-monitor info
 pytest
 ```
 
+### Sinais vitais
+
+```bash
+pip install -e ".[anomalias,dev]"
+med-monitor vitais baixar                                   # 10 registros do MIMIC-III (PhysioNet)
+med-monitor vitais analisar --sintetico --grafico           # série sintética com eventos injetados
+med-monitor vitais analisar --registro p000020-2183-04-28-17-47n --grafico
+med-monitor vitais avaliar                                  # recall/latência/carga de alarme (~10 min)
+```
+
 ---
 
 ## Dados e créditos
@@ -53,7 +64,13 @@ pytest
   Analyzing Pose Estimation Methods*, SISAP 2024.
   [Zenodo 13305826](https://zenodo.org/records/13305826), licença CC BY-NC 4.0.
   Não é redistribuído aqui: baixe com `./scripts/baixar_rehab24.sh`.
-- **PhysioNet** — séries de sinais vitais (em definição, ver [`docs/plano.md`](docs/plano.md)).
+- **MIMIC-III Waveform Database Matched Subset** — sinais vitais de UTI.
+  Moody B, Moody G, Villarroel M, Clifford GD, Silva I. PhysioNet, 2020.
+  <https://doi.org/10.13026/c2294b>, licença ODbL v1.0. Não é redistribuído:
+  baixe com `med-monitor vitais baixar`.
+- **PhysioNet** — Goldberger AL et al. *PhysioBank, PhysioToolkit, and
+  PhysioNet*. Circulation 101(23), 2000; e Pollard T et al. *PhysioNet as a
+  global platform for biomedical research*. Nature Health, 2026.
 
 ---
 
