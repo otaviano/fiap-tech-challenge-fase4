@@ -25,7 +25,7 @@ achados em alertas para a equipe médica.
 | Análise de áudio (Azure Speech to Text, Azure Text Analytics, alterações vocais) | [`src/med_monitor/audio/`](src/med_monitor/audio/), [`src/med_monitor/azure/`](src/med_monitor/azure/) |
 | Anomalias em sinais vitais ✅ | [`anomalias/sinais_vitais.py`](src/med_monitor/anomalias/sinais_vitais.py) — NEWS2 + desvio robusto + Isolation Forest; recall 96% em 336 h de UTI ([detalhes](docs/sinais-vitais.md)) |
 | Anomalias em prescrições e movimentação | [`src/med_monitor/anomalias/`](src/med_monitor/anomalias/) |
-| Fusão multimodal e alertas em tempo real | [`src/med_monitor/fusao/`](src/med_monitor/fusao/), [`src/med_monitor/alertas/`](src/med_monitor/alertas/), [`src/med_monitor/serving/`](src/med_monitor/serving/) |
+| Fusão multimodal e alertas em tempo real ✅ | [`fusao/motor.py`](src/med_monitor/fusao/motor.py), [`alertas/despacho.py`](src/med_monitor/alertas/despacho.py), [`serving/`](src/med_monitor/serving/) — painel SSE da equipe médica, escalonamento por concordância entre modalidades, ciência auditada ([detalhes](docs/fusao-alertas.md)) |
 | Serviços gerenciados em nuvem (Azure) | [`infra/`](infra/) — Terraform |
 | Fluxo multimodal | [`docs/arquitetura.md`](docs/arquitetura.md) |
 
@@ -53,6 +53,14 @@ med-monitor vitais baixar                                   # 10 registros do MI
 med-monitor vitais analisar --sintetico --grafico           # série sintética com eventos injetados
 med-monitor vitais analisar --registro p000020-2183-04-28-17-47n --grafico
 med-monitor vitais avaliar                                  # recall/latência/carga de alarme (~10 min)
+```
+
+### Painel da equipe médica (tempo real)
+
+```bash
+pip install -e ".[anomalias,serving,dev]"
+med-monitor serve --port 8000        # http://localhost:8000 → "Iniciar plantão"
+med-monitor monitorar --horas 6      # o mesmo plantão no terminal
 ```
 
 ---

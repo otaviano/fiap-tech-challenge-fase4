@@ -5,7 +5,7 @@ flowchart LR
     subgraph Fontes
         V[Vídeo<br/>fisioterapia / cirurgia]
         A[Áudio<br/>consulta]
-        S[Sinais vitais<br/>PhysioNet replay]
+        S[Sinais vitais<br/>MIMIC-III replay]
         P[Prescrições<br/>prontuário]
     end
 
@@ -30,8 +30,10 @@ flowchart LR
     VP & VO & AX & AC & SV & PR & MV -->|Achado| F[fusao<br/>late fusion por paciente/janela]
     F -->|Alerta| D[alertas<br/>despacho]
     D --> AU[(auditoria.jsonl)]
-    D --> SSE[API · SSE /stream/alertas]
+    D --> SSE[API · SSE /stream]
     SSE --> EQ[Painel da equipe médica]
+    EQ -->|Ciente| D
+    EXT[outras modalidades<br/>POST /achados] -->|Achado| F
     VP & VO --> RV[Relatório do procedimento]
 ```
 
@@ -46,3 +48,8 @@ flowchart LR
 Nenhum analisador conhece os outros; a fusão não conhece nenhum SDK. Isso
 permite testar cada peça isoladamente e rodar a demonstração mesmo com uma
 modalidade fora do ar.
+
+## Estado atual
+
+- Sinais vitais → fusão → alertas → painel: **implementado** ([sinais vitais](sinais-vitais.md), [fusão e alertas](fusao-alertas.md)).
+- Áudio, vídeo, prescrições e movimentação: entram na mesma fusão por `POST /achados` (ou chamando `MotorFusao.processar` direto) assim que os analisadores existirem.

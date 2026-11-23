@@ -28,7 +28,7 @@ anteriores) quer **monitorar pacientes continuamente com dados multimodais**
 | 3.1 | Anomalias em sinais vitais (FC, PA, SpO2) | `anomalias/sinais_vitais.py` — [docs](sinais-vitais.md) | ✅ recall 96% em 336 h reais |
 | 3.2 | Anomalias na evolução de prescrições | `anomalias/prescricoes.py` | ⬜ |
 | 3.3 | Padrões de movimentação na internação | `anomalias/movimentacao.py` | ⬜ |
-| 3.4 | Alertas automáticos à equipe médica | `fusao/` + `alertas/` + `serving/` | ⬜ |
+| 3.4 | Alertas automáticos à equipe médica | `fusao/` + `alertas/` + `serving/` — [docs](fusao-alertas.md) | ✅ fusão, painel SSE, ciência auditada; áudio/vídeo entram por `POST /achados` |
 | — | Contratos `Achado`/`Alerta`, config, auditoria, CLI | `domain.py`, `config.py`, `audit.py`, `cli.py` | ✅ |
 | — | Recursos Azure (Speech + Language + orçamento) | `infra/` | ✅ (falta conta e `apply`) |
 

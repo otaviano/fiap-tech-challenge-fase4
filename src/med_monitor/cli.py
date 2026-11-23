@@ -96,6 +96,51 @@ def _cmd_vitais_avaliar(args: argparse.Namespace) -> int:
     return 0
 
 
+# ------------------------------------------------------------- alertas
+
+def _cmd_serve(args: argparse.Namespace) -> int:
+    import uvicorn
+
+    print(f"painel da equipe médica: http://{args.host}:{args.port}")
+    uvicorn.run("med_monitor.serving.api:app", host=args.host, port=args.port, log_level="warning")
+    return 0
+
+
+def _cmd_monitorar(args: argparse.Namespace) -> int:
+    """Plantão no terminal: replay dos leitos imprimindo cada alerta (sem painel)."""
+    import asyncio
+
+    from .alertas.despacho import Despachante
+    from .serving.simulador import LEITOS_PADRAO, Simulador
+
+    despachante = Despachante()
+    sim = Simulador(despachante, velocidade=args.velocidade)
+    icone = {"critico": "!!!", "alto": "!! ", "moderado": "!  ", "informativo": "i  "}
+
+    async def rodar():
+        fila = despachante.assinar(100_000)
+        tarefa = asyncio.create_task(sim.executar(LEITOS_PADRAO))
+        limite = None
+        while not (tarefa.done() and fila.empty()):
+            try:
+                tipo, dados = await asyncio.wait_for(fila.get(), timeout=0.5)
+            except TimeoutError:
+                continue
+            if tipo == "vitais" and sim.relogio and limite is None:
+                limite = sim.relogio.timestamp() + args.horas * 3600
+            if limite and sim.relogio and sim.relogio.timestamp() >= limite:
+                sim.parar()
+            if tipo == "alerta":
+                print(f"{dados['momento'][11:16]} {icone[dados['severidade']]} {dados['contexto'].get('leito')} "
+                      f"[{dados['severidade']}] {dados['mensagem']}  → {dados['destinatario']}", flush=True)
+        await tarefa
+
+    asyncio.run(rodar())
+    print(f"{len(despachante.historico)} alertas · eventos injetados: "
+          + ", ".join(f"{e['leito']} {e['tipo']} {e['inicio'][11:16]}" for e in sim.eventos_injetados))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="med-monitor", description=__doc__)
     parser.add_argument("--version", action="version", version=__version__)
@@ -126,6 +171,16 @@ def build_parser() -> argparse.ArgumentParser:
     avaliar.add_argument("--if-persistencia", type=int, help="persistência do Isolation Forest")
     avaliar.add_argument("--saida", help="subpasta de results/anomalias (para variações)")
     avaliar.set_defaults(func=_cmd_vitais_avaliar)
+
+    serve = sub.add_parser("serve", help="API + painel da equipe médica (http://localhost:8000)")
+    serve.add_argument("--host", default="127.0.0.1")
+    serve.add_argument("--port", type=int, default=8000)
+    serve.set_defaults(func=_cmd_serve)
+
+    monitorar = sub.add_parser("monitorar", help="plantão no terminal: replay dos leitos com os alertas")
+    monitorar.add_argument("--velocidade", type=float, default=0, help="0 = o mais rápido possível")
+    monitorar.add_argument("--horas", type=float, default=6, help="horas de plantão a simular")
+    monitorar.set_defaults(func=_cmd_monitorar)
     return parser
 
 
