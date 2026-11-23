@@ -1,0 +1,71 @@
+# Materiais do curso (não são entregáveis)
+*Tech challenge*.pdf
+Capítulo de Projeto*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Dados externos baixados (PhysioNet, AudioSet) — os scripts que baixam SÃO versionados
+data/external/
+
+# Mídia bruta pesada: vídeos e áudios de entrada ficam fora; amostras curtas
+# de demonstração podem ser liberadas explicitamente com `!`.
+data/raw/**/*.mp4
+data/raw/**/*.mov
+data/raw/**/*.avi
+data/raw/**/*.wav
+data/raw/**/*.mp3
+
+# Pesos de modelos (YOLO baixa sozinho na primeira execução)
+models/
+*.pt
+*.onnx
+*.safetensors
+
+# Resultados: relatórios e métricas SÃO versionados; mídias anotadas e logs de execução não.
+results/**/*.mp4
+results/**/*.png
+results/logs/*.log
+results/logs/auditoria.jsonl
+!results/logs/exemplo_*.jsonl
+
+# Segredos (chaves do Azure ficam só no .env local)
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*secret*.json
+*credential*.json
+
+# Terraform
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.*
+infra/*.tfvars
+!infra/*.tfvars.example
+infra/.terraform.lock.hcl
+
+# SO / editores
+.DS_Store
+.idea/
+.vscode/
+
+# Material de gravação (local, não é entregável)
+docs/roteiro-video.md

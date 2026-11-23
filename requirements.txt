@@ -1,0 +1,34 @@
+# Instala tudo de uma vez. Para trabalhar numa modalidade só, prefira os extras:
+#   pip install -e ".[video,dev]"   |   pip install -e ".[audio,dev]"   |   ...
+
+# Núcleo
+numpy>=1.26
+pandas>=2.1
+pydantic>=2.0
+python-dotenv>=1.0
+
+# Vídeo — YOLOv8 (objetos) e YOLOv8-pose (keypoints no formato COCO, o mesmo do OpenPose)
+ultralytics>=8.3
+opencv-python-headless>=4.9
+
+# Áudio — Azure Speech to Text + Azure Text Analytics (Language) + features acústicas locais
+azure-cognitiveservices-speech>=1.40
+azure-ai-textanalytics>=5.3
+librosa>=0.10
+soundfile>=0.12
+
+# Anomalias — séries temporais (PhysioNet via wfdb) e modelos não supervisionados
+scikit-learn>=1.4
+wfdb>=4.1
+
+# API + painel de alertas em tempo real (SSE)
+fastapi>=0.115
+uvicorn>=0.30
+sse-starlette>=2.1
+
+# Notebook / testes
+jupyter>=1.0.0
+ipykernel>=6.0.0
+matplotlib>=3.8
+pytest>=7.4.0
+pytest-cov>=4.1.0
