@@ -113,13 +113,18 @@ def _cmd_monitorar(args: argparse.Namespace) -> int:
     from .alertas.despacho import Despachante
     from .serving.simulador import LEITOS_PADRAO, Simulador
 
+    leitos, roteiro = LEITOS_PADRAO, ()
+    if args.demo:
+        from .serving.demo import LEITOS_DEMO, ROTEIRO_DEMO
+
+        leitos, roteiro = LEITOS_DEMO, ROTEIRO_DEMO
     despachante = Despachante()
     sim = Simulador(despachante, velocidade=args.velocidade)
     icone = {"critico": "!!!", "alto": "!! ", "moderado": "!  ", "informativo": "i  "}
 
     async def rodar():
         fila = despachante.assinar(100_000)
-        tarefa = asyncio.create_task(sim.executar(LEITOS_PADRAO))
+        tarefa = asyncio.create_task(sim.executar(leitos, roteiro))
         limite = None
         while not (tarefa.done() and fila.empty()):
             try:
@@ -130,6 +135,9 @@ def _cmd_monitorar(args: argparse.Namespace) -> int:
                 limite = sim.relogio.timestamp() + args.horas * 3600
             if limite and sim.relogio and sim.relogio.timestamp() >= limite:
                 sim.parar()
+            if tipo == "modalidade" and dados["status"] != "processando":
+                print(f"{dados['horario'][11:16]} ◆   {dados['leito']} [{dados['canal']}] {dados['titulo']}: "
+                      + ("; ".join(dados["achados"]) or "nenhum achado"), flush=True)
             if tipo == "alerta":
                 print(f"{dados['momento'][11:16]} {icone[dados['severidade']]} {dados['contexto'].get('leito')} "
                       f"[{dados['severidade']}] {dados['mensagem']}  → {dados['destinatario']}", flush=True)
@@ -406,6 +414,7 @@ def build_parser() -> argparse.ArgumentParser:
     monitorar = sub.add_parser("monitorar", help="plantão no terminal: replay dos leitos com os alertas")
     monitorar.add_argument("--velocidade", type=float, default=0, help="0 = o mais rápido possível")
     monitorar.add_argument("--horas", type=float, default=6, help="horas de plantão a simular")
+    monitorar.add_argument("--demo", action="store_true", help="roteiro multimodal da demonstração (ver serving/demo.py)")
     monitorar.set_defaults(func=_cmd_monitorar)
     return parser
 

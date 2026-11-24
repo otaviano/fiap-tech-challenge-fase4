@@ -35,7 +35,26 @@
   main { display: grid; grid-template-columns: minmax(0, 1fr) 420px; height: calc(100% - 66px); }
   @media (max-width: 1100px) { main { grid-template-columns: 1fr; height: auto; } }
 
-  .leitos { padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; align-content: start; overflow: auto; }
+  .area { padding: 16px; display: flex; flex-direction: column; gap: 16px; overflow: auto; min-height: 0; }
+  .leitos { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; align-content: start; }
+
+  .linha { background: var(--painel); border: 1px solid var(--borda); border-radius: 10px; padding: 12px 14px; }
+  .linha h2 { font-size: 14px; margin: 0 0 4px; }
+  .linha .sub { color: var(--suave); font-size: 12px; margin: 0 0 10px; }
+  .evento { display: grid; grid-template-columns: 52px 64px 96px minmax(0, 1fr); gap: 10px; padding: 9px 0; border-top: 1px solid var(--borda); align-items: start; }
+  .evento:first-of-type { border-top: 0; }
+  .evento .hora { font-weight: 600; }
+  .canal { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 8px; border-radius: 999px; background: var(--painel-2); color: var(--suave); justify-self: start; }
+  .canal[data-canal="consulta"] { color: var(--spo2); }
+  .canal[data-canal="prontuario"] { color: var(--fr); }
+  .canal[data-canal="camera"] { color: var(--fc); }
+  .evento .titulo { font-weight: 600; }
+  .evento .status { color: var(--suave); font-size: 12px; margin-left: 6px; font-weight: 400; }
+  .evento .status.processando { color: var(--moderado); }
+  .evento ul { margin: 4px 0 0; padding-left: 18px; color: var(--texto); }
+  .evento li { margin: 2px 0; }
+  .evento .nada { color: var(--suave); font-style: italic; margin-top: 4px; }
+  .evento .extra { color: var(--suave); font-size: 12px; margin-top: 4px; }
   .leito { background: var(--painel); border: 1px solid var(--borda); border-radius: 10px; padding: 12px 14px; position: relative; }
   .leito[data-sev="moderado"] { border-color: color-mix(in srgb, var(--moderado) 45%, var(--borda)); }
   .leito[data-sev="alto"] { border-color: color-mix(in srgb, var(--alto) 70%, var(--borda)); }
@@ -107,13 +126,21 @@
       <option value="600">600× (10 min/s)</option>
     </select>
     <button class="primario" id="iniciar">Iniciar plantão</button>
+    <button class="primario" id="demo">Iniciar demonstração</button>
     <button class="perigo" id="parar">Parar</button>
     <input id="profissional" placeholder="Profissional (ex.: CRM-SP 111.222)" size="26">
   </div>
   <div class="relogio num" id="relogio">--:--<small id="relogio-sub">relógio do plantão</small></div>
 </header>
 <main>
-  <section class="leitos" id="leitos"></section>
+  <section class="area">
+    <div class="leitos" id="leitos"></div>
+    <section class="linha" id="linha-wrap" hidden>
+      <h2>Linha do tempo multimodal</h2>
+      <p class="sub">Eventos de outros canais (consulta, prontuário, câmera) que entram na mesma fusão do monitor</p>
+      <div id="linha"></div>
+    </section>
+  </section>
   <aside>
     <div class="fila-topo">
       <h2>Alertas para a equipe</h2>
@@ -285,6 +312,49 @@ $("mostrar-info").addEventListener("change", (e) => {
 });
 
 // ---------------------------------------------------------------- controles
+$("demo").onclick = async () => {
+  await fetch("/simulacao/iniciar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ velocidade: Number($("velocidade").value), demo: true }) });
+};
+
+// ---------------------------------------------------------------- linha do tempo
+const CANAL_ROTULO = { consulta: "consulta", prontuario: "prontuário", camera: "câmera" };
+function renderEvento(e) {
+  const corpo = el("div");
+  const titulo = el("div", { class: "titulo", text: e.titulo });
+  const st = e.status === "processando" ? "analisando…" : e.status === "erro" ? "falhou" : "";
+  if (st) titulo.append(el("span", { class: "status " + e.status, text: st }));
+  corpo.append(titulo);
+  if (e.status === "concluido") {
+    if (e.achados.length) {
+      const ul = el("ul");
+      e.achados.forEach(a => ul.append(el("li", { text: a })));
+      corpo.append(ul);
+    } else {
+      corpo.append(el("div", { class: "nada", text: "nenhum achado" + ((e.detalhes && e.detalhes.negados && e.detalhes.negados.length) ? ` — negados: ${e.detalhes.negados.join(", ")}` : "") }));
+    }
+    const d = e.detalhes || {};
+    const extras = [];
+    if (d.servicos) extras.push(`transcrição: ${d.servicos.speech} · texto: ${d.servicos.language}`);
+    if (d.prescricao) extras.push(`prescrito por ${d.prescritor}: ${d.prescricao.medicamento} ${d.prescricao.dose} ${d.prescricao.via} ${d.prescricao.frequencia} (antes: ${d.anterior.dose})`);
+    if (d.sessao) extras.push(`sessão ${d.sessao}: ${d.repeticoes} repetições analisadas por pose (YOLOv8)`);
+    if (e.alertas && e.alertas.length) extras.push("alertas: " + e.alertas.map(a => SEV_ROTULO[a.severidade]).join(", "));
+    if (extras.length) corpo.append(el("div", { class: "extra", text: extras.join(" · ") }));
+  } else if (e.status === "erro") {
+    corpo.append(el("div", { class: "nada", text: (e.detalhes && e.detalhes.erro) || "erro" }));
+  }
+  return el("div", { class: "evento", "data-id": e.id },
+    el("span", { class: "hora num", text: hora(e.horario) }),
+    el("span", { text: e.leito }),
+    el("span", { class: "canal", "data-canal": e.canal, text: CANAL_ROTULO[e.canal] || e.canal }),
+    corpo);
+}
+function atualizarEvento(e) {
+  $("linha-wrap").hidden = false;
+  const novo = renderEvento(e);
+  const antigo = document.querySelector(`.evento[data-id="${e.id}"]`);
+  antigo ? antigo.replaceWith(novo) : $("linha").append(novo);
+}
+
 $("iniciar").onclick = async () => {
   await fetch("/simulacao/iniciar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ velocidade: Number($("velocidade").value) }) });
 };
@@ -293,6 +363,7 @@ $("parar").onclick = () => fetch("/simulacao/parar", { method: "POST" });
 function estadoSimulacao(s) {
   $("relogio-sub").textContent = s.rodando ? `plantão em replay · ${s.velocidade}×` : "relógio do plantão · parado";
   $("iniciar").disabled = !!s.rodando;
+  $("demo").disabled = !!s.rodando;
 }
 
 // ---------------------------------------------------------------- stream
@@ -307,11 +378,19 @@ function conectar() {
     $("fila").replaceChildren(); alertas.clear();
     if (!d.alertas.length) $("fila").append(el("div", { class: "vazio-fila", id: "vazio", text: "Nenhum alerta. Inicie o plantão para começar o monitoramento." }));
     [...d.alertas].reverse().forEach(a => inserirAlerta(a, false));
+    $("linha").replaceChildren();
+    $("linha-wrap").hidden = !(d.linha_do_tempo && d.linha_do_tempo.length);
+    (d.linha_do_tempo || []).forEach(atualizarEvento);
   });
   es.addEventListener("vitais", (m) => atualizarLeito(JSON.parse(m.data)));
   es.addEventListener("alerta", (m) => inserirAlerta(JSON.parse(m.data), true));
   es.addEventListener("reconhecimento", (m) => marcarCiente(JSON.parse(m.data)));
-  es.addEventListener("simulacao", (m) => estadoSimulacao(JSON.parse(m.data)));
+  es.addEventListener("simulacao", (m) => {
+    const s = JSON.parse(m.data);
+    if (s.rodando) { $("linha").replaceChildren(); $("linha-wrap").hidden = true; }
+    estadoSimulacao(s);
+  });
+  es.addEventListener("modalidade", (m) => atualizarEvento(JSON.parse(m.data)));
 }
 conectar();
 </script>

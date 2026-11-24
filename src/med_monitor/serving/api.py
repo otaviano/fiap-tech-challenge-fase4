@@ -7,9 +7,9 @@ med-monitor serve --port 8000      # painel em http://localhost:8000
 | Endpoint | O que faz |
 |---|---|
 | `GET /` | painel da equipe médica (leitos ao vivo + fila de alertas) |
-| `GET /stream` | Server-Sent Events: `vitais`, `alerta`, `reconhecimento`, `simulacao` |
+| `GET /stream` | Server-Sent Events: `vitais`, `alerta`, `reconhecimento`, `simulacao`, `modalidade` |
 | `GET /health` | status do serviço e da simulação |
-| `POST /simulacao/iniciar` · `POST /simulacao/parar` | replay acelerado dos leitos de UTI |
+| `POST /simulacao/iniciar` · `POST /simulacao/parar` | replay acelerado dos leitos de UTI (`{"demo": true}`: roteiro multimodal) |
 | `GET /pacientes` | estado atual de cada leito (sinais, NEWS2, episódio aberto) |
 | `GET /alertas` | alertas emitidos, mais recentes primeiro |
 | `POST /alertas/{id}/ciente` | reconhecimento do alerta por um profissional (auditado) |
@@ -40,6 +40,7 @@ from .simulador import Simulador
 
 class IniciarSimulacao(BaseModel):
     velocidade: float = Field(120.0, ge=0, le=3600, description="minutos de UTI por minuto real × 60 (120 = 2 min/s)")
+    demo: bool = Field(False, description="roteiro da demonstração: consultas, prescrição e fisioterapia em horários fixos")
 
 
 class Ciencia(BaseModel):
@@ -88,9 +89,15 @@ def criar_app(despachante: Despachante | None = None, motor: MotorFusao | None =
     async def iniciar(cfg: IniciarSimulacao | None = None) -> dict:
         if simulador.rodando:
             raise HTTPException(409, "simulação já está rodando")
-        simulador.velocidade = (cfg or IniciarSimulacao()).velocidade
-        simulador.iniciar()
-        return simulador.status()
+        cfg = cfg or IniciarSimulacao()
+        simulador.velocidade = cfg.velocidade
+        if cfg.demo:
+            from .demo import LEITOS_DEMO, ROTEIRO_DEMO
+
+            simulador.iniciar(LEITOS_DEMO, ROTEIRO_DEMO)
+        else:
+            simulador.iniciar()
+        return {**simulador.status(), "demo": cfg.demo}
 
     @app.post("/simulacao/parar")
     async def parar() -> dict:
@@ -99,7 +106,8 @@ def criar_app(despachante: Despachante | None = None, motor: MotorFusao | None =
 
     @app.get("/simulacao")
     def simulacao() -> dict:
-        return {**simulador.status(), "eventos_injetados": simulador.eventos_injetados}
+        return {**simulador.status(), "eventos_injetados": simulador.eventos_injetados,
+                "linha_do_tempo": simulador.linha_do_tempo}
 
     # ------------------------------------------------------------- consultas
     @app.get("/pacientes")
@@ -144,8 +152,8 @@ def criar_app(despachante: Despachante | None = None, motor: MotorFusao | None =
 
         async def gerar():
             try:
-                yield _sse("snapshot", {"simulacao": simulador.status(),
-                                        "pacientes": pacientes(), "alertas": despachante.listar(50)})
+                yield _sse("snapshot", {"simulacao": simulador.status(), "pacientes": pacientes(),
+                                        "alertas": despachante.listar(50), "linha_do_tempo": simulador.linha_do_tempo})
                 while not await request.is_disconnected():
                     try:
                         tipo, dados = await asyncio.wait_for(fila.get(), timeout=15)

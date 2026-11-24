@@ -29,6 +29,7 @@ achados em alertas para a equipe médica.
 | Fusão multimodal e alertas em tempo real ✅ | [`fusao/motor.py`](src/med_monitor/fusao/motor.py), [`alertas/despacho.py`](src/med_monitor/alertas/despacho.py), [`serving/`](src/med_monitor/serving/) — painel SSE da equipe médica, escalonamento por concordância entre modalidades, ciência auditada ([detalhes](docs/fusao-alertas.md)) |
 | Serviços gerenciados em nuvem (Azure) | [`infra/`](infra/) — Terraform |
 | Fluxo multimodal | [`docs/arquitetura.md`](docs/arquitetura.md) |
+| **Demonstração integrada** | [`docs/demo.md`](docs/demo.md) — plantão com monitor, consulta (áudio + Azure), prescrição e fisioterapia (vídeo) na mesma fusão |
 
 ---
 
@@ -81,6 +82,12 @@ med-monitor video relatorio PM_016 [--api http://localhost:8000]
 ```bash
 med-monitor prescricoes avaliar
 med-monitor prescricoes exemplo --tipo erro_decimal [--api http://localhost:8000]
+```
+
+### Demonstração integrada (roteiro do vídeo)
+
+```bash
+med-monitor serve --port 8000        # http://localhost:8000 → "Iniciar demonstração"
 ```
 
 ### Painel da equipe médica (tempo real)

@@ -100,17 +100,54 @@ class Simulador:
         self.relogio: datetime | None = None
         self.inicio: datetime | None = None
         self.rodando = False
+        self.linha_do_tempo: list[dict] = []        # eventos de outros canais (demo)
         self._parar = False
         self._tarefa: asyncio.Task | None = None
+        self._roteiro: list[tuple[datetime, object]] = []
+        self._trava_roteiro: asyncio.Lock | None = None
 
     # --------------------------------------------------------------- controle
-    def iniciar(self, leitos: tuple[Leito, ...] = LEITOS_PADRAO) -> None:
+    def iniciar(self, leitos: tuple[Leito, ...] = LEITOS_PADRAO, roteiro: tuple = ()) -> None:
         if self.rodando:
             return
-        self._tarefa = asyncio.get_running_loop().create_task(self.executar(leitos))
+        self._tarefa = asyncio.get_running_loop().create_task(self.executar(leitos, roteiro))
 
     def parar(self) -> None:
         self._parar = True
+        try:   # acorda leitos parados na sincronização do relógio
+            asyncio.get_running_loop().create_task(self._acordar())
+        except RuntimeError:
+            pass
+
+    async def _acordar(self) -> None:
+        if getattr(self, "_cond", None) is not None:
+            async with self._cond:
+                self._cond.notify_all()
+
+    # ------------------------------------------------------- relógio comum
+    # Os leitos andam juntos, minuto a minuto: um leito só processa o minuto k
+    # depois que todos terminaram o k−1. Sem isso, diferenças no tempo de carga
+    # das séries viram minutos de defasagem entre leitos — e um evento de outro
+    # canal (a consulta das 07:52) chegaria à fusão depois de achados das 07:56.
+    async def _sincronizar(self, k: int) -> None:
+        async with self._cond:
+            self._chegaram += 1
+            if self._chegaram >= self._ativos:
+                await self._liberar(k)
+            else:
+                await self._cond.wait_for(lambda: self._k >= k or self._parar)
+
+    async def _liberar(self, k: int) -> None:
+        if self._pausa > 0 and k > 0:
+            await asyncio.sleep(self._pausa)
+        self._chegaram, self._k = 0, k
+        self._cond.notify_all()
+
+    async def _sair(self) -> None:
+        async with self._cond:
+            self._ativos -= 1
+            if 0 < self._ativos <= self._chegaram:
+                await self._liberar(self._k + 1)
 
     def status(self) -> dict:
         return {"rodando": self.rodando, "velocidade": self.velocidade,
@@ -122,12 +159,20 @@ class Simulador:
         return self.relogio or datetime.now(timezone.utc)
 
     # -------------------------------------------------------------- execução
-    async def executar(self, leitos: tuple[Leito, ...] = LEITOS_PADRAO) -> None:
+    async def executar(self, leitos: tuple[Leito, ...] = LEITOS_PADRAO, roteiro: tuple = ()) -> None:
+        """`roteiro`: eventos de outros canais (`serving.demo.EventoDemo`) em horários do plantão."""
         self.rodando, self._parar = True, False
         self.estado.clear()
         self.eventos_injetados.clear()
+        self.linha_do_tempo.clear()
         inicio = _relogio_base()
         self.inicio = inicio.to_pydatetime()
+        self._roteiro = sorted(((self.inicio + timedelta(minutes=ev.minutos_apos_inicio(INICIO_PLANTAO)), ev)
+                                for ev in roteiro), key=lambda par: par[0])
+        self._trava_roteiro = asyncio.Lock()
+        self._cond = asyncio.Condition()
+        self._k, self._chegaram, self._ativos = -1, 0, len(leitos)
+        self._pausa = 60.0 / self.velocidade if self.velocidade > 0 else 0.0
         trilha = self.despachante.trilha
         self.despachante.publicar("simulacao", {"rodando": True, "velocidade": self.velocidade})
         try:
@@ -138,11 +183,16 @@ class Simulador:
             self.despachante.publicar("simulacao", {"rodando": False})
 
     async def _leito(self, leito: Leito, inicio: pd.Timestamp, trace_id: str) -> None:
+        try:
+            await self._rodar_leito(leito, inicio, trace_id)
+        finally:
+            await self._sair()
+
+    async def _rodar_leito(self, leito: Leito, inicio: pd.Timestamp, trace_id: str) -> None:
         serie, eventos = await asyncio.to_thread(preparar_serie, leito, inicio, self.aquecimento)
         self.eventos_injetados += [{"leito": leito.leito, "paciente_id": leito.paciente_id, **e.as_dict()}
                                    for e in eventos]
         monitor = MonitorSinaisVitais(leito.paciente_id)
-        pausa = 60.0 / self.velocidade if self.velocidade > 0 else 0.0
         self.estado[leito.paciente_id] = {"leito": leito.leito, "paciente_id": leito.paciente_id,
                                           "registro": leito.registro, "status": "aquecendo"}
 
@@ -155,7 +205,16 @@ class Simulador:
                     await asyncio.sleep(0)          # não monopoliza o loop durante o aquecimento
                 continue
 
+            await self._sincronizar(i - self.aquecimento)
+            if self._parar:
+                break
             agora = momento.to_pydatetime()
+            # evento de outro canal no horário: o plantão espera a análise terminar
+            while self._roteiro and self._roteiro[0][0] <= agora:
+                async with self._trava_roteiro:
+                    if self._roteiro and self._roteiro[0][0] <= agora:
+                        quando, evento = self._roteiro.pop(0)
+                        await self._executar_evento(evento, quando, trace_id)
             self.relogio = agora if self.relogio is None else max(self.relogio, agora)
             vitais = _para_exibir(linha)
             pontos = pontuar_news2({k: v for k, v in vitais.items() if v is not None})
@@ -167,8 +226,34 @@ class Simulador:
                 self.despachante.despachar(decisao, trace_id, contexto={"leito": leito.leito, "vitais": vitais})
             estado["episodio"] = self.motor.episodio_aberto(leito.paciente_id, agora)
             self.despachante.publicar("vitais", estado)
-            await asyncio.sleep(pausa)
 
         self.estado[leito.paciente_id]["status"] = "fim do registro" if not self._parar else "pausado"
         self.despachante.publicar("vitais", self.estado[leito.paciente_id])
         _log.info("leito %s encerrado", leito.leito)
+
+    async def _executar_evento(self, evento, quando: datetime, trace_id: str) -> None:
+        """Roda o produtor do evento (em thread: áudio chama o Azure), funde os achados e publica."""
+        from ..fusao.motor import descrever
+
+        registro = {"id": f"{evento.leito}-{evento.horario}", "horario": quando.isoformat(), "leito": evento.leito,
+                    "paciente_id": evento.paciente_id, "canal": evento.canal, "titulo": evento.titulo,
+                    "status": "processando", "achados": [], "alertas": []}
+        self.linha_do_tempo.append(registro)
+        self.despachante.publicar("modalidade", registro)
+        try:
+            achados, detalhes = await asyncio.to_thread(evento.produtor, evento.paciente_id, quando)
+        except Exception as exc:  # um canal com problema não derruba o plantão
+            registro.update(status="erro", detalhes={"erro": f"{type(exc).__name__}: {exc}"[:300]})
+            self.despachante.trilha.event(trace_id, "evento_canal_falhou", leito=evento.leito, canal=evento.canal,
+                                          erro=type(exc).__name__)
+            self.despachante.publicar("modalidade", registro)
+            return
+        self.despachante.trilha.event(trace_id, "evento_canal", leito=evento.leito, canal=evento.canal,
+                                      paciente_id=evento.paciente_id, achados=[a.as_dict() for a in achados])
+        vitais = self.estado.get(evento.paciente_id, {}).get("vitais")
+        alertas = [self.despachante.despachar(d, trace_id, contexto={"leito": evento.leito, "vitais": vitais,
+                                                                     "canal": evento.canal})
+                   for d in self.motor.processar_varios(achados)]
+        registro.update(status="concluido", achados=[descrever(a) for a in achados], detalhes=detalhes,
+                        alertas=[{"id": a["id"], "severidade": a["severidade"]} for a in alertas])
+        self.despachante.publicar("modalidade", registro)

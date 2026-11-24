@@ -56,6 +56,12 @@ PADROES: dict[str, dict] = {
 }
 TIPOS_CLINICOS = tuple(PADROES)
 
+# Padrões usados só na demonstração (fora da avaliação): depressão respiratória por
+# excesso de opioide — a frequência respiratória cai e a saturação acompanha.
+PADROES_EXTRA: dict[str, dict] = {
+    "depressao_respiratoria": {"alvo": {"fr": 7.0, "spo2": 88.0}, "delta": {"fc": -10}, "dur": (30, 45), "rampa": 8},
+}
+
 
 def gerar_basal(horas: float = 12, inicio: str = "2026-01-01 00:00", semente: int = 42,
                 basal: dict | None = None) -> pd.DataFrame:
@@ -96,7 +102,7 @@ def injetar(df: pd.DataFrame, tipo: str, inicio_idx: int, duracao: int,
         ev = EventoInjetado("artefato", fatia[0], fatia[-1], ("spo2",), clinico=False)
         return df, ev
 
-    padrao = PADROES[tipo]
+    padrao = PADROES[tipo] if tipo in PADROES else PADROES_EXTRA[tipo]
     fatia = df.index[inicio_idx:inicio_idx + duracao]
     perfil = _perfil(len(fatia), padrao["rampa"])
     for sinal, delta in padrao.get("delta", {}).items():
