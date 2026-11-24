@@ -3,7 +3,7 @@
 > **FIAP Postech — IA para Devs**
 > Vídeo + áudio + séries temporais → detecção de anomalias → alerta à equipe médica, com Azure AI
 
-> 🚧 **Em construção.** Plano, decisões e status por requisito em [`docs/plano.md`](docs/plano.md).
+> 📄 **Relatório técnico:** [`RELATORIO_TECH_CHALLENGE_FASE4.md`](RELATORIO_TECH_CHALLENGE_FASE4.md) · plano, decisões e status por requisito em [`docs/plano.md`](docs/plano.md).
 
 Quarta fase de uma linha contínua: a [Fase 1](https://github.com/otaviano/fiap-tech-challenge-fase1)
 construiu o classificador de diagnóstico, a
@@ -22,7 +22,7 @@ achados em alertas para a equipe médica.
 | Requisito do enunciado | Onde está |
 |---|---|
 | Análise de vídeo ✅ | [`video/`](src/med_monitor/video/) — YOLOv8-pose (keypoints do OpenPose) e YOLOv8 de objetos; execução incorreta com AUC por pessoa 0,87–0,95 no REHAB24-6; relatório automático da sessão ([detalhes](docs/video.md)) |
-| Análise de áudio ✅ (Azure 🟡 aguardando conta) | [`audio/`](src/med_monitor/audio/) — fala ofegante e fadiga vs basal do paciente, termos críticos com negação; [`azure/`](src/med_monitor/azure/) — Speech to Text, sentimento e Text Analytics for Health ([detalhes](docs/audio.md)) |
+| Análise de áudio ✅ (Azure Speech e Language rodando em `brazilsouth`, F0) | [`audio/`](src/med_monitor/audio/) — fala ofegante e fadiga vs basal do paciente, termos críticos com negação; [`azure/`](src/med_monitor/azure/) — Speech to Text, sentimento e Text Analytics for Health ([detalhes](docs/audio.md)) |
 | Anomalias em sinais vitais ✅ | [`anomalias/sinais_vitais.py`](src/med_monitor/anomalias/sinais_vitais.py) — NEWS2 + desvio robusto + Isolation Forest; recall 96% em 336 h de UTI ([detalhes](docs/sinais-vitais.md)) |
 | Anomalias em prescrições ✅ | [`anomalias/prescricoes.py`](src/med_monitor/anomalias/prescricoes.py) — regras do formulário + variação de dose aprendida por medicamento; recall 92% com 1,2% de alertas em internações normais ([detalhes](docs/prescricoes.md)) |
 | Padrões de movimentação ✅ | amplitude vs sessão anterior e queda, no [vídeo](docs/video.md) |

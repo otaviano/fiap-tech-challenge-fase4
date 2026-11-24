@@ -35,7 +35,7 @@ anteriores) quer **monitorar pacientes continuamente com dados multimodais**
 ### Entregáveis
 
 - [ ] Código-fonte completo
-- [ ] Relatório técnico: fluxo multimodal, modelos por tipo de dado, resultados e exemplos de anomalias
+- [x] Relatório técnico ([`RELATORIO_TECH_CHALLENGE_FASE4.md`](../RELATORIO_TECH_CHALLENGE_FASE4.md)): fluxo multimodal, modelos por tipo de dado, resultados e exemplos de anomalias
 - [ ] Vídeo ≤ 15 min (YouTube/Vimeo, não listado): áudio e vídeo na prática, detecção e resposta a anomalias, integração Azure, fluxo do alerta até a equipe
 - [ ] Documento de entrega em PDF (mesmo padrão das fases 1–3)
 
