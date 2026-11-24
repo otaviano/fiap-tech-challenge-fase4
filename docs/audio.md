@@ -56,6 +56,11 @@ Três decisões de método:
    e sem respiração audível são atribuídas à **fadiga**, não à dispneia: na
    dispneia, a articulação dentro de cada grupo de fala continua no ritmo
    normal.
+4. **Fala fragmentada sozinha não é falta de ar.** Grupos de fala mais curtos e
+   pausas mais frequentes são o mesmo fenômeno medido duas vezes. Contados como
+   dois critérios independentes, qualquer mudança de *estilo* de fala (frases
+   curtas, pausas na pontuação) parecia dispneia. A fala ofegante agora exige
+   também um sinal respiratório: respiração audível ou voz soprosa.
 
 ### Avaliação
 
@@ -75,7 +80,7 @@ em SSML):
 
 | Condição | Com basal | Sem basal |
 |---|---|---|
-| normal | 2/12 falsos alarmes | 0/12 falsos alarmes |
+| normal | **0/12 falsos alarmes** | 0/12 falsos alarmes |
 | fadiga | **11/12**, 0 confusões | 0/12 |
 | fadiga leve | 1/12 | 0/12 |
 | dispneia | **12/12**, 0 confusões | 12/12 |
@@ -87,24 +92,37 @@ em SSML):
 |---|---|---|
 | normal | 0/12 falsos alarmes | 0/12 falsos alarmes |
 | fadiga | 12/12, 0 confusões | 0/12 |
-| fadiga leve | 4/12, 2 confusões | 0/12 |
+| fadiga leve | 4/12, 0 confusões | 0/12 |
 | dispneia | 12/12, 0 confusões | 12/12 |
-| dispneia leve | 12/12, 0 confusões | 12/12 |
+| dispneia leve | 8/12, 0 confusões | 6/12 |
 
 **Leitura:**
 - A **dispneia** é detectada em todos os casos, com e sem basal, nos dois
   motores. Respiração audível entre frases curtas é anormal em qualquer pessoa.
+  A **dispneia leve** também, com as vozes neurais.
 - A **fadiga marcada** é detectada com basal (11–12 de 12). Sem basal ela é
   invisível, porque fala lenta não é anormal por si só. Isso sustenta a
   recomendação de gravar uma consulta basal na admissão.
 - A **fadiga leve** fica dentro da variação natural de uma mesma pessoa, e
   quase não é detectada.
-- Os **2 falsos alarmes da voz neural** vêm da **pontuação do roteiro**, não da
-  voz. O roteiro do basal tem frases longas. Os roteiros `basal_3` e `estavel`
-  têm muitas vírgulas e frases curtas, e a voz natural pausa na pontuação. Os
-  grupos de fala encurtam cerca de 40% sem respiração audível. O espeak
-  praticamente não pausava em vírgulas, por isso não mostrava isso. O mesmo
-  aconteceria com uma pessoa real que muda o tipo de fala entre consultas.
+- **Falsos alarmes por estilo de fala (corrigido).** Antes da decisão 4, a voz
+  neural dava 2/12 falsos alarmes. Eles vinham da **pontuação do roteiro**, não
+  da voz:
+  - o roteiro do basal tem frases longas;
+  - os roteiros `basal_3` e `estavel` têm muitas vírgulas e frases curtas, e a
+    voz natural pausa na pontuação;
+  - os grupos de fala encurtavam cerca de 40%, mas sem respiração audível.
+
+  O espeak praticamente não pausa em vírgulas, por isso não mostrava o problema.
+  O mesmo aconteceria com uma pessoa real que muda o tipo de fala entre
+  consultas. Exigir o sinal respiratório zerou esses falsos alarmes, e todas as
+  48 consultas com dispneia das vozes neurais continuam detectadas.
+- **O custo da decisão 4 aparece no espeak.** Nas vozes femininas do espeak
+  (`f2` e `f4`), o detector mede pouca ou nenhuma respiração audível na
+  dispneia leve, de 0 a 4 por minuto contra cerca de 33 nas vozes masculinas.
+  Ali a dispneia leve só se distinguia pelas pausas, que é a mesma evidência
+  dos falsos alarmes. Escolhemos não alarmar com fala fragmentada sem sinal
+  respiratório.
 - **Limitação:** a voz é sintética e as alterações são controladas. Isto valida
   a *mecânica* do detector. Para o vídeo, o ideal é o grupo gravar os roteiros.
 

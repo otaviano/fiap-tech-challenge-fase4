@@ -15,7 +15,7 @@
     "com basal": {
       "normal": {
         "n": 12,
-        "falso_alarme": 2
+        "falso_alarme": 0
       },
       "fadiga": {
         "n": 12,
@@ -871,9 +871,7 @@
       "roteiro": "basal_3",
       "condicao": "normal",
       "modo": "com basal",
-      "declarado": [
-        "fala_ofegante"
-      ]
+      "declarado": []
     },
     {
       "voz": "pt-BR-BrendaNeural",
@@ -953,9 +951,7 @@
       "roteiro": "estavel",
       "condicao": "normal",
       "modo": "com basal",
-      "declarado": [
-        "fala_ofegante"
-      ]
+      "declarado": []
     },
     {
       "voz": "pt-BR-BrendaNeural",

@@ -302,18 +302,34 @@ def _pausas_explicadas_pela_lentidao(dispneia: list[Criterio], fadiga: list[Crit
     return lenta and "inspiracoes_por_min" not in atendidos
 
 
+SINAIS_RESPIRATORIOS = frozenset({"inspiracoes_por_min", "planicidade_espectral"})
+
+
+def _so_fragmentacao(dispneia: list[Criterio]) -> bool:
+    """Fala fragmentada sem nenhum sinal respiratório não é falta de ar.
+
+    Grupos de fala mais curtos e pausas mais frequentes são o mesmo fenômeno
+    medido duas vezes: contá-los como dois critérios independentes faz qualquer
+    mudança no *estilo* de fala (frases curtas, pausas na pontuação) parecer
+    dispneia. Exigimos também respiração audível ou voz soprosa.
+    """
+    return not any(c.atendido and c.feature in SINAIS_RESPIRATORIOS for c in dispneia)
+
+
 def detectar(atual: FeaturesVoz, basal: FeaturesVoz | None = None) -> list[AlteracaoVocal]:
     """Uma alteração é declarada quando ≥ 2 critérios concordam.
 
     Um critério isolado é ruído plausível (o paciente estava distraído, falou
-    mais baixo, a sala estava barulhenta); dois juntos são padrão.
+    mais baixo, a sala estava barulhenta); dois juntos são padrão. Na fala
+    ofegante, um dos dois precisa ser respiratório.
     """
     comparacao = "basal do paciente" if basal is not None else "referência populacional"
     dispneia, fadiga = criterios_dispneia(atual, basal), criterios_fadiga(atual, basal)
     saida = []
     for tipo, criterios in (("fala_ofegante", dispneia), ("fadiga_vocal", fadiga)):
         n = sum(c.atendido for c in criterios)
-        if tipo == "fala_ofegante" and n >= 2 and _pausas_explicadas_pela_lentidao(dispneia, fadiga):
+        if tipo == "fala_ofegante" and n >= 2 and (_so_fragmentacao(dispneia)
+                                                   or _pausas_explicadas_pela_lentidao(dispneia, fadiga)):
             continue
         if n >= 2:
             escore = round(min(1.0, 0.45 + 0.15 * n), 2) if basal is not None else 0.5

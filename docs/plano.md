@@ -22,7 +22,7 @@ anteriores) quer **monitorar pacientes continuamente com dados multimodais**
 | 1.3 | Objetos e áreas críticas (YOLOv8) | `video/objetos.py` | ✅ pessoa visível 83%/96%, área do paciente, queda |
 | 1.4 | Relatório automático de desvios | `video/relatorio.py` | ✅ AUC por pessoa 0,87 (braço) e 0,95 (agachamento) |
 | 2.1 | Processar áudios de consultas | `audio/consulta.py` — [docs](audio.md) | ✅ |
-| 2.2 | Alterações vocais (cansaço, dificuldade respiratória) | `audio/acustica.py` | ✅ dispneia 24/24, fadiga 12/12, 0 falsos alarmes (sintético) |
+| 2.2 | Alterações vocais (cansaço, dificuldade respiratória) | `audio/acustica.py` | ✅ dispneia 24/24, fadiga 11/12, 0 falsos alarmes (vozes neurais, sintético) |
 | 2.3 | Azure Speech to Text | `azure/speech.py` | ✅ rodando no Azure (brazilsouth, F0): confiança 0,81–0,93 com voz natural |
 | 2.4 | Termos críticos e sentimento (Azure Text Analytics) | `azure/language.py` + `audio/termos.py` | ✅ sentimento + Text Analytics for Health (pt) no F0, com negação |
 | 3.1 | Anomalias em sinais vitais (FC, PA, SpO2) | `anomalias/sinais_vitais.py` — [docs](sinais-vitais.md) | ✅ recall 96% em 336 h reais |

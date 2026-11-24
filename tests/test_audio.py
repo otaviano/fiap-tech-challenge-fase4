@@ -92,6 +92,17 @@ def test_pausas_com_fala_lenta_sem_respiracao_sao_fadiga_nao_dispneia():
     assert sorted(a.tipo for a in acustica.detectar(com_sopro, b)) == ["fadiga_vocal", "fala_ofegante"]
 
 
+def test_fala_fragmentada_sem_sinal_respiratorio_nao_e_dispneia():
+    """Frases curtas e pausas na pontuação mudam o estilo, não a respiração."""
+    b = _feats()
+    so_fragmentada = _feats(grupo_fala_medio_s=1.5, pausas_por_min=25)
+    assert acustica.detectar(so_fragmentada, b) == []
+    com_respiracao = _feats(grupo_fala_medio_s=1.5, pausas_por_min=25, inspiracoes_por_min=8.0)
+    assert [a.tipo for a in acustica.detectar(com_respiracao, b)] == ["fala_ofegante"]
+    soprosa = _feats(grupo_fala_medio_s=1.5, pausas_por_min=25, planicidade_espectral=0.02)
+    assert [a.tipo for a in acustica.detectar(soprosa, b)] == ["fala_ofegante"]
+
+
 # ------------------------------------------------------------------- termos
 
 @pytest.mark.parametrize("texto, esperado", [
