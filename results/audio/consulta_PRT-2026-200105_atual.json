@@ -3,43 +3,68 @@
   "arquivo": "data/raw/audio/PRT-2026-200105_atual.wav",
   "basal": "data/raw/audio/PRT-2026-200105_basal.wav",
   "servicos": {
-    "speech": "referencia (roteiro .txt)",
-    "language": "indisponível"
+    "speech": "azure-speech",
+    "language": "azure-language"
   },
   "features": {
-    "duracao_s": 13.073,
-    "tempo_fala_s": 9.97,
-    "razao_pausa": 0.152,
-    "pausas_por_min": 20.408,
-    "pausa_media_s": 0.448,
-    "grupo_fala_medio_s": 1.994,
-    "taxa_articulacao": 5.316,
-    "f0_mediana_hz": 91.924,
-    "f0_variab_st": 1.406,
-    "intensidade_db": -29.355,
-    "planicidade_espectral": 0.015,
-    "inspiracoes_por_min": 0.0
+    "duracao_s": 13.738,
+    "tempo_fala_s": 8.57,
+    "razao_pausa": 0.277,
+    "pausas_por_min": 20.236,
+    "pausa_media_s": 0.823,
+    "grupo_fala_medio_s": 1.714,
+    "taxa_articulacao": 4.667,
+    "f0_mediana_hz": 146.765,
+    "f0_variab_st": 4.117,
+    "intensidade_db": -23.171,
+    "planicidade_espectral": 0.016,
+    "inspiracoes_por_min": 5.059
   },
   "features_basal": {
-    "duracao_s": 16.774,
-    "tempo_fala_s": 13.99,
-    "razao_pausa": 0.096,
-    "pausas_por_min": 19.392,
-    "pausa_media_s": 0.296,
-    "grupo_fala_medio_s": 2.332,
-    "taxa_articulacao": 5.147,
-    "f0_mediana_hz": 93.531,
-    "f0_variab_st": 1.564,
-    "intensidade_db": -28.143,
-    "planicidade_espectral": 0.014,
+    "duracao_s": 16.038,
+    "tempo_fala_s": 10.9,
+    "razao_pausa": 0.228,
+    "pausas_por_min": 21.246,
+    "pausa_media_s": 0.644,
+    "grupo_fala_medio_s": 1.817,
+    "taxa_articulacao": 5.596,
+    "f0_mediana_hz": 143.413,
+    "f0_variab_st": 3.585,
+    "intensidade_db": -21.33,
+    "planicidade_espectral": 0.017,
     "inspiracoes_por_min": 0.0
   },
   "alteracoes": [],
   "transcricao": {
-    "texto": "Estou bem, doutor. Não tenho falta de ar, nem dor no peito. Dormi bem e não tive febre. Só quero saber se a cirurgia continua marcada para quinta e se posso tomar banho sozinho.",
-    "fonte": "referencia",
+    "texto": "Estou bem, doutor. Não tenho falta de ar nem dor no peito. Dormi bem e não tive febre. Só quero saber se a cirurgia continua marcada para quinta e se posso tomar banho sozinho.",
+    "fonte": "azure-speech",
     "idioma": "pt-BR",
-    "segmentos": []
+    "segmentos": [
+      {
+        "inicio_s": 0.51,
+        "fim_s": 2.03,
+        "texto": "Estou bem, doutor.",
+        "confianca": 0.871
+      },
+      {
+        "inicio_s": 2.75,
+        "fim_s": 5.03,
+        "texto": "Não tenho falta de ar nem dor no peito.",
+        "confianca": 0.931
+      },
+      {
+        "inicio_s": 5.79,
+        "fim_s": 7.51,
+        "texto": "Dormi bem e não tive febre.",
+        "confianca": 0.913
+      },
+      {
+        "inicio_s": 8.23,
+        "fim_s": 12.55,
+        "texto": "Só quero saber se a cirurgia continua marcada para quinta e se posso tomar banho sozinho.",
+        "confianca": 0.925
+      }
+    ]
   },
   "termos": [
     {
@@ -47,14 +72,14 @@
       "categoria": "respiratorio",
       "escore": 0.8,
       "negado": true,
-      "trecho": "estou bem, doutor. nao tenho falta de ar, nem dor no peito."
+      "trecho": "estou bem, doutor. nao tenho falta de ar nem dor no peito. d"
     },
     {
       "termo": "dor no peito",
       "categoria": "cardiovascular",
       "escore": 0.8,
       "negado": true,
-      "trecho": "bem, doutor. nao tenho falta de ar, nem dor no peito. dormi bem e nao ti"
+      "trecho": "bem, doutor. nao tenho falta de ar nem dor no peito. dormi bem e nao ti"
     },
     {
       "termo": "febre",
@@ -64,7 +89,60 @@
       "trecho": "nem dor no peito. dormi bem e nao tive febre. so quero saber se"
     }
   ],
-  "analise_texto": null,
+  "analise_texto": {
+    "fonte": "azure-language",
+    "sentimento": "mixed",
+    "confianca_sentimento": {
+      "positive": 0.46,
+      "neutral": 0.15,
+      "negative": 0.39
+    },
+    "opinioes": [],
+    "entidades": [
+      {
+        "texto": "Estou bem",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.96,
+        "negada": false,
+        "normalizado": null
+      },
+      {
+        "texto": "falta de ar",
+        "categoria": "SymptomOrSign",
+        "confianca": 1.0,
+        "negada": true,
+        "normalizado": "Dyspnea"
+      },
+      {
+        "texto": "dor no",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.84,
+        "negada": true,
+        "normalizado": null
+      },
+      {
+        "texto": "peito",
+        "categoria": "BodyStructure",
+        "confianca": 0.67,
+        "negada": false,
+        "normalizado": "Chest"
+      },
+      {
+        "texto": "Dormi bem",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.96,
+        "negada": false,
+        "normalizado": null
+      },
+      {
+        "texto": "febre",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.97,
+        "negada": true,
+        "normalizado": "Fever"
+      }
+    ]
+  },
   "erros": [],
   "achados": []
 }

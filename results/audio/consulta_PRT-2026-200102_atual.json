@@ -3,36 +3,36 @@
   "arquivo": "data/raw/audio/PRT-2026-200102_atual.wav",
   "basal": "data/raw/audio/PRT-2026-200102_basal.wav",
   "servicos": {
-    "speech": "referencia (roteiro .txt)",
-    "language": "indisponível"
+    "speech": "azure-speech",
+    "language": "azure-language"
   },
   "features": {
-    "duracao_s": 22.729,
-    "tempo_fala_s": 13.25,
-    "razao_pausa": 0.38,
-    "pausas_por_min": 44.902,
-    "pausa_media_s": 0.508,
-    "grupo_fala_medio_s": 0.779,
-    "taxa_articulacao": 5.132,
-    "f0_mediana_hz": 104.38,
-    "f0_variab_st": 1.836,
-    "intensidade_db": -27.851,
-    "planicidade_espectral": 0.015,
-    "inspiracoes_por_min": 39.289
+    "duracao_s": 26.3,
+    "tempo_fala_s": 9.57,
+    "razao_pausa": 0.607,
+    "pausas_por_min": 39.377,
+    "pausa_media_s": 0.926,
+    "grupo_fala_medio_s": 0.563,
+    "taxa_articulacao": 4.807,
+    "f0_mediana_hz": 185.984,
+    "f0_variab_st": 5.007,
+    "intensidade_db": -24.361,
+    "planicidade_espectral": 0.009,
+    "inspiracoes_por_min": 54.143
   },
   "features_basal": {
-    "duracao_s": 17.244,
-    "tempo_fala_s": 14.71,
-    "razao_pausa": 0.071,
-    "pausas_por_min": 11.371,
-    "pausa_media_s": 0.373,
-    "grupo_fala_medio_s": 3.677,
-    "taxa_articulacao": 5.37,
-    "f0_mediana_hz": 104.985,
-    "f0_variab_st": 1.414,
-    "intensidade_db": -26.429,
-    "planicidade_espectral": 0.015,
-    "inspiracoes_por_min": 0.0
+    "duracao_s": 18.05,
+    "tempo_fala_s": 12.98,
+    "razao_pausa": 0.198,
+    "pausas_por_min": 14.824,
+    "pausa_media_s": 0.802,
+    "grupo_fala_medio_s": 2.596,
+    "taxa_articulacao": 4.777,
+    "f0_mediana_hz": 135.364,
+    "f0_variab_st": 3.665,
+    "intensidade_db": -23.096,
+    "planicidade_espectral": 0.012,
+    "inspiracoes_por_min": 7.412
   },
   "alteracoes": [
     {
@@ -46,29 +46,60 @@
       ],
       "medidas": {
         "grupo_fala_medio_s": {
-          "atual": 0.779,
-          "referencia": 3.677
+          "atual": 0.563,
+          "referencia": 2.596
         },
         "pausas_por_min": {
-          "atual": 44.902,
-          "referencia": 11.371
+          "atual": 39.377,
+          "referencia": 14.824
         },
         "planicidade_espectral": {
-          "atual": 0.015,
-          "referencia": 0.015
+          "atual": 0.009,
+          "referencia": 0.012
         },
         "inspiracoes_por_min": {
-          "atual": 39.289,
-          "referencia": 0.0
+          "atual": 54.143,
+          "referencia": 7.412
         }
       }
     }
   ],
   "transcricao": {
-    "texto": "Doutor, estou com falta de ar desde cedo. Qualquer coisa que eu falo já canso. Tentei levantar para ir ao banheiro e precisei parar no caminho, o peito apertado. Parece que o ar não chega, e à noite piorou quando deitei.",
-    "fonte": "referencia",
+    "texto": "Doutor Stock, falta de ar desde cedo. Qualquer coisa que eu falo já canso. Tentei levantar para. Ir ao banheiro e precisei parar no caminho, o peito apertado. Parece que o ar não chega e a noite piorou quando deitei.",
+    "fonte": "azure-speech",
     "idioma": "pt-BR",
-    "segmentos": []
+    "segmentos": [
+      {
+        "inicio_s": 0.55,
+        "fim_s": 4.87,
+        "texto": "Doutor Stock, falta de ar desde cedo.",
+        "confianca": 0.81
+      },
+      {
+        "inicio_s": 5.51,
+        "fim_s": 9.11,
+        "texto": "Qualquer coisa que eu falo já canso.",
+        "confianca": 0.911
+      },
+      {
+        "inicio_s": 10.41,
+        "fim_s": 11.93,
+        "texto": "Tentei levantar para.",
+        "confianca": 0.901
+      },
+      {
+        "inicio_s": 12.39,
+        "fim_s": 18.11,
+        "texto": "Ir ao banheiro e precisei parar no caminho, o peito apertado.",
+        "confianca": 0.933
+      },
+      {
+        "inicio_s": 18.75,
+        "fim_s": 25.03,
+        "texto": "Parece que o ar não chega e a noite piorou quando deitei.",
+        "confianca": 0.863
+      }
+    ]
   },
   "termos": [
     {
@@ -76,7 +107,7 @@
       "categoria": "respiratorio",
       "escore": 0.8,
       "negado": false,
-      "trecho": "doutor, estou com falta de ar desde cedo. qualque"
+      "trecho": "doutor stock, falta de ar desde cedo. qualque"
     },
     {
       "termo": "peito apertado",
@@ -86,7 +117,61 @@
       "trecho": "banheiro e precisei parar no caminho, o peito apertado. parece que o ar na"
     }
   ],
-  "analise_texto": null,
+  "analise_texto": {
+    "fonte": "azure-language",
+    "sentimento": "negative",
+    "confianca_sentimento": {
+      "positive": 0.0,
+      "neutral": 0.05,
+      "negative": 0.95
+    },
+    "opinioes": [
+      {
+        "alvo": "ar",
+        "sentimento": "negative",
+        "avaliacoes": [
+          "chega"
+        ]
+      },
+      {
+        "alvo": "noite",
+        "sentimento": "negative",
+        "avaliacoes": [
+          "piorou"
+        ]
+      }
+    ],
+    "entidades": [
+      {
+        "texto": "falta de ar",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.98,
+        "negada": false,
+        "normalizado": "Dyspnea"
+      },
+      {
+        "texto": "canso",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.99,
+        "negada": false,
+        "normalizado": null
+      },
+      {
+        "texto": "peito apertado",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.99,
+        "negada": false,
+        "normalizado": "Chest tightness"
+      },
+      {
+        "texto": "ar não chega",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.98,
+        "negada": false,
+        "normalizado": null
+      }
+    ]
+  },
   "erros": [],
   "achados": [
     {
@@ -104,51 +189,51 @@
         ],
         "medidas": {
           "grupo_fala_medio_s": {
-            "atual": 0.779,
-            "referencia": 3.677
+            "atual": 0.563,
+            "referencia": 2.596
           },
           "pausas_por_min": {
-            "atual": 44.902,
-            "referencia": 11.371
+            "atual": 39.377,
+            "referencia": 14.824
           },
           "planicidade_espectral": {
-            "atual": 0.015,
-            "referencia": 0.015
+            "atual": 0.009,
+            "referencia": 0.012
           },
           "inspiracoes_por_min": {
-            "atual": 39.289,
-            "referencia": 0.0
+            "atual": 54.143,
+            "referencia": 7.412
           }
         }
       },
-      "momento": "2026-11-23T22:58:16.829876+00:00",
-      "id": "0272b4925604"
+      "momento": "2026-11-24T01:29:38.200175+00:00",
+      "id": "1cb9602f9bf6"
     },
     {
       "paciente_id": "PRT-2026-200102",
       "modalidade": "texto",
       "tipo": "termo_critico",
-      "escore": 0.8,
-      "fonte": "lexico-hospital",
+      "escore": 0.8500000000000001,
+      "fonte": "lexico-hospital+azure-ta4h",
       "evidencia": {
         "categoria": "respiratorio",
         "termos": [
           "falta de ar"
         ],
         "trechos": [
-          "doutor, estou com falta de ar desde cedo. qualque"
+          "doutor stock, falta de ar desde cedo. qualque"
         ],
         "negados_ignorados": []
       },
-      "momento": "2026-11-23T22:58:16.829876+00:00",
-      "id": "90097be8ecf5"
+      "momento": "2026-11-24T01:29:38.200175+00:00",
+      "id": "1a39dba835a6"
     },
     {
       "paciente_id": "PRT-2026-200102",
       "modalidade": "texto",
       "tipo": "termo_critico",
-      "escore": 0.8,
-      "fonte": "lexico-hospital",
+      "escore": 0.8500000000000001,
+      "fonte": "lexico-hospital+azure-ta4h",
       "evidencia": {
         "categoria": "cardiovascular",
         "termos": [
@@ -159,8 +244,51 @@
         ],
         "negados_ignorados": []
       },
-      "momento": "2026-11-23T22:58:16.829876+00:00",
-      "id": "fa4d3eaae58f"
+      "momento": "2026-11-24T01:29:38.200175+00:00",
+      "id": "494c50d50669"
+    },
+    {
+      "paciente_id": "PRT-2026-200102",
+      "modalidade": "texto",
+      "tipo": "sintoma_relatado",
+      "escore": 0.5,
+      "fonte": "azure-ta4h",
+      "evidencia": {
+        "sintomas": [
+          "ar não chega",
+          "canso"
+        ]
+      },
+      "momento": "2026-11-24T01:29:38.200175+00:00",
+      "id": "f2e6d05d3d82"
+    },
+    {
+      "paciente_id": "PRT-2026-200102",
+      "modalidade": "texto",
+      "tipo": "sentimento_negativo",
+      "escore": 0.57,
+      "fonte": "azure-language",
+      "evidencia": {
+        "confianca": 0.95,
+        "opinioes": [
+          {
+            "alvo": "ar",
+            "sentimento": "negative",
+            "avaliacoes": [
+              "chega"
+            ]
+          },
+          {
+            "alvo": "noite",
+            "sentimento": "negative",
+            "avaliacoes": [
+              "piorou"
+            ]
+          }
+        ]
+      },
+      "momento": "2026-11-24T01:29:38.200175+00:00",
+      "id": "1f2b284d3cd6"
     }
   ]
 }

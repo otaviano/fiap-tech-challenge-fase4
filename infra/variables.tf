@@ -16,9 +16,9 @@ variable "location" {
 }
 
 variable "language_location" {
-  description = "Região do Language. eastus porque a docs não confirma Text Analytics for Health no Brazil South (plano D7)"
+  description = "Região do Language (Text Analytics for Health confirmado em brazilsouth no F0; plano D7)"
   type        = string
-  default     = "eastus"
+  default     = "brazilsouth"
 }
 
 variable "speech_sku" {

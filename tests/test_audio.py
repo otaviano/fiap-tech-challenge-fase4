@@ -169,3 +169,57 @@ def test_falha_do_azure_nao_derruba_a_analise(wav):
 
 def test_transcricao_de_referencia_ausente(tmp_path):
     assert transcricao_de_referencia(tmp_path / "x.wav") is None
+
+
+# ------------------------------------------------------------ síntese neural
+
+def test_ssml_azure_tem_voz_prosodia_pausas_e_escapa_texto():
+    from med_monitor.audio.amostras import ssml_azure
+
+    s = ssml_azure("Dor <forte> & falta de ar agora mesmo", "dispneia", "pt-BR-AntonioNeural")
+    assert '<voice name="pt-BR-AntonioNeural">' in s and 'xml:lang="pt-BR"' in s
+    assert "&lt;forte&gt;" in s and "&amp;" in s
+    assert s.count('<break time="550ms"/>') == 2               # 8 palavras, pausa a cada 3
+    assert 'rate="-30%"' in ssml_azure("ok", "fadiga", "pt-BR-FranciscaNeural")
+
+
+def test_sintese_azure_usa_cache_e_cai_no_espeak_sem_chave(tmp_path, monkeypatch):
+    import soundfile as sf
+
+    from med_monitor.audio import amostras
+    from med_monitor.config import AzureSettings
+
+    monkeypatch.setattr(amostras, "CACHE_TTS", tmp_path)
+    chamadas = []
+
+    def tts_falso(texto, condicao, voz, settings):
+        chamadas.append(voz)
+        return np.sin(np.linspace(0, 2000, SR)) * 0.5, SR
+
+    monkeypatch.setattr(amostras, "_tts_azure", tts_falso)
+    monkeypatch.setattr(amostras, "_tts_espeak", lambda t, c, v: (chamadas.append(v) or np.zeros(SR) + 0.1, SR))
+    com_chave = AzureSettings(speech_key="x", speech_region="brazilsouth")
+    sem_chave = AzureSettings(speech_key="", speech_region="")
+    amostras.sintetizar("teste", "normal", "pt-BR-AntonioNeural", settings=com_chave)
+    amostras.sintetizar("teste", "normal", "pt-BR-AntonioNeural", settings=sem_chave)
+    assert chamadas == ["pt-BR-AntonioNeural", "pt-br+m3"]     # sem chave: variante equivalente do espeak
+
+
+def test_qualificador_positivo_nao_vira_sintoma(tmp_path):
+    import soundfile as sf
+
+    class Lang:
+        disponivel = True
+
+        def analisar(self, texto):
+            return AnaliseTexto(sentimento="mixed", confianca_sentimento={"negative": 0.4},
+                                entidades=[EntidadeSaude("Dormi bem", "SymptomOrSign", 0.9),
+                                           EntidadeSaude("Estou bem", "SymptomOrSign", 0.8),
+                                           EntidadeSaude("tosse", "SymptomOrSign", 0.9)])
+
+    caminho = tmp_path / "P_atual.wav"
+    sf.write(caminho, _fala([3.0] * 3, 0.5), SR)
+    caminho.with_suffix(".txt").write_text("Dormi bem, estou bem, só uma tosse.", encoding="utf-8")
+    rel = consulta.analisar_consulta(caminho, "P", speech=_SpeechFalso(False), language=Lang())
+    [extra] = [a for a in rel.achados if a.tipo == "sintoma_relatado"]
+    assert extra.evidencia["sintomas"] == ["tosse"]

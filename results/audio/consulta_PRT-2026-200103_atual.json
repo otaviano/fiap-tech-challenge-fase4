@@ -3,72 +3,78 @@
   "arquivo": "data/raw/audio/PRT-2026-200103_atual.wav",
   "basal": "data/raw/audio/PRT-2026-200103_basal.wav",
   "servicos": {
-    "speech": "referencia (roteiro .txt)",
-    "language": "indisponível"
+    "speech": "azure-speech",
+    "language": "azure-language"
   },
   "features": {
-    "duracao_s": 26.677,
-    "tempo_fala_s": 21.95,
-    "razao_pausa": 0.125,
-    "pausas_por_min": 14.348,
-    "pausa_media_s": 0.523,
-    "grupo_fala_medio_s": 3.136,
-    "taxa_articulacao": 3.736,
-    "f0_mediana_hz": 162.846,
-    "f0_variab_st": 2.187,
-    "intensidade_db": -32.843,
-    "planicidade_espectral": 0.017,
+    "duracao_s": 20.04,
+    "tempo_fala_s": 16.08,
+    "razao_pausa": 0.086,
+    "pausas_por_min": 10.227,
+    "pausa_media_s": 0.507,
+    "grupo_fala_medio_s": 4.02,
+    "taxa_articulacao": 3.731,
+    "f0_mediana_hz": 219.9,
+    "f0_variab_st": 4.042,
+    "intensidade_db": -29.571,
+    "planicidade_espectral": 0.012,
     "inspiracoes_por_min": 0.0
   },
   "features_basal": {
-    "duracao_s": 15.914,
-    "tempo_fala_s": 13.79,
-    "razao_pausa": 0.062,
-    "pausas_por_min": 12.245,
-    "pausa_media_s": 0.303,
-    "grupo_fala_medio_s": 3.447,
-    "taxa_articulacao": 5.439,
-    "f0_mediana_hz": 194.78,
-    "f0_variab_st": 1.771,
-    "intensidade_db": -24.69,
-    "planicidade_espectral": 0.019,
+    "duracao_s": 15.312,
+    "tempo_fala_s": 12.03,
+    "razao_pausa": 0.095,
+    "pausas_por_min": 13.534,
+    "pausa_media_s": 0.423,
+    "grupo_fala_medio_s": 3.007,
+    "taxa_articulacao": 4.738,
+    "f0_mediana_hz": 228.973,
+    "f0_variab_st": 3.018,
+    "intensidade_db": -22.563,
+    "planicidade_espectral": 0.012,
     "inspiracoes_por_min": 0.0
   },
   "alteracoes": [
     {
       "tipo": "fadiga_vocal",
-      "escore": 0.9,
+      "escore": 0.75,
       "comparacao": "basal do paciente",
       "criterios_atendidos": [
         "fala ≥ 20% mais lenta que o basal",
-        "voz ≥ 8% mais grave",
         "voz ≥ 4 dB mais fraca"
       ],
       "medidas": {
         "taxa_articulacao": {
-          "atual": 3.736,
-          "referencia": 5.439
+          "atual": 3.731,
+          "referencia": 4.738
         },
         "f0_variab_st": {
-          "atual": 2.187,
-          "referencia": 1.771
+          "atual": 4.042,
+          "referencia": 3.018
         },
         "f0_mediana_hz": {
-          "atual": 162.846,
-          "referencia": 194.78
+          "atual": 219.9,
+          "referencia": 228.973
         },
         "intensidade_db": {
-          "atual": -32.843,
-          "referencia": -24.69
+          "atual": -29.571,
+          "referencia": -22.563
         }
       }
     }
   ],
   "transcricao": {
-    "texto": "Estou muito cansada hoje, doutor. Sem força nenhuma, nem consegui comer direito. Tive calafrio de madrugada e a enfermeira disse que eu estava com febre. Só quero ficar deitada, uma fraqueza no corpo todo.",
-    "fonte": "referencia",
+    "texto": "Estou muito cansada hoje, doutor. Sem força nenhuma, nem consegui comer direito. Tive calafrio de madrugada e a enfermeira disse que eu estava com febre. Só quero ficar deitada. Uma fraqueza no corpo todo.",
+    "fonte": "azure-speech",
     "idioma": "pt-BR",
-    "segmentos": []
+    "segmentos": [
+      {
+        "inicio_s": 0.55,
+        "fim_s": 18.43,
+        "texto": "Estou muito cansada hoje, doutor. Sem força nenhuma, nem consegui comer direito. Tive calafrio de madrugada e a enfermeira disse que eu estava com febre. Só quero ficar deitada. Uma fraqueza no corpo todo.",
+        "confianca": 0.891
+      }
+    ]
   },
   "termos": [
     {
@@ -104,53 +110,112 @@
       "categoria": "fadiga",
       "escore": 0.55,
       "negado": false,
-      "trecho": "com febre. so quero ficar deitada, uma fraqueza no corpo todo."
+      "trecho": "com febre. so quero ficar deitada. uma fraqueza no corpo todo."
     }
   ],
-  "analise_texto": null,
+  "analise_texto": {
+    "fonte": "azure-language",
+    "sentimento": "negative",
+    "confianca_sentimento": {
+      "positive": 0.0,
+      "neutral": 0.06,
+      "negative": 0.94
+    },
+    "opinioes": [],
+    "entidades": [
+      {
+        "texto": "cansada",
+        "categoria": "SymptomOrSign",
+        "confianca": 1.0,
+        "negada": false,
+        "normalizado": null
+      },
+      {
+        "texto": "Sem força nenhuma",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.84,
+        "negada": false,
+        "normalizado": null
+      },
+      {
+        "texto": "consegui comer direito",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.88,
+        "negada": false,
+        "normalizado": null
+      },
+      {
+        "texto": "calafrio",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.98,
+        "negada": false,
+        "normalizado": "Chills"
+      },
+      {
+        "texto": "febre",
+        "categoria": "SymptomOrSign",
+        "confianca": 0.93,
+        "negada": false,
+        "normalizado": "Fever"
+      },
+      {
+        "texto": "fraqueza",
+        "categoria": "SymptomOrSign",
+        "confianca": 1.0,
+        "negada": false,
+        "normalizado": "Weakness"
+      },
+      {
+        "texto": "corpo",
+        "categoria": "BodyStructure",
+        "confianca": 0.87,
+        "negada": false,
+        "normalizado": null
+      }
+    ]
+  },
   "erros": [],
   "achados": [
     {
       "paciente_id": "PRT-2026-200103",
       "modalidade": "audio",
       "tipo": "fadiga_vocal",
-      "escore": 0.9,
+      "escore": 0.75,
       "fonte": "librosa",
       "evidencia": {
         "comparacao": "basal do paciente",
         "criterios_atendidos": [
           "fala ≥ 20% mais lenta que o basal",
-          "voz ≥ 8% mais grave",
           "voz ≥ 4 dB mais fraca"
         ],
         "medidas": {
           "taxa_articulacao": {
-            "atual": 3.736,
-            "referencia": 5.439
+            "atual": 3.731,
+            "referencia": 4.738
           },
           "f0_variab_st": {
-            "atual": 2.187,
-            "referencia": 1.771
+            "atual": 4.042,
+            "referencia": 3.018
           },
           "f0_mediana_hz": {
-            "atual": 162.846,
-            "referencia": 194.78
+            "atual": 219.9,
+            "referencia": 228.973
           },
           "intensidade_db": {
-            "atual": -32.843,
-            "referencia": -24.69
+            "atual": -29.571,
+            "referencia": -22.563
           }
         }
       },
-      "momento": "2026-11-23T22:58:19.477523+00:00",
-      "id": "86503a6ad55a"
+      "momento": "2026-11-24T01:29:58.783310+00:00",
+      "id": "02870d43a9b9"
     },
     {
       "paciente_id": "PRT-2026-200103",
       "modalidade": "texto",
       "tipo": "termo_critico",
-      "escore": 0.55,
-      "fonte": "lexico-hospital",
+      "escore": 0.6000000000000001,
+      "fonte": "lexico-hospital+azure-ta4h",
       "evidencia": {
         "categoria": "fadiga",
         "termos": [
@@ -161,19 +226,19 @@
         "trechos": [
           "estou muito cansada hoje, doutor. sem f",
           "estou muito cansada hoje, doutor. sem forca nenhuma, nem conseg",
-          "com febre. so quero ficar deitada, uma fraqueza no corpo todo."
+          "com febre. so quero ficar deitada. uma fraqueza no corpo todo."
         ],
         "negados_ignorados": []
       },
-      "momento": "2026-11-23T22:58:19.477523+00:00",
-      "id": "9f96544d61e5"
+      "momento": "2026-11-24T01:29:58.783310+00:00",
+      "id": "e3f196cadfd9"
     },
     {
       "paciente_id": "PRT-2026-200103",
       "modalidade": "texto",
       "tipo": "termo_critico",
-      "escore": 0.45,
-      "fonte": "lexico-hospital",
+      "escore": 0.5,
+      "fonte": "lexico-hospital+azure-ta4h",
       "evidencia": {
         "categoria": "geral",
         "termos": [
@@ -186,8 +251,35 @@
         ],
         "negados_ignorados": []
       },
-      "momento": "2026-11-23T22:58:19.477523+00:00",
-      "id": "4ac79f171584"
+      "momento": "2026-11-24T01:29:58.783310+00:00",
+      "id": "5f5253c7283d"
+    },
+    {
+      "paciente_id": "PRT-2026-200103",
+      "modalidade": "texto",
+      "tipo": "sintoma_relatado",
+      "escore": 0.5,
+      "fonte": "azure-ta4h",
+      "evidencia": {
+        "sintomas": [
+          "consegui comer direito"
+        ]
+      },
+      "momento": "2026-11-24T01:29:58.783310+00:00",
+      "id": "8bb78198f4e8"
+    },
+    {
+      "paciente_id": "PRT-2026-200103",
+      "modalidade": "texto",
+      "tipo": "sentimento_negativo",
+      "escore": 0.564,
+      "fonte": "azure-language",
+      "evidencia": {
+        "confianca": 0.94,
+        "opinioes": []
+      },
+      "momento": "2026-11-24T01:29:58.783310+00:00",
+      "id": "138ca76928cb"
     }
   ]
 }

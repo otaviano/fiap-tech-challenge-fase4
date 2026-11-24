@@ -15,6 +15,7 @@ credenciais, o Azure aparece como "indisponível" e a transcrição como
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -26,6 +27,8 @@ from ..domain import Achado, Modalidade
 from . import acustica, termos
 
 SENTIMENTO_NEGATIVO_MIN = 0.75
+# O Text Analytics for Health às vezes marca como sintoma um estado bom ("dorme bem", "respirando melhor").
+_POSITIVO = re.compile(r"\b(bem|melhor|normal|normais|tranquil\w*|[óo]tim\w*)\b", re.IGNORECASE)
 
 
 def _relativo(caminho: Path | str | None) -> str | None:
@@ -64,7 +67,7 @@ def _achados_texto(paciente_id: str, momento: datetime, encontrados: list[termos
                    analise: AnaliseTexto | None) -> list[Achado]:
     saida = []
     sintomas_azure = {e.texto.lower() for e in (analise.entidades if analise else [])
-                      if e.categoria == "SymptomOrSign" and not e.negada}
+                      if e.categoria == "SymptomOrSign" and not e.negada and not _POSITIVO.search(e.texto)}
     por_categoria: dict[str, list[termos.TermoEncontrado]] = {}
     for t in encontrados:
         if not t.negado:

@@ -8,6 +8,7 @@ permite cruzar termos críticos com o trecho do áudio.
 
 from __future__ import annotations
 
+import json
 import threading
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -64,9 +65,9 @@ class ClienteSpeech:
             r = evt.result
             if r.reason == sdk.ResultReason.RecognizedSpeech and r.text:
                 confianca = None
-                try:
-                    confianca = float(r.best()[0].confidence)
-                except Exception:  # formato detalhado ausente: segue sem confiança
+                try:   # formato detalhado: a confiança vem na melhor hipótese (NBest[0])
+                    confianca = round(float(json.loads(r.json)["NBest"][0]["Confidence"]), 3)
+                except (KeyError, IndexError, ValueError, TypeError):
                     pass
                 ini = r.offset / _TICKS_POR_SEGUNDO
                 segmentos.append(Segmento(round(ini, 2), round(ini + r.duration / _TICKS_POR_SEGUNDO, 2),

@@ -60,36 +60,56 @@ Três decisões de método:
 ### Avaliação
 
 Não existe dataset público de consultas em pt-BR com rótulo de fadiga ou
-dispneia. Geramos então consultas sintéticas com **espeak-ng**, com a condição
-conhecida ([`audio/amostras.py`](../src/med_monitor/audio/amostras.py)):
-- 4 vozes (2 masculinas, 2 femininas);
+dispneia. Por isso geramos consultas sintéticas com a condição conhecida
+([`audio/amostras.py`](../src/med_monitor/audio/amostras.py)):
+- 4 vozes;
 - 3 roteiros por condição, sempre diferentes do roteiro do basal;
-- versões **leves** de cada alteração, para medir a sensibilidade;
+- versões **leves** de cada alteração;
 - piso de ruído de sala e ruído de inspiração nas pausas da dispneia.
+
+Usamos dois motores de síntese. **O resultado principal é o das vozes neurais
+do Azure**, porque são fala natural.
+
+**Vozes neurais do Azure Speech** (Antonio, Francisca, Donato, Brenda; prosódia
+em SSML):
 
 | Condição | Com basal | Sem basal |
 |---|---|---|
-| normal | **0/12 falsos alarmes** | 0/12 falsos alarmes |
-| fadiga | **12/12**, 0 confusões | 0/12 |
-| fadiga leve | 4/12, 2 confusões | 0/12 |
+| normal | 2/12 falsos alarmes | 0/12 falsos alarmes |
+| fadiga | **11/12**, 0 confusões | 0/12 |
+| fadiga leve | 1/12 | 0/12 |
 | dispneia | **12/12**, 0 confusões | 12/12 |
 | dispneia leve | **12/12**, 0 confusões | 12/12 |
 
+**espeak-ng** (voz robótica, offline):
+
+| Condição | Com basal | Sem basal |
+|---|---|---|
+| normal | 0/12 falsos alarmes | 0/12 falsos alarmes |
+| fadiga | 12/12, 0 confusões | 0/12 |
+| fadiga leve | 4/12, 2 confusões | 0/12 |
+| dispneia | 12/12, 0 confusões | 12/12 |
+| dispneia leve | 12/12, 0 confusões | 12/12 |
+
 **Leitura:**
-- Com basal, o detector é **específico**: nenhum falso alarme e nenhuma
-  confusão nas alterações marcadas.
-- A **fadiga leve** é o limite. Fala 15% mais lenta e voz 2,5 dB mais fraca
-  ficam dentro da variação que a mesma pessoa tem de um dia para outro.
-- **Sem basal, a fadiga é invisível**, porque fala lenta não é anormal por si
-  só. Já a dispneia aparece mesmo sem basal: respiração audível entre frases
-  curtas é anormal em qualquer pessoa. Isso sustenta a recomendação clínica de
-  gravar uma consulta basal na admissão.
-- **Limitação:** a voz é sintética e as alterações são caricatas. Isto valida a
-  *mecânica*, não a acurácia clínica. Para o vídeo, o ideal é o grupo gravar
-  os roteiros com a própria voz.
+- A **dispneia** é detectada em todos os casos, com e sem basal, nos dois
+  motores. Respiração audível entre frases curtas é anormal em qualquer pessoa.
+- A **fadiga marcada** é detectada com basal (11–12 de 12). Sem basal ela é
+  invisível, porque fala lenta não é anormal por si só. Isso sustenta a
+  recomendação de gravar uma consulta basal na admissão.
+- A **fadiga leve** fica dentro da variação natural de uma mesma pessoa, e
+  quase não é detectada.
+- Os **2 falsos alarmes da voz neural** vêm da **pontuação do roteiro**, não da
+  voz. O roteiro do basal tem frases longas. Os roteiros `basal_3` e `estavel`
+  têm muitas vírgulas e frases curtas, e a voz natural pausa na pontuação. Os
+  grupos de fala encurtam cerca de 40% sem respiração audível. O espeak
+  praticamente não pausava em vírgulas, por isso não mostrava isso. O mesmo
+  aconteceria com uma pessoa real que muda o tipo de fala entre consultas.
+- **Limitação:** a voz é sintética e as alterações são controladas. Isto valida
+  a *mecânica* do detector. Para o vídeo, o ideal é o grupo gravar os roteiros.
 
 ```bash
-med-monitor audio avaliar          # ~1 min; resultados em results/audio/avaliacao_acustica.md
+med-monitor audio avaliar          # ~1,5 min; usa vozes neurais se o Azure estiver configurado
 ```
 
 **Disartria** (fala arrastada por lesão neurológica) aparece no desafio do
@@ -137,10 +157,25 @@ correto por ignorar a negação.
 O relatório de cada consulta registra em `servicos` **o que foi de fato
 usado**. Nunca se finge que a nuvem foi chamada (decisão D4).
 
-> **Status:** os clientes Azure estão implementados e testados com dublês, mas
-> **ainda não rodaram contra o serviço real**, porque a conta está sendo
-> criada. Depois do `terraform apply` e do `.env`, basta rodar `med-monitor
-> audio analisar` de novo: o pipeline passa a usar o Azure sem mudança de código.
+### Resultado com o Azure real
+
+Recursos em `brazilsouth`, camada gratuita (F0), assinatura Azure for Students.
+
+| Consulta | Transcrição (Speech to Text) | Text Analytics for Health | Achados |
+|---|---|---|---|
+| PRT-2026-200102, dispneia | confiança 0,81–0,93, quase idêntica ao roteiro | "falta de ar", "peito apertado", "canso", "ar não chega" | fala ofegante (0,90) + termos críticos **corroborados pelo Azure** + sentimento negativo |
+| PRT-2026-200103, fadiga | confiança 0,89 | "cansada", "sem força", "calafrio", "febre", "fraqueza" | fadiga vocal (0,75) + termos críticos + sentimento negativo |
+| PRT-2026-200105, estável | confiança 0,87–0,93 | "falta de ar", "dor no peito" e "febre" **negados** | nenhum achado |
+
+- **Text Analytics for Health funciona em `brazilsouth` na camada F0** com
+  `language="pt"`. Essa era a dúvida aberta da decisão D7.
+- **A voz importa para o Speech to Text.** Com a voz robótica do espeak, o
+  serviço pulava trechos inteiros, com confiança de 0,5–0,6, e transcreveu
+  "estou a ganhar dinheiro" no lugar de "estou com falta de ar". Com voz neural,
+  a transcrição fica praticamente igual ao roteiro.
+- **Filtro de qualificador positivo:** o Text Analytics for Health às vezes marca
+  como sintoma um estado bom ("Estou bem", "Dormi bem"). Entidades com "bem",
+  "melhor", "normal" ou "tranquilo" não viram achado.
 
 ## Integração com a fusão
 

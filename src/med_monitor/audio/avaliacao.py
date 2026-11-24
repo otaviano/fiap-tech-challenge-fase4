@@ -17,22 +17,25 @@ from pathlib import Path
 
 from ..config import AUDIO_RESULTS
 from . import acustica
-from .amostras import ROTEIROS, sintetizar
+from .amostras import ROTEIROS, motor_padrao, sintetizar
 
-VOZES = ("pt-br+m3", "pt-br+f2", "pt-br+m1", "pt-br+f4")
+VOZES = ("pt-BR-AntonioNeural", "pt-BR-FranciscaNeural", "pt-BR-DonatoNeural", "pt-BR-BrendaNeural")
 ROTEIROS_ATUAIS = ("basal_2", "basal_3", "estavel")
 CONDICOES = ("normal", "fadiga", "fadiga_leve", "dispneia", "dispneia_leve")
 ESPERADO = {"normal": None, "fadiga": "fadiga_vocal", "fadiga_leve": "fadiga_vocal",
             "dispneia": "fala_ofegante", "dispneia_leve": "fala_ofegante"}
 
 
-def avaliar() -> dict:
+def avaliar(motor: str | None = None) -> dict:
+    """`motor`: "azure" (vozes neurais) ou "espeak"; padrão: Azure se configurado."""
+    motor = motor or motor_padrao()
     linhas = []
     for iv, voz in enumerate(VOZES):
-        basal = acustica.extrair(sintetizar(ROTEIROS["basal_1"], "normal", voz, semente=iv))
+        basal = acustica.extrair(sintetizar(ROTEIROS["basal_1"], "normal", voz, semente=iv, motor=motor))
         for ir, roteiro in enumerate(ROTEIROS_ATUAIS):
             for condicao in CONDICOES:
-                f = acustica.extrair(sintetizar(ROTEIROS[roteiro], condicao, voz, semente=100 + iv * 10 + ir))
+                f = acustica.extrair(sintetizar(ROTEIROS[roteiro], condicao, voz, semente=100 + iv * 10 + ir,
+                                                motor=motor))
                 for modo, ref in (("com basal", basal), ("sem basal", None)):
                     tipos = sorted(a.tipo for a in acustica.detectar(f, ref))
                     linhas.append({"voz": voz, "roteiro": roteiro, "condicao": condicao, "modo": modo,
@@ -50,11 +53,13 @@ def avaliar() -> dict:
                                "detectado": sum(esperado in l["declarado"] for l in casos),
                                "confusao": sum(any(t != esperado for t in l["declarado"]) for l in casos)}
         resumo[modo] = por_cond
-    return {"vozes": list(VOZES), "roteiros_atuais": list(ROTEIROS_ATUAIS), "resumo": resumo, "casos": linhas}
+    return {"motor": motor, "vozes": list(VOZES), "roteiros_atuais": list(ROTEIROS_ATUAIS), "resumo": resumo,
+            "casos": linhas}
 
 
 def tabela_markdown(res: dict) -> str:
-    linhas = [f"{len(res['vozes'])} vozes × {len(res['roteiros_atuais'])} roteiros por condição "
+    motor = {"azure": "vozes neurais do Azure Speech", "espeak": "espeak-ng"}.get(res.get("motor"), res.get("motor"))
+    linhas = [f"{len(res['vozes'])} vozes ({motor}) × {len(res['roteiros_atuais'])} roteiros por condição "
               "(basal: outro roteiro, mesma voz, fala normal)", "",
               "| Condição | Com basal | Sem basal (referência populacional) |", "|---|---|---|"]
     for c in CONDICOES:

@@ -23,14 +23,14 @@ anteriores) quer **monitorar pacientes continuamente com dados multimodais**
 | 1.4 | Relatório automático de desvios | `video/relatorio.py` | ✅ AUC por pessoa 0,87 (braço) e 0,95 (agachamento) |
 | 2.1 | Processar áudios de consultas | `audio/consulta.py` — [docs](audio.md) | ✅ |
 | 2.2 | Alterações vocais (cansaço, dificuldade respiratória) | `audio/acustica.py` | ✅ dispneia 24/24, fadiga 12/12, 0 falsos alarmes (sintético) |
-| 2.3 | Azure Speech to Text | `azure/speech.py` | 🟡 implementado e testado com dublê; falta rodar com a conta |
-| 2.4 | Termos críticos e sentimento (Azure Text Analytics) | `azure/language.py` + `audio/termos.py` | 🟡 léxico com negação ✅; Azure falta rodar com a conta |
+| 2.3 | Azure Speech to Text | `azure/speech.py` | ✅ rodando no Azure (brazilsouth, F0): confiança 0,81–0,93 com voz natural |
+| 2.4 | Termos críticos e sentimento (Azure Text Analytics) | `azure/language.py` + `audio/termos.py` | ✅ sentimento + Text Analytics for Health (pt) no F0, com negação |
 | 3.1 | Anomalias em sinais vitais (FC, PA, SpO2) | `anomalias/sinais_vitais.py` — [docs](sinais-vitais.md) | ✅ recall 96% em 336 h reais |
 | 3.2 | Anomalias na evolução de prescrições | `anomalias/prescricoes.py` — [docs](prescricoes.md) | ✅ recall 92%, 1,2% de alertas em internações normais |
 | 3.3 | Padrões de movimentação na internação | `video/relatorio.py` (amplitude vs sessão anterior, queda) | ✅ parcial: sessões de fisioterapia |
 | 3.4 | Alertas automáticos à equipe médica | `fusao/` + `alertas/` + `serving/` — [docs](fusao-alertas.md) | ✅ fusão, painel SSE, ciência auditada; áudio/vídeo entram por `POST /achados` |
 | — | Contratos `Achado`/`Alerta`, config, auditoria, CLI | `domain.py`, `config.py`, `audit.py`, `cli.py` | ✅ |
-| — | Recursos Azure (Speech + Language + orçamento) | `infra/` | ✅ (falta conta e `apply`) |
+| — | Recursos Azure (Speech + Language + orçamento) | `infra/` | ✅ aplicado na assinatura Azure for Students |
 
 ### Entregáveis
 
@@ -107,10 +107,11 @@ desenhado para não consumir nada dele:
   com alerta por e-mail em 50% e 90% de US$ 20, criado só quando
   `budget_alert_email` é informado.
 
-O Language fica em `eastus` e o Speech em `brazilsouth`. A documentação não
-confirma o Text Analytics for Health no Brazil South, e o East US é região
-principal para todos os recursos de Language. Como os dados são sintéticos, a
-residência de dados não é uma restrição.
+Speech e Language ficam em `brazilsouth`. A assinatura Azure for Students tem
+uma política que só permite 5 regiões (`brazilsouth`, `westus3`,
+`francecentral`, `spaincentral`, `southafricanorth`), e o `eastus` planejado
+para o Language foi recusado. **Confirmado no uso:** o Text Analytics for
+Health funciona em `brazilsouth` na camada F0.
 
 ## Dados
 
@@ -124,10 +125,8 @@ residência de dados não é uma restrição.
 
 ## Em aberto
 
-- [ ] Criar a conta Azure com o benefício de crédito de US$ 100/ano e confirmar
-      que a assinatura aceita recursos F0 e tem limite de gasto (*spending limit*)
-- [ ] No primeiro `terraform apply`, testar uma chamada de Text Analytics for
-      Health no F0 (D7): se recusar, trocar `language_sku` para `S`
+- [x] Conta Azure for Students (US$ 100/ano, sem cartão), recursos F0 aplicados
+- [x] Text Analytics for Health no F0 em `brazilsouth`: funciona
 - [x] Vídeos de fisioterapia → dataset público REHAB24-6 (D6)
 - [x] Text Analytics for Health em português → `language="pt"` (D5); região `eastus` (D7)
 - [ ] Gravar os roteiros de `audio/amostras.py` com a voz do grupo (basal + atual) para o vídeo
