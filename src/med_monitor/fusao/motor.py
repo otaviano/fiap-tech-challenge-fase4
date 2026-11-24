@@ -11,7 +11,8 @@ Como a severidade de um episódio é decidida:
    pontos pede avaliação urgente à beira do leito (*moderado*), escore ≥ 5
    pede resposta urgente (*alto*), ≥ 7 é emergência (*crítico*).
 2. **Corroboração**: dois ou mais detectores *diferentes* apontando o mesmo
-   paciente dentro de `janela_corroboracao` elevam um nível, **até no máximo
+   paciente com achados **vigentes** (ver `VALIDADE`: 15 min para o monitor,
+   1 h para consulta e vídeo, 6 h para prescrição) elevam um nível, **até no máximo
    alto**. Detectores da mesma modalidade leem o mesmo sensor: um oxímetro
    reposicionado engana os três ao mesmo tempo, então a concordância deles não
    é evidência independente o bastante para declarar emergência.
@@ -51,6 +52,15 @@ SEVERIDADE_BASE: dict[tuple[str, str | None], Severidade] = {
 TETO_BASE = {"desvio-robusto": S.MODERADO}
 TETO_CORROBORACAO = S.ALTO
 
+# Por quanto tempo um achado continua valendo como evidência do estado do paciente.
+# Um valor do monitor envelhece em minutos; o que o paciente relatou na consulta,
+# em cerca de uma hora; uma prescrição perigosa é risco enquanto o medicamento age.
+VALIDADE = {
+    Modalidade.PRESCRICAO: timedelta(hours=6),
+    Modalidade.AUDIO: timedelta(hours=1), Modalidade.TEXTO: timedelta(hours=1),
+    Modalidade.VIDEO: timedelta(hours=1), Modalidade.MOVIMENTACAO: timedelta(hours=1),
+}
+
 # Canal físico de cada modalidade: é a independência *da origem* que importa.
 CANAL = {
     Modalidade.SINAIS_VITAIS: "monitor",
@@ -87,9 +97,22 @@ ROTULO = {
     "sintoma_relatado": "Sintoma relatado",
     "queda": "Queda", "desvio_postural": "Desvio postural", "amplitude_reduzida": "Amplitude de movimento reduzida",
     "desvio_execucao": "Execução incorreta na fisioterapia",
+    "possivel_erro_decimal": "Possível erro decimal na prescrição", "dose_acima_maxima": "Dose acima da máxima",
+    "duplicidade_terapeutica": "Duplicidade terapêutica", "suspensao_abrupta": "Suspensão abrupta",
+    "intervalo_inesperado": "Intervalo de dose inesperado", "salto_de_dose": "Salto de dose",
+    "alteracao_atipica": "Ajuste de dose atípico para o medicamento",
 }
 UNIDADE = {"fc": "bpm", "pas": "mmHg", "pad": "mmHg", "pam": "mmHg", "fr": "irpm", "spo2": "%"}
 NOME_SINAL = {"fc": "FC", "pas": "PAS", "pad": "PAD", "pam": "PAM", "fr": "FR", "spo2": "SpO2"}
+
+
+def _destinatario(principal: Achado, severidade: Severidade) -> str:
+    if principal.modalidade is Modalidade.PRESCRICAO and severidade is not S.CRITICO:
+        # a prescrição ainda não foi administrada: quem age é a farmácia e, se grave, quem prescreveu
+        return "farmácia clínica" if severidade.peso <= S.MODERADO.peso else "médico prescritor e farmácia clínica"
+    if severidade.peso <= S.MODERADO.peso and principal.tipo in DESTINATARIO_POR_TIPO:
+        return DESTINATARIO_POR_TIPO[principal.tipo]
+    return DESTINATARIO[severidade]
 
 
 def severidade_base(achado: Achado) -> Severidade:
@@ -141,6 +164,23 @@ def descrever(achado: Achado) -> str:
         return f"{rotulo} na consulta ({criterios})" if criterios else rotulo
     if achado.tipo == "sentimento_negativo":
         return f"{rotulo} na consulta (confiança {_num(round(ev.get('confianca', 0), 2))})"
+    if achado.modalidade is Modalidade.PRESCRICAO and "prescricao" in ev:
+        p = ev["prescricao"]
+        base = f"{rotulo}: {p['medicamento']} {p['dose']} {p['via']} {p['frequencia']}"
+        if achado.tipo == "possivel_erro_decimal":
+            return base + f" ({_num(ev['razao'])}× a dose de referência de {_num(ev['dose_referencia'])})"
+        if achado.tipo == "dose_acima_maxima":
+            return base + f" ({'; '.join(ev.get('motivos', []))})"
+        if achado.tipo == "duplicidade_terapeutica":
+            return base + f" — já ativo: {', '.join(ev.get('ja_ativo', []))}"
+        if achado.tipo == "suspensao_abrupta":
+            return base + f" sem desmame (dose diária {_num(ev['dose_diaria_ao_suspender'])})"
+        if achado.tipo == "intervalo_inesperado":
+            return base + f" (antes {ev['intervalo_anterior_h']}/{ev['intervalo_anterior_h']}h)"
+        if achado.tipo in ("salto_de_dose", "alteracao_atipica"):
+            extra = f", variação típica {ev['variacao_tipica']}" if "variacao_tipica" in ev else ""
+            return base + f" ({_num(ev['razao_dose_diaria'])}× a dose diária anterior{extra})"
+        return base
     if achado.tipo == "desvio_execucao":
         return (f"{rotulo} ({ev.get('exercicio')}): {len(ev.get('repeticoes_incorretas', []))} de "
                 f"{ev.get('total_repeticoes')} repetições" + (f" — {'; '.join(ev['desvios'][:2])}" if ev.get("desvios") else ""))
@@ -196,11 +236,16 @@ class MotorFusao:
             return None
         if agora is not None:
             agora = agora if agora.tzinfo else agora.replace(tzinfo=timezone.utc)
-            if agora - ep.ultimo > self.janela_episodio:
+            if agora - ep.ultimo > self.janela_episodio and not any(self._vigente(a, agora) for a in ep.achados):
                 return None
         return {"inicio": ep.inicio.isoformat(), "ultimo": ep.ultimo.isoformat(),
                 "achados": len(ep.achados),
                 "severidade": ep.severidade_emitida.value if ep.severidade_emitida else None}
+
+    def _vigente(self, a: Achado, agora: datetime) -> bool:
+        """O achado ainda vale como evidência em `agora` (validade da modalidade, no mínimo a janela de corroboração)."""
+        idade = agora - a.momento
+        return timedelta(0) <= idade <= max(self.janela_corroboracao, VALIDADE.get(a.modalidade, timedelta(0)))
 
     def processar(self, achado: Achado) -> list[Decisao]:
         achado = _com_fuso(achado)
@@ -208,12 +253,14 @@ class MotorFusao:
             return [self._alerta_tecnico(achado)]
 
         ep = self._episodios.get(achado.paciente_id)
-        if ep is None or achado.momento - ep.ultimo > self.janela_episodio:
+        continua = ep is not None and (achado.momento - ep.ultimo <= self.janela_episodio
+                                       or any(self._vigente(a, achado.momento) for a in ep.achados))
+        if not continua:
             ep = self._episodios[achado.paciente_id] = _Episodio(achado.momento, achado.momento)
         ep.achados.append(achado)
         ep.ultimo = max(ep.ultimo, achado.momento)
 
-        recentes = [a for a in ep.achados if achado.momento - a.momento <= self.janela_corroboracao]
+        recentes = [a for a in ep.achados if self._vigente(a, achado.momento)]
         principal = max(recentes, key=lambda a: (severidade_base(a).peso, a.escore))
         severidade = max((severidade_base(a) for a in ep.achados), key=lambda s: s.peso)
         fontes = {a.fonte for a in recentes}
@@ -251,8 +298,7 @@ class MotorFusao:
             mensagem=" · ".join(partes),
             achados=tuple(a.id for a in recentes),
             modalidades=mods,
-            destinatario=(DESTINATARIO_POR_TIPO.get(principal.tipo, DESTINATARIO[severidade])
-                          if severidade.peso <= S.MODERADO.peso else DESTINATARIO[severidade]),
+            destinatario=_destinatario(principal, severidade),
             momento=achado.momento,
         )
         return [Decisao(alerta, tuple(recentes))]

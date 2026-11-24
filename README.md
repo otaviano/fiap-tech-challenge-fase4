@@ -24,7 +24,8 @@ achados em alertas para a equipe médica.
 | Análise de vídeo ✅ | [`video/`](src/med_monitor/video/) — YOLOv8-pose (keypoints do OpenPose) e YOLOv8 de objetos; execução incorreta com AUC por pessoa 0,87–0,95 no REHAB24-6; relatório automático da sessão ([detalhes](docs/video.md)) |
 | Análise de áudio ✅ (Azure 🟡 aguardando conta) | [`audio/`](src/med_monitor/audio/) — fala ofegante e fadiga vs basal do paciente, termos críticos com negação; [`azure/`](src/med_monitor/azure/) — Speech to Text, sentimento e Text Analytics for Health ([detalhes](docs/audio.md)) |
 | Anomalias em sinais vitais ✅ | [`anomalias/sinais_vitais.py`](src/med_monitor/anomalias/sinais_vitais.py) — NEWS2 + desvio robusto + Isolation Forest; recall 96% em 336 h de UTI ([detalhes](docs/sinais-vitais.md)) |
-| Anomalias em prescrições e movimentação | [`src/med_monitor/anomalias/`](src/med_monitor/anomalias/) |
+| Anomalias em prescrições ✅ | [`anomalias/prescricoes.py`](src/med_monitor/anomalias/prescricoes.py) — regras do formulário + variação de dose aprendida por medicamento; recall 92% com 1,2% de alertas em internações normais ([detalhes](docs/prescricoes.md)) |
+| Padrões de movimentação ✅ | amplitude vs sessão anterior e queda, no [vídeo](docs/video.md) |
 | Fusão multimodal e alertas em tempo real ✅ | [`fusao/motor.py`](src/med_monitor/fusao/motor.py), [`alertas/despacho.py`](src/med_monitor/alertas/despacho.py), [`serving/`](src/med_monitor/serving/) — painel SSE da equipe médica, escalonamento por concordância entre modalidades, ciência auditada ([detalhes](docs/fusao-alertas.md)) |
 | Serviços gerenciados em nuvem (Azure) | [`infra/`](infra/) — Terraform |
 | Fluxo multimodal | [`docs/arquitetura.md`](docs/arquitetura.md) |
@@ -73,6 +74,13 @@ pip install -e ".[video,anomalias,dev]"
 med-monitor video baixar             # 22 vídeos do REHAB24-6 (download seletivo, ~475 MB)
 med-monitor video avaliar            # pose + validação por pessoa (~12 min na 1ª vez)
 med-monitor video relatorio PM_016 [--api http://localhost:8000]
+```
+
+### Prescrições
+
+```bash
+med-monitor prescricoes avaliar
+med-monitor prescricoes exemplo --tipo erro_decimal [--api http://localhost:8000]
 ```
 
 ### Painel da equipe médica (tempo real)

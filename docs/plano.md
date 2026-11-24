@@ -26,7 +26,7 @@ anteriores) quer **monitorar pacientes continuamente com dados multimodais**
 | 2.3 | Azure Speech to Text | `azure/speech.py` | 🟡 implementado e testado com dublê; falta rodar com a conta |
 | 2.4 | Termos críticos e sentimento (Azure Text Analytics) | `azure/language.py` + `audio/termos.py` | 🟡 léxico com negação ✅; Azure falta rodar com a conta |
 | 3.1 | Anomalias em sinais vitais (FC, PA, SpO2) | `anomalias/sinais_vitais.py` — [docs](sinais-vitais.md) | ✅ recall 96% em 336 h reais |
-| 3.2 | Anomalias na evolução de prescrições | `anomalias/prescricoes.py` | ⬜ |
+| 3.2 | Anomalias na evolução de prescrições | `anomalias/prescricoes.py` — [docs](prescricoes.md) | ✅ recall 92%, 1,2% de alertas em internações normais |
 | 3.3 | Padrões de movimentação na internação | `video/relatorio.py` (amplitude vs sessão anterior, queda) | ✅ parcial: sessões de fisioterapia |
 | 3.4 | Alertas automáticos à equipe médica | `fusao/` + `alertas/` + `serving/` — [docs](fusao-alertas.md) | ✅ fusão, painel SSE, ciência auditada; áudio/vídeo entram por `POST /achados` |
 | — | Contratos `Achado`/`Alerta`, config, auditoria, CLI | `domain.py`, `config.py`, `audit.py`, `cli.py` | ✅ |

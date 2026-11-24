@@ -264,6 +264,66 @@ def _cmd_video_relatorio(args: argparse.Namespace) -> int:
     return 0
 
 
+# ------------------------------------------------------------ prescrições
+
+def _cmd_prescricoes_avaliar(_: argparse.Namespace) -> int:
+    from .anomalias import prescricoes
+    from .config import ANOMALIAS_RESULTS
+
+    res = prescricoes.avaliar()
+    print(prescricoes.tabela_markdown(res))
+    for caminho in prescricoes.salvar(res, ANOMALIAS_RESULTS):
+        print(f"salvo: {caminho}")
+    return 0
+
+
+def _cmd_prescricoes_exemplo(args: argparse.Namespace) -> int:
+    """Uma internação sintética com a anomalia pedida, avaliada evento a evento."""
+    import json as _json
+    import urllib.request
+
+    import numpy as np
+
+    from .anomalias import prescricoes
+    from .config import ANOMALIAS_RESULTS
+    from .dados import prescricoes as dados
+    from .fusao.motor import descrever
+
+    caminho_modelo = ANOMALIAS_RESULTS / "modelo_variacao_prescricoes.json"
+    modelo = (prescricoes.ModeloVariacao.carregar(caminho_modelo) if caminho_modelo.exists()
+              else prescricoes.ModeloVariacao.ajustar(dados.gerar_coorte(600, 7, 0.0, prefixo="PRT-2026-4")))
+    rng = np.random.default_rng(args.semente)
+    for _ in range(200):
+        eventos = dados.injetar(dados.gerar_internacao(args.paciente, rng), args.tipo, rng)
+        if eventos:
+            break
+    else:
+        print(f"não consegui encaixar '{args.tipo}' numa internação; tente outra semente")
+        return 1
+    mon = prescricoes.MonitorPrescricoes(modelo)
+    achados = []
+    for ev in eventos:
+        ach = mon.processar(ev)
+        p = ev.como_prontuario()
+        marca = "  ◀ anomalia injetada" if ev.anomalia else ""
+        print(f"{ev.momento:%d/%m %H:%M} {ev.acao:<9} {p['medicamento']:<24} {p['dose']:>9} {p['via']:<3} "
+              f"{p['frequencia']}{marca}")
+        for a in ach:
+            print(f"      ▸ {descrever(a)}  [{a.fonte}, escore {a.escore:.2f}]")
+        achados += ach
+    if args.api:
+        for a in achados:
+            corpo = {k: v for k, v in a.as_dict().items()
+                     if k in ("paciente_id", "modalidade", "tipo", "escore", "fonte", "evidencia")}
+            req = urllib.request.Request(args.api.rstrip("/") + "/achados", method="POST",
+                                         data=_json.dumps(corpo, ensure_ascii=False).encode(),
+                                         headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                for alerta in _json.load(resp)["alertas"]:
+                    print(f"  → alerta [{alerta['severidade']}] {alerta['mensagem']} → {alerta['destinatario']}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="med-monitor", description=__doc__)
     parser.add_argument("--version", action="version", version=__version__)
@@ -324,6 +384,19 @@ def build_parser() -> argparse.ArgumentParser:
     vr.add_argument("--sem-objetos", action="store_true", help="pula o YOLOv8 de objetos (mais rápido)")
     vr.add_argument("--api", help="envia os achados para a fusão, ex.: http://localhost:8000")
     vr.set_defaults(func=_cmd_video_relatorio)
+
+    presc = sub.add_parser("prescricoes", help="anomalias na evolução de prescrições (formulário + variação aprendida)")
+    psub = presc.add_subparsers(dest="acao", required=True)
+    pa = psub.add_parser("avaliar", help="recall por tipo de anomalia e alertas em internações sem anomalia")
+    pa.set_defaults(func=_cmd_prescricoes_avaliar)
+    pe = psub.add_parser("exemplo", help="mostra uma internação com a anomalia pedida, evento a evento")
+    pe.add_argument("--tipo", default="erro_decimal",
+                    choices=["erro_decimal", "dose_acima_maxima", "salto_dose", "duplicidade", "suspensao_abrupta",
+                             "frequencia_inesperada", "ajuste_atipico"])
+    pe.add_argument("--paciente", default="PRT-2026-200104")
+    pe.add_argument("--semente", type=int, default=3)
+    pe.add_argument("--api", help="envia os achados para a fusão, ex.: http://localhost:8000")
+    pe.set_defaults(func=_cmd_prescricoes_exemplo)
 
     serve = sub.add_parser("serve", help="API + painel da equipe médica (http://localhost:8000)")
     serve.add_argument("--host", default="127.0.0.1")

@@ -36,10 +36,24 @@ coisas.
 | Desvio do basal do paciente | pelo escore, **teto moderado** | mudança relativa pede olhar, não chamar o plantonista |
 | Relato de risco de autolesão na consulta | **crítico** | não espera corroboração |
 | Queda detectada no vídeo | alto | paciente no chão: avaliação médica imediata |
+| Prescrição: erro decimal, dose acima da máxima | alto (escore 0,8–0,95) | para o **médico prescritor e a farmácia clínica** |
+| Prescrição: duplicidade, salto, intervalo, suspensão abrupta, ajuste atípico | moderado | para a **farmácia clínica** |
 | Execução incorreta na fisioterapia, amplitude reduzida | pelo escore, no máximo moderado | vai para a **fisioterapia**, não para a enfermagem |
 | Outras fontes (áudio, texto, vídeo...) | pelo escore: ≥ 0,8 alto · ≥ 0,5 moderado | ex.: "falta de ar" relatada (0,80) é alto; fala ofegante (0,75–0,90) vai de moderado a alto |
 
 ### 2. Corroboração e concordância entre canais
+
+Cada achado tem uma **validade**, o tempo em que continua valendo como
+evidência:
+
+| Achado | Validade | Por quê |
+|---|---|---|
+| monitor | 15 min | o valor do monitor envelhece rápido |
+| consulta (áudio, texto) e câmera (vídeo, movimentação) | 1 h | o relato e a observação valem por algum tempo |
+| prescrição | **6 h** | o risco dura enquanto o medicamento age |
+
+Um episódio continua aberto enquanto houver achado vigente. É assim que a
+prescrição errada das 10:00 se liga à bradipneia das 10:40.
 
 Cada modalidade pertence a um **canal físico**, que é a origem do dado:
 
