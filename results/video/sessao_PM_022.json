@@ -1,0 +1,250 @@
+{
+  "video": "PM_022",
+  "camera": 17,
+  "pessoa": 2,
+  "exercicio": 6,
+  "repeticoes": [
+    {
+      "repeticao": 1,
+      "inicio_s": 2.7,
+      "fim_s": 5.3,
+      "prob_incorreta": 0.482,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 2,
+      "inicio_s": 5.4,
+      "fim_s": 8.3,
+      "prob_incorreta": 0.106,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 3,
+      "inicio_s": 8.4,
+      "fim_s": 11.0,
+      "prob_incorreta": 0.325,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 4,
+      "inicio_s": 11.3,
+      "fim_s": 14.0,
+      "prob_incorreta": 0.289,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 5,
+      "inicio_s": 14.2,
+      "fim_s": 16.5,
+      "prob_incorreta": 0.33,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 6,
+      "inicio_s": 25.7,
+      "fim_s": 28.2,
+      "prob_incorreta": 0.485,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 7,
+      "inicio_s": 28.2,
+      "fim_s": 31.0,
+      "prob_incorreta": 0.485,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 8,
+      "inicio_s": 32.2,
+      "fim_s": 35.0,
+      "prob_incorreta": 0.487,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 9,
+      "inicio_s": 35.3,
+      "fim_s": 38.3,
+      "prob_incorreta": 0.863,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": [
+        "assimetria entre os joelhos 44° — acima do padrão correto (12°, z=+4,2)",
+        "flexão do quadril (direito) 137° — acima do padrão correto (102°, z=+2,1)"
+      ]
+    },
+    {
+      "repeticao": 10,
+      "inicio_s": 38.7,
+      "fim_s": 41.0,
+      "prob_incorreta": 0.971,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": [
+        "assimetria entre os joelhos 53° — acima do padrão correto (12°, z=+5,4)",
+        "flexão do quadril (direito) 145° — acima do padrão correto (102°, z=+2,6)"
+      ]
+    },
+    {
+      "repeticao": 11,
+      "inicio_s": 49.0,
+      "fim_s": 51.5,
+      "prob_incorreta": 0.895,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 12,
+      "inicio_s": 51.8,
+      "fim_s": 54.7,
+      "prob_incorreta": 0.847,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 13,
+      "inicio_s": 55.2,
+      "fim_s": 58.0,
+      "prob_incorreta": 0.836,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 14,
+      "inicio_s": 62.7,
+      "fim_s": 65.0,
+      "prob_incorreta": 0.895,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 15,
+      "inicio_s": 65.3,
+      "fim_s": 68.0,
+      "prob_incorreta": 0.875,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 16,
+      "inicio_s": 68.7,
+      "fim_s": 71.3,
+      "prob_incorreta": 0.891,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 17,
+      "inicio_s": 71.8,
+      "fim_s": 74.0,
+      "prob_incorreta": 0.9,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": [
+        "duração da repetição 2s — abaixo do padrão correto (4s, z=-1,6)"
+      ]
+    },
+    {
+      "repeticao": 18,
+      "inicio_s": 76.3,
+      "fim_s": 79.2,
+      "prob_incorreta": 0.942,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": [
+        "flexão máxima dos joelhos (ângulo mínimo) 65° — abaixo do padrão correto (107°, z=-1,7)",
+        "amplitude dos joelhos 112° — acima do padrão correto (66°, z=+1,6)"
+      ]
+    },
+    {
+      "repeticao": 19,
+      "inicio_s": 79.5,
+      "fim_s": 82.5,
+      "prob_incorreta": 0.94,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": [
+        "amplitude dos joelhos 110° — acima do padrão correto (66°, z=+1,6)",
+        "flexão máxima dos joelhos (ângulo mínimo) 67° — abaixo do padrão correto (107°, z=-1,6)"
+      ]
+    },
+    {
+      "repeticao": 20,
+      "inicio_s": 82.8,
+      "fim_s": 85.7,
+      "prob_incorreta": 0.956,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 21,
+      "inicio_s": 86.0,
+      "fim_s": 88.8,
+      "prob_incorreta": 0.938,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": [
+        "amplitude dos joelhos 114° — acima do padrão correto (66°, z=+1,7)",
+        "flexão máxima dos joelhos (ângulo mínimo) 65° — abaixo do padrão correto (107°, z=-1,7)"
+      ]
+    },
+    {
+      "repeticao": 22,
+      "inicio_s": 89.0,
+      "fim_s": 91.3,
+      "prob_incorreta": 0.98,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": [
+        "flexão máxima dos joelhos (ângulo mínimo) 60° — abaixo do padrão correto (107°, z=-1,8)",
+        "amplitude dos joelhos 116° — acima do padrão correto (66°, z=+1,8)"
+      ]
+    }
+  ],
+  "eventos": [],
+  "objetos": {
+    "pessoa": 1.0,
+    "cadeira": 0.5,
+    "mesa": 0.033,
+    "banco": 0.022
+  },
+  "comparacao_anterior": null,
+  "achados": [
+    {
+      "paciente_id": "REHAB-P02",
+      "modalidade": "video",
+      "tipo": "desvio_execucao",
+      "escore": 0.79,
+      "fonte": "yolov8-pose",
+      "evidencia": {
+        "exercicio": "agachamento",
+        "repeticoes_incorretas": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22
+        ],
+        "total_repeticoes": 22,
+        "desvios": [
+          "amplitude dos joelhos acima do padrão correto",
+          "assimetria entre os joelhos acima do padrão correto",
+          "duração da repetição abaixo do padrão correto",
+          "flexão do quadril",
+          "flexão máxima dos joelhos"
+        ]
+      },
+      "momento": "2026-11-23T23:55:43.354229+00:00",
+      "id": "217260e88936"
+    }
+  ]
+}

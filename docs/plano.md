@@ -17,17 +17,17 @@ anteriores) quer **monitorar pacientes continuamente com dados multimodais**
 
 | # | Requisito | Módulo | Status |
 |---|---|---|---|
-| 1.1 | Processar vídeos clínicos (fisioterapia / cirurgia) | `video/` | ⬜ |
-| 1.2 | Análise postural (OpenPose) | `video/pose.py` | ⬜ |
-| 1.3 | Objetos e áreas críticas (YOLOv8) | `video/objetos.py` | ⬜ |
-| 1.4 | Relatório automático de desvios | `video/relatorio.py` | ⬜ |
+| 1.1 | Processar vídeos clínicos (fisioterapia / cirurgia) | `video/` — [docs](video.md) | ✅ fisioterapia (REHAB24-6, 22 vídeos) |
+| 1.2 | Análise postural (OpenPose) | `video/pose.py` + `video/metricas.py` | ✅ YOLOv8-pose (keypoints COCO do OpenPose), 36 q/s em CPU |
+| 1.3 | Objetos e áreas críticas (YOLOv8) | `video/objetos.py` | ✅ pessoa visível 83%/96%, área do paciente, queda |
+| 1.4 | Relatório automático de desvios | `video/relatorio.py` | ✅ AUC por pessoa 0,87 (braço) e 0,95 (agachamento) |
 | 2.1 | Processar áudios de consultas | `audio/consulta.py` — [docs](audio.md) | ✅ |
 | 2.2 | Alterações vocais (cansaço, dificuldade respiratória) | `audio/acustica.py` | ✅ dispneia 24/24, fadiga 12/12, 0 falsos alarmes (sintético) |
 | 2.3 | Azure Speech to Text | `azure/speech.py` | 🟡 implementado e testado com dublê; falta rodar com a conta |
 | 2.4 | Termos críticos e sentimento (Azure Text Analytics) | `azure/language.py` + `audio/termos.py` | 🟡 léxico com negação ✅; Azure falta rodar com a conta |
 | 3.1 | Anomalias em sinais vitais (FC, PA, SpO2) | `anomalias/sinais_vitais.py` — [docs](sinais-vitais.md) | ✅ recall 96% em 336 h reais |
 | 3.2 | Anomalias na evolução de prescrições | `anomalias/prescricoes.py` | ⬜ |
-| 3.3 | Padrões de movimentação na internação | `anomalias/movimentacao.py` | ⬜ |
+| 3.3 | Padrões de movimentação na internação | `video/relatorio.py` (amplitude vs sessão anterior, queda) | ✅ parcial: sessões de fisioterapia |
 | 3.4 | Alertas automáticos à equipe médica | `fusao/` + `alertas/` + `serving/` — [docs](fusao-alertas.md) | ✅ fusão, painel SSE, ciência auditada; áudio/vídeo entram por `POST /achados` |
 | — | Contratos `Achado`/`Alerta`, config, auditoria, CLI | `domain.py`, `config.py`, `audit.py`, `cli.py` | ✅ |
 | — | Recursos Azure (Speech + Language + orçamento) | `infra/` | ✅ (falta conta e `apply`) |

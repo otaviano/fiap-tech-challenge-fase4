@@ -1,0 +1,149 @@
+{
+  "video": "PM_001",
+  "camera": 17,
+  "pessoa": 1,
+  "exercicio": 1,
+  "repeticoes": [
+    {
+      "repeticao": 1,
+      "inicio_s": 4.3,
+      "fim_s": 10.8,
+      "prob_incorreta": 0.603,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": [
+        "duração da repetição 6s — acima do padrão correto (5s, z=+1,9)"
+      ]
+    },
+    {
+      "repeticao": 2,
+      "inicio_s": 10.8,
+      "fim_s": 17.9,
+      "prob_incorreta": 0.503,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": [
+        "duração da repetição 7s — acima do padrão correto (5s, z=+2,5)"
+      ]
+    },
+    {
+      "repeticao": 3,
+      "inicio_s": 17.9,
+      "fim_s": 24.4,
+      "prob_incorreta": 0.509,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": [
+        "duração da repetição 6s — acima do padrão correto (5s, z=+1,8)"
+      ]
+    },
+    {
+      "repeticao": 4,
+      "inicio_s": 24.4,
+      "fim_s": 30.6,
+      "prob_incorreta": 0.509,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": [
+        "duração da repetição 6s — acima do padrão correto (5s, z=+1,6)"
+      ]
+    },
+    {
+      "repeticao": 5,
+      "inicio_s": 30.7,
+      "fim_s": 36.3,
+      "prob_incorreta": 0.602,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 6,
+      "inicio_s": 56.3,
+      "fim_s": 64.7,
+      "prob_incorreta": 0.255,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 7,
+      "inicio_s": 68.7,
+      "fim_s": 78.2,
+      "prob_incorreta": 0.348,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 8,
+      "inicio_s": 78.2,
+      "fim_s": 85.1,
+      "prob_incorreta": 0.463,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 9,
+      "inicio_s": 85.2,
+      "fim_s": 91.5,
+      "prob_incorreta": 0.38,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 10,
+      "inicio_s": 91.6,
+      "fim_s": 98.7,
+      "prob_incorreta": 0.305,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    }
+  ],
+  "eventos": [],
+  "objetos": {
+    "cadeira": 1.0,
+    "pessoa": 1.0
+  },
+  "comparacao_anterior": {
+    "sessao_anterior": "PM_000",
+    "metrica": "abducao_ombro_d_amp",
+    "atual": 101.8,
+    "anterior": 144.5,
+    "variacao": -0.296
+  },
+  "achados": [
+    {
+      "paciente_id": "REHAB-P01",
+      "modalidade": "video",
+      "tipo": "desvio_execucao",
+      "escore": 0.5726,
+      "fonte": "yolov8-pose",
+      "evidencia": {
+        "exercicio": "abdução de braço",
+        "repeticoes_incorretas": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "total_repeticoes": 10,
+        "desvios": [
+          "duração da repetição acima do padrão correto"
+        ]
+      },
+      "momento": "2026-11-23T23:54:28.863894+00:00",
+      "id": "fa8830a24103"
+    },
+    {
+      "paciente_id": "REHAB-P01",
+      "modalidade": "movimentacao",
+      "tipo": "amplitude_reduzida",
+      "escore": 0.79,
+      "fonte": "yolov8-pose",
+      "evidencia": {
+        "sessao_anterior": "PM_000",
+        "metrica": "abducao_ombro_d_amp",
+        "atual": 101.8,
+        "anterior": 144.5,
+        "variacao": -0.296
+      },
+      "momento": "2026-11-23T23:54:28.863894+00:00",
+      "id": "378a0f5c7c00"
+    }
+  ]
+}

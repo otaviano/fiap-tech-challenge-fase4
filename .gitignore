@@ -46,6 +46,7 @@ results/logs/auditoria.jsonl
 !results/logs/exemplo_*.jsonl
 # gráficos de exemplo citados na documentação
 !results/anomalias/sinais_vitais_*.png
+!results/video/sessao_*.png
 
 # Segredos (chaves do Azure ficam só no .env local)
 .env
@@ -74,3 +75,6 @@ docs/roteiro-video.md
 
 # Consultas sintéticas: geradas por `med-monitor audio amostras` (determinístico)
 data/raw/audio/
+
+# Cache de pose (derivado do REHAB24-6, regenerável por `med-monitor video avaliar`)
+data/processed/pose/

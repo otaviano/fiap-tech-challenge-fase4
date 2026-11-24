@@ -45,6 +45,7 @@ SEVERIDADE_BASE: dict[tuple[str, str | None], Severidade] = {
     ("news2", "news2_medio"): S.ALTO,
     ("news2", None): S.MODERADO,                 # parâmetro isolado com 3 pontos
     ("isolation-forest", None): S.MODERADO,      # deterioração multiparamétrica
+    ("yolov8-pose", "queda"): S.ALTO,            # paciente no chão: avaliação médica imediata
 }
 # Teto da severidade base por fonte: desvio do basal, sozinho, pede olhar — não chamar o plantonista.
 TETO_BASE = {"desvio-robusto": S.MODERADO}
@@ -62,6 +63,9 @@ PREFIXO = {
     Modalidade.SINAIS_VITAIS: "SV", Modalidade.AUDIO: "AU", Modalidade.TEXTO: "TX",
     Modalidade.VIDEO: "VD", Modalidade.MOVIMENTACAO: "MV", Modalidade.PRESCRICAO: "RX",
 }
+
+# Achados de reabilitação vão para a fisioterapia enquanto não houver risco clínico maior.
+DESTINATARIO_POR_TIPO = {"desvio_execucao": "fisioterapia", "amplitude_reduzida": "fisioterapia"}
 
 DESTINATARIO = {
     S.CRITICO: "time de resposta rápida",
@@ -82,6 +86,7 @@ ROTULO = {
     "termo_critico": "Termo crítico na consulta", "sentimento_negativo": "Sentimento negativo",
     "sintoma_relatado": "Sintoma relatado",
     "queda": "Queda", "desvio_postural": "Desvio postural", "amplitude_reduzida": "Amplitude de movimento reduzida",
+    "desvio_execucao": "Execução incorreta na fisioterapia",
 }
 UNIDADE = {"fc": "bpm", "pas": "mmHg", "pad": "mmHg", "pam": "mmHg", "fr": "irpm", "spo2": "%"}
 NOME_SINAL = {"fc": "FC", "pas": "PAS", "pad": "PAD", "pam": "PAM", "fr": "FR", "spo2": "SpO2"}
@@ -136,6 +141,11 @@ def descrever(achado: Achado) -> str:
         return f"{rotulo} na consulta ({criterios})" if criterios else rotulo
     if achado.tipo == "sentimento_negativo":
         return f"{rotulo} na consulta (confiança {_num(round(ev.get('confianca', 0), 2))})"
+    if achado.tipo == "desvio_execucao":
+        return (f"{rotulo} ({ev.get('exercicio')}): {len(ev.get('repeticoes_incorretas', []))} de "
+                f"{ev.get('total_repeticoes')} repetições" + (f" — {'; '.join(ev['desvios'][:2])}" if ev.get("desvios") else ""))
+    if achado.tipo == "amplitude_reduzida":
+        return f"{rotulo}: {_num(ev.get('atual'))}° vs {_num(ev.get('anterior'))}° na sessão anterior"
     if achado.tipo == "sensor_sem_sinal":
         return f"{rotulo}: {NOME_SINAL.get(sinal, sinal)} há {ev.get('minutos')} min"
     if sinal and "valor" in ev:
@@ -241,7 +251,8 @@ class MotorFusao:
             mensagem=" · ".join(partes),
             achados=tuple(a.id for a in recentes),
             modalidades=mods,
-            destinatario=DESTINATARIO[severidade],
+            destinatario=(DESTINATARIO_POR_TIPO.get(principal.tipo, DESTINATARIO[severidade])
+                          if severidade.peso <= S.MODERADO.peso else DESTINATARIO[severidade]),
             momento=achado.momento,
         )
         return [Decisao(alerta, tuple(recentes))]

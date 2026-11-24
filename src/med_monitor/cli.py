@@ -206,6 +206,64 @@ def _cmd_audio_avaliar(_: argparse.Namespace) -> int:
     return 0
 
 
+# ----------------------------------------------------------------- vídeo
+
+def _cmd_video_baixar(args: argparse.Namespace) -> int:
+    from .dados import rehab24
+
+    zr = rehab24.RemoteZip()
+    for video_id, camera in rehab24.selecao(tuple(args.exercicios)):
+        caminho = rehab24.baixar_videos([video_id], camera, zr)[0]
+        print(f"{video_id} câmera {camera}: {caminho.stat().st_size / 1e6:.0f} MB", flush=True)
+    return 0
+
+
+def _cmd_video_avaliar(args: argparse.Namespace) -> int:
+    from .video import avaliacao
+
+    df = avaliacao.tabela_repeticoes(tuple(args.exercicios), passo=args.passo)
+    if df.empty:
+        print("nenhum vídeo baixado — rode `med-monitor video baixar` antes")
+        return 1
+    res = avaliacao.avaliar(df)
+    print(avaliacao.tabela_markdown(res))
+    for caminho in avaliacao.salvar(df, res):
+        print(f"salvo: {caminho}")
+    return 0
+
+
+def _cmd_video_relatorio(args: argparse.Namespace) -> int:
+    import json as _json
+    import urllib.request
+
+    import pandas as pd
+
+    from .config import VIDEO_RESULTS
+    from .video import relatorio
+
+    tabela = VIDEO_RESULTS / "metricas_repeticoes.csv"
+    if not tabela.exists():
+        print("rode `med-monitor video avaliar` antes (gera as métricas das repetições)")
+        return 1
+    rel = relatorio.gerar(args.video, pd.read_csv(tabela), paciente_id=args.paciente,
+                          com_objetos=not args.sem_objetos)
+    print(relatorio.markdown(rel))
+    for caminho in relatorio.salvar(rel):
+        print(f"salvo: {caminho}")
+    for a in rel.achados:
+        print(f"  ▸ {a.modalidade.value}/{a.tipo} escore {a.escore:.2f}")
+        if args.api:
+            corpo = {k: v for k, v in a.as_dict().items()
+                     if k in ("paciente_id", "modalidade", "tipo", "escore", "fonte", "evidencia")}
+            req = urllib.request.Request(args.api.rstrip("/") + "/achados", method="POST",
+                                         data=_json.dumps(corpo, ensure_ascii=False).encode(),
+                                         headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                for alerta in _json.load(resp)["alertas"]:
+                    print(f"    → alerta [{alerta['severidade']}] {alerta['mensagem']} → {alerta['destinatario']}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="med-monitor", description=__doc__)
     parser.add_argument("--version", action="version", version=__version__)
@@ -250,6 +308,22 @@ def build_parser() -> argparse.ArgumentParser:
     an.set_defaults(func=_cmd_audio_analisar)
     av = asub.add_parser("avaliar", help="detecção de fadiga/dispneia em consultas sintéticas (~1 min)")
     av.set_defaults(func=_cmd_audio_avaliar)
+
+    video = sub.add_parser("video", help="sessões de fisioterapia (REHAB24-6): pose, desvios, áreas críticas")
+    vdsub = video.add_subparsers(dest="acao", required=True)
+    vb = vdsub.add_parser("baixar", help="baixa só os vídeos dos exercícios avaliados (download seletivo do zip)")
+    vb.add_argument("--exercicios", type=int, nargs="+", default=[1, 6])
+    vb.set_defaults(func=_cmd_video_baixar)
+    va = vdsub.add_parser("avaliar", help="pose + métricas + classificador validado por pessoa")
+    va.add_argument("--exercicios", type=int, nargs="+", default=[1, 6])
+    va.add_argument("--passo", type=int, default=2, help="processa 1 a cada N quadros")
+    va.set_defaults(func=_cmd_video_avaliar)
+    vr = vdsub.add_parser("relatorio", help="relatório automático de uma sessão (ex.: PM_001)")
+    vr.add_argument("video")
+    vr.add_argument("--paciente", help="id do paciente nos achados (padrão: REHAB-Pnn)")
+    vr.add_argument("--sem-objetos", action="store_true", help="pula o YOLOv8 de objetos (mais rápido)")
+    vr.add_argument("--api", help="envia os achados para a fusão, ex.: http://localhost:8000")
+    vr.set_defaults(func=_cmd_video_relatorio)
 
     serve = sub.add_parser("serve", help="API + painel da equipe médica (http://localhost:8000)")
     serve.add_argument("--host", default="127.0.0.1")

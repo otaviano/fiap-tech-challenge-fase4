@@ -1,0 +1,211 @@
+{
+  "video": "PM_029",
+  "camera": 18,
+  "pessoa": 3,
+  "exercicio": 6,
+  "repeticoes": [
+    {
+      "repeticao": 1,
+      "inicio_s": 2.3,
+      "fim_s": 6.7,
+      "prob_incorreta": 0.164,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 2,
+      "inicio_s": 7.0,
+      "fim_s": 11.0,
+      "prob_incorreta": 0.164,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 3,
+      "inicio_s": 11.3,
+      "fim_s": 15.3,
+      "prob_incorreta": 0.171,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 4,
+      "inicio_s": 15.4,
+      "fim_s": 19.7,
+      "prob_incorreta": 0.119,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 5,
+      "inicio_s": 19.7,
+      "fim_s": 24.0,
+      "prob_incorreta": 0.102,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 6,
+      "inicio_s": 31.3,
+      "fim_s": 34.3,
+      "prob_incorreta": 0.579,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 7,
+      "inicio_s": 35.0,
+      "fim_s": 39.0,
+      "prob_incorreta": 0.422,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 8,
+      "inicio_s": 39.0,
+      "fim_s": 42.7,
+      "prob_incorreta": 0.637,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": [
+        "inclinação do tronco 47° — acima do padrão correto (20°, z=+2,1)",
+        "flexão do quadril (direito) 71° — abaixo do padrão correto (108°, z=-1,6)"
+      ]
+    },
+    {
+      "repeticao": 9,
+      "inicio_s": 42.7,
+      "fim_s": 46.0,
+      "prob_incorreta": 0.609,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": [
+        "inclinação do tronco 43° — acima do padrão correto (20°, z=+1,8)"
+      ]
+    },
+    {
+      "repeticao": 10,
+      "inicio_s": 46.0,
+      "fim_s": 48.5,
+      "prob_incorreta": 0.523,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 11,
+      "inicio_s": 59.7,
+      "fim_s": 63.3,
+      "prob_incorreta": 0.308,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 12,
+      "inicio_s": 63.8,
+      "fim_s": 67.7,
+      "prob_incorreta": 0.322,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 13,
+      "inicio_s": 68.0,
+      "fim_s": 71.8,
+      "prob_incorreta": 0.349,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 14,
+      "inicio_s": 71.9,
+      "fim_s": 75.7,
+      "prob_incorreta": 0.317,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 15,
+      "inicio_s": 75.7,
+      "fim_s": 79.3,
+      "prob_incorreta": 0.328,
+      "rotulo_fisioterapeuta": "correta",
+      "desvios": []
+    },
+    {
+      "repeticao": 16,
+      "inicio_s": 82.7,
+      "fim_s": 86.2,
+      "prob_incorreta": 0.256,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 17,
+      "inicio_s": 86.2,
+      "fim_s": 89.7,
+      "prob_incorreta": 0.372,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 18,
+      "inicio_s": 89.7,
+      "fim_s": 93.3,
+      "prob_incorreta": 0.377,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 19,
+      "inicio_s": 93.4,
+      "fim_s": 96.7,
+      "prob_incorreta": 0.475,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    },
+    {
+      "repeticao": 20,
+      "inicio_s": 96.7,
+      "fim_s": 99.3,
+      "prob_incorreta": 0.564,
+      "rotulo_fisioterapeuta": "incorreta",
+      "desvios": []
+    }
+  ],
+  "eventos": [
+    {
+      "tipo": "pessoa_na_area",
+      "inicio_s": 101.7,
+      "fim_s": 102.9,
+      "detalhe": "outra pessoa na área do paciente"
+    }
+  ],
+  "objetos": {
+    "pessoa": 1.0
+  },
+  "comparacao_anterior": null,
+  "achados": [
+    {
+      "paciente_id": "REHAB-P03",
+      "modalidade": "video",
+      "tipo": "desvio_execucao",
+      "escore": 0.4456,
+      "fonte": "yolov8-pose",
+      "evidencia": {
+        "exercicio": "agachamento",
+        "repeticoes_incorretas": [
+          6,
+          8,
+          9,
+          10,
+          20
+        ],
+        "total_repeticoes": 20,
+        "desvios": [
+          "flexão do quadril",
+          "inclinação do tronco acima do padrão correto"
+        ]
+      },
+      "momento": "2026-11-23T23:55:08.015429+00:00",
+      "id": "d617f372696a"
+    }
+  ]
+}

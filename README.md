@@ -21,7 +21,7 @@ achados em alertas para a equipe médica.
 
 | Requisito do enunciado | Onde está |
 |---|---|
-| Análise de vídeo (OpenPose, YOLOv8, relatório de desvios) | [`src/med_monitor/video/`](src/med_monitor/video/) |
+| Análise de vídeo ✅ | [`video/`](src/med_monitor/video/) — YOLOv8-pose (keypoints do OpenPose) e YOLOv8 de objetos; execução incorreta com AUC por pessoa 0,87–0,95 no REHAB24-6; relatório automático da sessão ([detalhes](docs/video.md)) |
 | Análise de áudio ✅ (Azure 🟡 aguardando conta) | [`audio/`](src/med_monitor/audio/) — fala ofegante e fadiga vs basal do paciente, termos críticos com negação; [`azure/`](src/med_monitor/azure/) — Speech to Text, sentimento e Text Analytics for Health ([detalhes](docs/audio.md)) |
 | Anomalias em sinais vitais ✅ | [`anomalias/sinais_vitais.py`](src/med_monitor/anomalias/sinais_vitais.py) — NEWS2 + desvio robusto + Isolation Forest; recall 96% em 336 h de UTI ([detalhes](docs/sinais-vitais.md)) |
 | Anomalias em prescrições e movimentação | [`src/med_monitor/anomalias/`](src/med_monitor/anomalias/) |
@@ -63,6 +63,16 @@ med-monitor audio amostras           # consultas sintéticas (requer espeak-ng)
 med-monitor audio analisar data/raw/audio/PRT-2026-200102_atual.wav \
     --basal data/raw/audio/PRT-2026-200102_basal.wav [--api http://localhost:8000]
 med-monitor audio avaliar
+```
+
+### Vídeo das sessões de fisioterapia
+
+```bash
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install -e ".[video,anomalias,dev]"
+med-monitor video baixar             # 22 vídeos do REHAB24-6 (download seletivo, ~475 MB)
+med-monitor video avaliar            # pose + validação por pessoa (~12 min na 1ª vez)
+med-monitor video relatorio PM_016 [--api http://localhost:8000]
 ```
 
 ### Painel da equipe médica (tempo real)

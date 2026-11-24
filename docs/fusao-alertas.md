@@ -35,6 +35,8 @@ coisas.
 | Isolation Forest (deterioração multiparamétrica) | moderado | padrão anômalo, sem limiar clínico absoluto |
 | Desvio do basal do paciente | pelo escore, **teto moderado** | mudança relativa pede olhar, não chamar o plantonista |
 | Relato de risco de autolesão na consulta | **crítico** | não espera corroboração |
+| Queda detectada no vídeo | alto | paciente no chão: avaliação médica imediata |
+| Execução incorreta na fisioterapia, amplitude reduzida | pelo escore, no máximo moderado | vai para a **fisioterapia**, não para a enfermagem |
 | Outras fontes (áudio, texto, vídeo...) | pelo escore: ≥ 0,8 alto · ≥ 0,5 moderado | ex.: "falta de ar" relatada (0,80) é alto; fala ofegante (0,75–0,90) vai de moderado a alto |
 
 ### 2. Corroboração e concordância entre canais
@@ -75,6 +77,8 @@ alerta.
 | alto | médico plantonista |
 | moderado | enfermagem do leito |
 | informativo (técnico, ex.: sensor sem sinal) | enfermagem do leito |
+
+Exceção: desvio de execução e amplitude reduzida, enquanto ficam em moderado ou abaixo, vão para a **fisioterapia**.
 
 ### Exemplo: a mesma dessaturação em três momentos
 
